@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="code\main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\audio\along.wav" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
