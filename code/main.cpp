@@ -1,6 +1,6 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-//zuihaole
+//zuihaol
 int main()
 {
     // 创建窗口
