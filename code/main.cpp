@@ -18,6 +18,7 @@ void drawGame();//绘制游戏界面
 bool isWin();//胜利判定
 void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
+void Gameopen();//游戏启动界面
 
 int main() {
 	SSIZE = 3;
@@ -25,7 +26,10 @@ int main() {
 	blockImgs.resize(SSIZE * SSIZE);
 
 	initgraph(SSIZE * 100 + 200, SSIZE * 100 + 400);//游戏板大小
-	SetWindowText(GetHWnd(), _T("数字华容道"));
+	loadImages();
+	BeginBatchDraw();//双缓冲防止游戏闪烁
+	Gameopen();
+	/*SetWindowText(GetHWnd(), _T("数字华容道"));
 	loadImages();
 	BeginBatchDraw();//双缓冲防止游戏闪烁
 
@@ -38,6 +42,7 @@ int main() {
 
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(120, 200, _T("按任意键开始"));
+	FlushBatchDraw();*/
 
 	_getch();
 
@@ -82,6 +87,13 @@ int main() {
 			else if (key == 27) {
 				break;
 			}
+			if (key == 'a') {
+				showWin();
+				initBoard();
+				shuffleBoard();
+				moves = 0;
+				continue;
+			}
 		}
 
 		drawGame();
@@ -91,6 +103,15 @@ int main() {
 
 	closegraph();
 	return 0;
+}
+
+void Gameopen() {
+	IMAGE Start;
+	loadimage(&Start, _T("./assets/image/Start.png"),getwidth(),getheight());//载入开始画面
+
+	putimage(0, 0, &Start);
+
+	FlushBatchDraw();
 }
 
 void loadImages() {
@@ -241,21 +262,36 @@ bool isWin() {
 }
 
 void showWin() {
-	setfillcolor(RGB(0, 0, 0));
-	solidrectangle(0, 0, getwidth(), getheight());
+	//setfillcolor(RGB(0, 0, 0));
+	//solidrectangle(0, 0, getwidth(), getheight());
+	drawGame(); // 先绘制游戏界面
+	FlushBatchDraw();
 
-	settextcolor(WHITE);
+	HDC hdc = GetImageHDC(); // 获取 EasyX 的 HDC
+
+	// 创建半透明画刷
+	Graphics graphics(hdc);
+	Color color(128, 0, 0, 0); // ARGB(透明度, R, G, B)
+	SolidBrush brush(color);
+
+	// 覆盖整个窗口
+	graphics.FillRectangle(&brush, 0, 0, getwidth(), getheight());
+
+	settextcolor(BLACK);
 	settextstyle(40, 0, _T("宋体"));
-	outtextxy(150, 150, _T("恭喜你赢了!"));
+	outtextxy(SSIZE*50-20, SSIZE*100+230, _T("恭喜你赢了!"));
 
 	TCHAR resultText[50];
 	_stprintf_s(resultText, _T("移动次数: %d"), moves);
 	settextstyle(30, 0, _T("宋体"));
-	outtextxy(180, 200, resultText);
+	outtextxy(SSIZE*50, SSIZE*100+270, resultText);
 
 	settextstyle(20, 0, _T("宋体"));
-	outtextxy(150, 250, _T("按任意键继续"));
-	outtextxy(150, 280, _T("ESC退出游戏"));
+	outtextxy(150, SSIZE*100+310, _T("按任意键继续"));
+	outtextxy(150, SSIZE*100+330, _T("ESC退出游戏"));
+
+	FlushBatchDraw();
+
 
 	while (true) {
 		if (_kbhit()) {

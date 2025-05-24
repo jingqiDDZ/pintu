@@ -7,6 +7,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <gdiplus.h>
+#pragma comment(lib,"gdiplus.lib")
+using namespace Gdiplus;
 using namespace std;
 
 
