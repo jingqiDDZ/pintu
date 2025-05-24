@@ -17,7 +17,7 @@ void moveTile(int row, int col);//处理方块移动
 void drawGame();//绘制游戏界面
 bool isWin();//胜利判定
 void showWin();//胜利结算
-void handleMouse();//鼠标点击处理
+bool handleMouse();//鼠标点击处理
 
 int main() {
 	SSIZE = 3;
@@ -46,7 +46,10 @@ int main() {
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
 	loadSoundBgm("./assets/audio/bgm_long.wav", sound_bgm, buffer_bgm);
-	//sf::Sound sound;
+	
+	sf::Sound sound_click;
+	sf::SoundBuffer buffer_click;
+	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
 	
 	
 	bool bgm_start = false;
@@ -56,7 +59,9 @@ int main() {
 			bgm_start = true;
 			sound_bgm.play();
 		}
-		handleMouse();
+		if (handleMouse()) {
+			sound_click.play();
+		}
 		
 		if (isWin()) {
 			showWin();
@@ -262,7 +267,7 @@ void showWin() {
 	}
 }
 
-void handleMouse() {
+bool handleMouse() {
 	MOUSEMSG msg;
 	if (MouseHit()) {  // 检查是否有鼠标消息
 		msg = GetMouseMsg();
@@ -274,13 +279,10 @@ void handleMouse() {
 
 			// 检查点击是否在有效范围内
 			if (row >= 0 && row < SSIZE && col >= 0 && col < SSIZE) {
-				
 				moveTile(row, col);
-				//sf::Sound tmp_sound;
-				//string aa = "./assets/audio/click.wav";
-				//loadSound(aa，tmp_sound);
-				
+				return true;
 			}
 		}
 	}
+	return false;
 }
