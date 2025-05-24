@@ -21,7 +21,7 @@ bool handleMouse();//鼠标点击处理
 
 int main() {
 	SSIZE = 3;
-    board.resize(SSIZE, vector<int>(SSIZE));
+	board.resize(SSIZE, vector<int>(SSIZE));
 	blockImgs.resize(SSIZE * SSIZE);
 
 	initgraph(SSIZE * 100 + 200, SSIZE * 100 + 400);//游戏板大小
@@ -46,12 +46,12 @@ int main() {
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
 	loadSoundBgm("./assets/audio/bgm_long.wav", sound_bgm, buffer_bgm);
-	
+
 	sf::Sound sound_click;
 	sf::SoundBuffer buffer_click;
 	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
-	
-	
+
+
 	bool bgm_start = false;
 
 	while (true) {
@@ -62,7 +62,7 @@ int main() {
 		if (handleMouse()) {
 			sound_click.play();
 		}
-		
+
 		if (isWin()) {
 			showWin();
 			initBoard();
@@ -94,10 +94,10 @@ int main() {
 }
 
 void loadImages() {
-	for (int i = 0; i <= SSIZE*SSIZE-1; i++) {
+	for (int i = 0; i <= SSIZE * SSIZE - 1; i++) {
 		TCHAR path[256];
 		//"./assets/image/0.bmp"
-		
+
 		_stprintf_s(path, _T("./assets/image/%d.png"), i); // 图片路径为img文件夹下的0.bmp到8.bmp  
 		loadimage(&blockImgs[i], path, BLOCK_SIZE, BLOCK_SIZE);
 		if (blockImgs[i].getwidth() == 0 || blockImgs[i].getheight() == 0) {
@@ -162,8 +162,8 @@ void shuffleBoard() {
 			int idx = rand() % count;
 			int targetRow = validNeighbors[idx][0];
 			int targetCol = validNeighbors[idx][1];
-            preDir[0][0] = emptyRow;
-            preDir[0][1] = emptyCol;
+			preDir[0][0] = emptyRow;
+			preDir[0][1] = emptyCol;
 			// 执行交换（模拟移动）
 			board[emptyRow][emptyCol] = board[targetRow][targetCol];
 			board[targetRow][targetCol] = 0;
@@ -196,12 +196,12 @@ void drawGame() {
 	// 绘制标题和移动次数（保持不变）
 	settextcolor(BLACK);
 	settextstyle(30, 0, _T("宋体"));
-	outtextxy(SSIZE*50, 10, _T("数字华容道"));
+	outtextxy(SSIZE * 50, 10, _T("数字华容道"));
 
 	TCHAR movesText[50];
 	_stprintf_s(movesText, _T("移动次数: %d"), moves);
 	settextstyle(20, 0, _T("宋体"));
-	outtextxy(SSIZE*50+50, 50, movesText);
+	outtextxy(SSIZE * 50 + 50, 50, movesText);
 
 	// 绘制游戏方块
 	for (int i = 0; i < SSIZE; i++) {
@@ -219,10 +219,10 @@ void drawGame() {
 
 	// 绘制操作说明（保持不变）
 	settextstyle(16, 0, _T("宋体"));
-	outtextxy(50, SSIZE*100+150, _T("操作说明:"));
-	outtextxy(50, SSIZE*100+170, _T("鼠标点击 - 移动方块"));
-	outtextxy(50, SSIZE*100+190, _T("R - 重新开始"));
-	outtextxy(50, SSIZE*100+210, _T("ESC - 退出游戏"));
+	outtextxy(50, SSIZE * 100 + 150, _T("操作说明:"));
+	outtextxy(50, SSIZE * 100 + 170, _T("鼠标点击 - 移动方块"));
+	outtextxy(50, SSIZE * 100 + 190, _T("R - 重新开始"));
+	outtextxy(50, SSIZE * 100 + 210, _T("ESC - 退出游戏"));
 }
 
 bool isWin() {
