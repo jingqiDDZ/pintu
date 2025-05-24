@@ -39,6 +39,8 @@ int main() {
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(120, 200, _T("按任意键开始"));
 
+	FlushBatchDraw();  // 刷新缓冲区，显示初始界面
+
 	_getch();
 
 	initBoard();
@@ -64,7 +66,10 @@ int main() {
 		}
 
 		if (isWin()) {
+			cout << "WOW~~ isWin!" << endl;
 			showWin();
+			cout << "showWin finished" << endl;
+
 			initBoard();
 			shuffleBoard();
 			moves = 0;
@@ -242,9 +247,9 @@ bool isWin() {
 
 void showWin() {
 	setfillcolor(RGB(0, 0, 0));
-	solidrectangle(0, 0, getwidth(), getheight());
+	//solidrectangle(0, 0, getwidth(), getheight());
 
-	settextcolor(WHITE);
+	settextcolor(BLACK);
 	settextstyle(40, 0, _T("宋体"));
 	outtextxy(150, 150, _T("恭喜你赢了!"));
 
@@ -253,11 +258,15 @@ void showWin() {
 	settextstyle(30, 0, _T("宋体"));
 	outtextxy(180, 200, resultText);
 
+
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(150, 250, _T("按任意键继续"));
 	outtextxy(150, 280, _T("ESC退出游戏"));
+	FlushBatchDraw();  // 刷新缓冲区，显示初始界面
 
 	while (true) {
+		//cout << "kk" << endl;
+
 		if (_kbhit()) {
 			int key = _getch();
 			if (key == 27) exit(0);
