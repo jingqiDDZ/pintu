@@ -10,7 +10,6 @@
 using namespace std;
 
 
-sf::Sound loadSoundBgm(const string path);			//加载声音文件的函数(BGM,)
-sf::Sound loadSoundClip(const string path);		//加载声音文件的函数
+void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer);			//加载声音文件的函数(BGM,)
+void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer)	//加载声音文件的函数
 
-//int playSound(const string sound_name);			//播放声音文件的函数
