@@ -11,5 +11,5 @@ using namespace std;
 
 
 void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer);			//加载声音文件的函数(BGM,)
-void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer)	//加载声音文件的函数
+void loadSoundClip(const string path, sf::Sound& sound, sf::SoundBuffer& buffer);	//加载声音文件的函数
 

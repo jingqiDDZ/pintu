@@ -8,7 +8,7 @@ void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer) 
     sound.setLoop(true);
 }
 
-void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer) { // 注意 sf::Sound&
+void loadSoundClip(const string path, sf::Sound& sound, sf::SoundBuffer& buffer) { // 注意 sf::Sound&
     if (!buffer.loadFromFile(path)) {
         throw runtime_error("加载 CLIP 失败:" + path);
     }
