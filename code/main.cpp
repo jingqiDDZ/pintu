@@ -1,6 +1,6 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-//zuihaol【kk我是亚龙人
+//zuihaol【kk我是亚龙
 
 int main()
 {
