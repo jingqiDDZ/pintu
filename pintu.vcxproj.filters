@@ -18,10 +18,18 @@
     <ClCompile Include="code\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="code\PlayMusic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav">
       <Filter>资源文件</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,4 @@
-﻿#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <graphics.h>
-#include <time.h>
-#include <stdio.h>
-#include <conio.h>
-#include <vector>
-using  namespace std;
+﻿#include "game.h"
 
 #define BLOCK_SIZE 100
 #define MARGIN  50
@@ -50,10 +43,25 @@ int main() {
 
 	initBoard();
 	shuffleBoard();
+	sf::Sound sound;
+	//sound = loadSoundBgm("./assets/audio/bgm_long.wav");
+	sf::SoundBuffer buffer;
+	//sf::Sound sound;
+	if (!buffer.loadFromFile("./assets/audio/bgm_long.wav")) {
+		throw runtime_error("加载 BGM 失败:. / assets / audio / bgm_long.wav");
+	}
+	sound.setBuffer(buffer);
+	sound.setLoop(true);
+	
+	bool bgm_start = false;
 
 	while (true) {
+		if (!bgm_start) {
+			bgm_start = true;
+			sound.play();
+		}
 		handleMouse();
-
+		
 		if (isWin()) {
 			showWin();
 			initBoard();
@@ -270,7 +278,12 @@ void handleMouse() {
 
 			// 检查点击是否在有效范围内
 			if (row >= 0 && row < SSIZE && col >= 0 && col < SSIZE) {
+				
 				moveTile(row, col);
+				//sf::Sound tmp_sound;
+				//string aa = "./assets/audio/click.wav";
+				//loadSound(aa，tmp_sound);
+				
 			}
 		}
 	}

@@ -20,9 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp" />
+    <ClCompile Include="code\PlayMusic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
