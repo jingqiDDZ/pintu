@@ -9,6 +9,7 @@ vector<IMAGE> blockImgs;
 int emptyRow, emptyCol;
 int moves = 0;
 
+void Shuffle(int times);//根据次数打乱棋盘(算步数的)
 void loadImages();//加载方块图片资源
 void initBoard();//初始化游戏板
 void shuffleBoard();//打乱游戏板
@@ -19,6 +20,7 @@ bool isWin();//胜利判定
 void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
 void Gameopen();//游戏启动界面
+void Debuff_jojo(sf::Sound& kingCrimson);//红王debuff，随机移动两步
 
 int main() {
 	SSIZE = 3;
@@ -58,6 +60,11 @@ int main() {
 	sf::SoundBuffer buffer_click;
 	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
 
+	//后期位置可能变化
+	sf::Sound kingCrimson;
+	sf::SoundBuffer buffer_kingCrimson;
+	loadSoundClip("./assets/audio/Debuff_jojo.mp3", kingCrimson, buffer_kingCrimson);
+	//标记一下
 
 	bool bgm_start = false;
 
@@ -98,6 +105,9 @@ int main() {
 				shuffleBoard();
 				moves = 0;
 				continue;
+			}
+			if (key == 'b') {
+				Debuff_jojo(kingCrimson);
 			}
 		}
 
@@ -329,4 +339,67 @@ bool handleMouse() {
 		}
 	}
 	return false;
+}
+
+void Shuffle(int times) {
+	srand((unsigned)time(NULL));
+	int preDir[1][2];//先前移动的反方向
+	int last = -1;//初始没有先前移动方向
+	// 预生成所有可能的合法移动对
+	for (int i = 0; i < times; i++) {
+		// 获取当前空白块周围可交换的位置
+		int neighbors[4][2] = {
+			{emptyRow - 1, emptyCol}, // 上
+			{emptyRow + 1, emptyCol}, // 下
+			{emptyRow, emptyCol - 1}, // 左
+			{emptyRow, emptyCol + 1}  // 右
+		};
+
+		// 收集所有合法的邻居位置
+		int validNeighbors[4][2];
+		int count = 0;
+		for (int j = 0; j < 4; j++) {
+			int r = neighbors[j][0];
+			int c = neighbors[j][1];
+			if (last == -1) {
+				if (r >= 0 && r < SSIZE && c >= 0 && c < SSIZE) {
+					validNeighbors[count][0] = r;
+					validNeighbors[count][1] = c;
+					count++;
+				}
+			}
+			else {
+				if (r >= 0 && r < SSIZE && c >= 0 && c < SSIZE &&
+					r != preDir[0][0] && c != preDir[0][1]) {
+					validNeighbors[count][0] = r;
+					validNeighbors[count][1] = c;
+					count++;
+				}
+			}
+		}
+		last = 1;
+		// 随机选择一个邻居进行交换
+		if (count > 0) {
+			int idx = rand() % count;
+			int targetRow = validNeighbors[idx][0];
+			int targetCol = validNeighbors[idx][1];
+			preDir[0][0] = emptyRow;
+			preDir[0][1] = emptyCol;
+			// 执行交换（模拟移动）
+			board[emptyRow][emptyCol] = board[targetRow][targetCol];
+			board[targetRow][targetCol] = 0;
+			emptyRow = targetRow;
+			emptyCol = targetCol;
+			moves++;
+		}
+	}
+}
+
+void Debuff_jojo(sf::Sound& kingCrimson) {
+	int mark = 0;
+	//kingCrimson.setVolume(200);
+	kingCrimson.play();
+	Shuffle(3);
+	FlushBatchDraw();
+	Sleep(1000);//听bgm;
 }
