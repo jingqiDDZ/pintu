@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp" />
+    <ClCompile Include="code\menu.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
   </ItemGroup>
   <ItemGroup>
