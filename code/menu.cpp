@@ -8,6 +8,13 @@ using namespace std;
 #define WD_width 1000		//window_width,图形窗口的宽度
 #define WD_height 800
 
+
+const TCHAR* LevelChars[] = {
+	_T("壹"), _T("贰"), _T("叁"),
+	_T("肆"), _T("伍"), _T("陆"),
+	_T("柒"), _T("捌"), _T("玖")
+};
+
 //按钮类
 class Button {
 public:
@@ -73,6 +80,7 @@ public:
 
 };
 
+//游戏数据（目前只是一个草稿）
 class GameData {
 public:
 	int unlockLevel = 1;		//解锁的关卡进度
@@ -80,6 +88,15 @@ public:
 };
 
 GameData game_data;
+
+//菜单状态枚举（没有添加进入关卡的操作）
+enum MenuState {
+	MAIN_MENU,
+	LEVEL_SELECT,
+	SHOP,
+	EXIT
+};
+
 
 //初始化按钮数组（主菜单按钮）
 vector<Button> initMainMenuBtn() {
@@ -98,7 +115,7 @@ vector<Button> initMainMenuBtn() {
 }
 
 //初始化按钮数组（关卡按钮）
-vector<Button> initBtn() {
+vector<Button> initLevelBtn() {
 
 	vector<Button> buttons;
 
@@ -109,9 +126,6 @@ vector<Button> initBtn() {
 	double startY = 0.3f;
 
 	for (int i = 0;i < 9;i++) {
-
-		TCHAR levelText[10];
-		_stprintf_s(levelText, _T("关卡 %d"), i + 1);
 
 		COLORREF color, press_color;
 		if (i + 1 <= game_data.unlockLevel) {		//根据关卡的解锁状态来使用不同的颜色
@@ -132,7 +146,7 @@ vector<Button> initBtn() {
 		buttons.emplace_back(
 			startX + paceX * col, startY + paceY * row,
 			btnsize, btnsize,
-			levelText, color, press_color
+			LevelChars[i], color, press_color
 		);
 	}
 
@@ -155,8 +169,32 @@ void drawMainMenu(vector<Button> buttons) {
 	for (auto btn : buttons) {
 		btn.draw();
 	}
+
+	//显示金币数量
+	settextstyle(20, 0, _T("宋体"));
+	TCHAR coinText[50];
+	_stprintf_s(coinText, _T("金币: %d"), game_data.coins);
+	outtextxy(850, 30, coinText);
 }
 
+void drawLevelSelect(vector<Button> buttons) {
+	cleardevice();
+
+	//绘制背景
+	setbkcolor(RGB(240, 240, 240));
+	cleardevice();
+
+	//绘制按钮
+	for (auto btn : buttons) {
+		btn.draw();
+	}
+
+	//显示金币数量
+	settextstyle(20, 0, _T("宋体"));
+	TCHAR coinText[50];
+	_stprintf_s(coinText, _T("金币: %d"), game_data.coins);
+	outtextxy(850, 30, coinText);
+}
 
 int menu() {
 	// 初始化窗口
@@ -166,14 +204,13 @@ int menu() {
 	cleardevice();
 	BeginBatchDraw();			//先在内存里面绘图
 
-	Button btn1(0.5f, 0.8f, 180, 90, _T("关卡选择"), RGB(100, 200, 100), RGB(150, 250, 150));
+	// 初始化菜单状态
+	MenuState currentState = MAIN_MENU;
+	vector<Button> buttons = initMainMenuBtn();
 
 	//主循环
 	while (true) {
 		cleardevice();
-
-		//绘制按钮
-		btn1.draw();
 
 		//检查鼠标位置
 		MOUSEMSG msg;
@@ -181,14 +218,71 @@ int menu() {
 			msg = GetMouseMsg();
 
 			//更新按钮悬停状态
-			btn1.checkAbove(msg.x, msg.y);
+			for (auto& btn : buttons) {
+				btn.checkAbove(msg.x, msg.y);
+			}
 
 			//处理鼠标点击
 			if (msg.uMsg == WM_LBUTTONDOWN) {
-				if (btn1.checkAbove(msg.x, msg.y)) {
+				for (size_t i = 0; i < buttons.size(); i++) {
+					if (buttons[i].checkAbove(msg.x, msg.y)) {
 
+						//主菜单按钮处理
+						if (currentState == MAIN_MENU) {
+							if (i == 0) {		//关卡选择
+								currentState = LEVEL_SELECT;
+								buttons = initLevelBtn();
+							}
+							else if (i == 1) {		//商店
+								currentState = SHOP;
+								//buttons = initLevelBtn();
+							}
+							else if (i == 2) {		//退出游戏
+								currentState = EXIT;
+								//buttons = initLevelBtn();
+							}
+						}
+
+						//关卡选择界面按钮处理
+						else if (currentState == LEVEL_SELECT) {
+							if (i < 9) {		//点击关卡按钮
+								int level = i + 1;
+								if (level > game_data.unlockLevel) {
+									cout << "关卡未解锁" << endl;
+								}
+								else {
+									//此处添加关卡代码
+									cout << "开始关卡" << level << endl;
+								}
+							}
+							else if (i == 9) {		//返回按钮
+								currentState = MAIN_MENU;
+								buttons = initMainMenuBtn();
+							}
+						}
+
+						break;			//一次处理一个按钮点击操作，处理完毕即可退出循环
+					}
 				}
 			}
+		}
+		// 检查退出
+		if (currentState == EXIT) {
+			break;
+		}
+
+		// 绘制当前菜单
+		switch (currentState) {
+		case MAIN_MENU:
+			drawMainMenu(buttons);
+			break;
+		case LEVEL_SELECT:
+			drawLevelSelect(buttons);
+			break;
+		case SHOP:
+			;
+		case EXIT:
+			break;
 		}
 		FlushBatchDraw();
 		Sleep(1);  // 降低CPU占用
