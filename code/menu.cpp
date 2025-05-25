@@ -158,7 +158,7 @@ void drawMainMenu(vector<Button> buttons) {
 }
 
 
-int main() {
+int menu() {
 	// 初始化窗口
 	initgraph(WD_width, WD_height);
 	SetWindowText(GetHWnd(), _T("游戏主菜单"));
