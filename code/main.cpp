@@ -63,7 +63,7 @@ int main() {
 	//后期位置可能变化
 	sf::Sound kingCrimson;
 	sf::SoundBuffer buffer_kingCrimson;
-	loadSoundClip("./assets/audio/Debuff_jojo.mp3", kingCrimson, buffer_kingCrimson);
+	loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, buffer_kingCrimson);
 	//标记一下
 
 	bool bgm_start = false;
