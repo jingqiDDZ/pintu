@@ -22,6 +22,7 @@
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\menu.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
+    <ClCompile Include="code\Record.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav" />

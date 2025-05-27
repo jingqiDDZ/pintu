@@ -1,0 +1,34 @@
+{
+  "player": {
+    "coins": 500,
+    "unlockedLevel": 3
+  },
+  "inventory": [
+    {
+      "id": "红豆香囊",
+      "number": 0
+    },
+    {
+      "id": "绿豆香囊",
+      "number": 2
+    }
+  ],
+  "achievementStatus": [
+    {
+      "id": "登峰造极",
+      "unlock": false
+    },
+    {
+      "id": "势如破竹",
+      "unlock": false
+    },
+    {
+      "id": "二周目玩家",
+      "unlock": false
+    },
+    {
+      "id": "（连续十次在某一关超过倒计时时间输掉）",
+      "unlock": false
+    }
+  ]
+}
