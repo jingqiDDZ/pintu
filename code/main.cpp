@@ -3,13 +3,21 @@
 #define BLOCK_SIZE 100
 #define MARGIN  50
 
-time_t startTime, endTime;
-bool isWinning = false;
+time_t startTime, endTime;//计时时间
+bool isWinning = false;//计时的胜利判定用的
 int SSIZE;
 vector<vector<int>> board;
 vector<IMAGE> blockImgs;
 int emptyRow, emptyCol;
 int moves = 0;
+int totalTime = 15;//倒计时总时间
+int remaining;
+chrono::time_point<chrono::system_clock>startTime_Re, currentTime_Re;
+chrono::duration<double> used;
+bool  isTimeout = false;//倒计时胜利判定的
+bool Played_count = false;//倒计时音乐是否播放过了
+int Tmode = 1;//0表示计时模式，1表示倒计时模式
+
 
 void Shuffle(int times);//根据次数打乱棋盘(算步数的)
 void loadImages();//加载方块图片资源
@@ -54,8 +62,14 @@ int main() {
 
 	initBoard();
 	shuffleBoard();
-	time(&startTime);
-	isWinning = false;
+	if (Tmode == 0) {
+		time(&startTime);
+		isWinning = false;
+	}
+	else if (Tmode == 1) {
+		startTime_Re = chrono::system_clock::now();
+		isTimeout = false;
+	}
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
 	loadSoundBgm("./assets/audio/bgm_long.wav", sound_bgm, buffer_bgm);
@@ -70,9 +84,34 @@ int main() {
 	loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, buffer_kingCrimson);
 	//标记一下
 
+	//倒计时音乐
+	sf::Sound sound_Timeout;
+	sf::SoundBuffer buffer_Timeout;
+	loadSoundClip("./assets/audio/Countdown.wav", sound_Timeout, buffer_Timeout);
+	//标记
+
 	bool bgm_start = false;
 
+
+
 	while (true) {
+
+		if (Tmode == 1) {
+			auto now = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsed_Re = now - startTime_Re;
+			remaining = totalTime - static_cast<int>(elapsed_Re.count());
+
+			if (remaining <= 0 && !isWin()) {
+				isTimeout = true;
+				remaining = 0;
+			}
+
+			if (remaining <= 10&&Played_count==false) {
+				sound_Timeout.play();
+				Played_count = true;
+			}
+		}//倒计时
+
 		if (!bgm_start) {
 			bgm_start = true;
 			sound_bgm.play();
@@ -82,8 +121,15 @@ int main() {
 		}
 
 		if (isWin()) {
-			time(&endTime);
-			isWinning = true;
+			if (Tmode == 0) {
+				time(&endTime);
+				isWinning = true;
+			}
+			else  if (Tmode == 1) {
+				// 计算用时
+				auto endTime_Re = std::chrono::system_clock::now();
+				used = endTime_Re - startTime_Re;
+			}
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
 			cout << "showWin finished" << endl;
@@ -91,8 +137,11 @@ int main() {
 			initBoard();
 			shuffleBoard();
 			moves = 0;
-			isWinning = false;
-			time(&startTime);
+			Played_count = false;
+			if (Tmode == 0) {
+				isWinning = false;
+				time(&startTime);
+			}
 			continue;
 		}
 
@@ -103,15 +152,28 @@ int main() {
 				initBoard();
 				shuffleBoard();
 				moves = 0;
-				time(&startTime);  // 重置开始时间
-				isWinning = false;
+				if (Tmode == 0) {
+					time(&startTime);  // 重置开始时间
+					isWinning = false;
+				}
+				else if (Tmode == 1) {
+					startTime_Re = std::chrono::system_clock::now(); // 重置计时器
+					isTimeout = false;
+				}
 			}
 			else if (key == 27) {
 				break;
 			}
 			if (key == 'a') {
-				time(&endTime);
-				isWinning = true;
+				if (Tmode == 0) {
+					time(&endTime);
+					isWinning = true;
+				}
+				else  if (Tmode == 1) {
+					// 计算用时
+					auto endTime_Re = std::chrono::system_clock::now();
+					used = endTime_Re - startTime_Re;
+				}
 				cout << "WOW~~ isWin!" << endl;
 				showWin();
 				cout << "showWin finished" << endl;
@@ -119,14 +181,50 @@ int main() {
 				initBoard();
 				shuffleBoard();
 				moves = 0;
-				isWinning = false;
-				time(&startTime);
+				Played_count = false;
+				if (Tmode == 0) {
+					isWinning = false;
+					time(&startTime);
+				}
 				continue;
 			}
 			if (key == 'b') {
 				Debuff_jojo(kingCrimson);
 			}
 		}
+
+		if (isTimeout&&Tmode==1) {
+			// 绘制超时界面
+			setbkcolor(RGB(240, 240, 240));
+			cleardevice();
+
+			settextcolor(RED);
+			settextstyle(40, 0, _T("宋体"));
+			outtextxy(SSIZE * 50 - 40, SSIZE * 100 + 230, _T("时间耗尽!"));
+
+			settextstyle(20, 0, _T("宋体"));
+			outtextxy(150, SSIZE * 100 + 270, _T("按R重新开始"));
+			outtextxy(150, SSIZE * 100 + 300, _T("ESC退出游戏"));
+
+			FlushBatchDraw();
+
+			// 处理输入
+			if (_kbhit()) {
+				int key = _getch();
+				if (key == 'r' || key == 'R') {
+					initBoard();
+					shuffleBoard();
+					moves = 0;
+					Played_count = false;
+					startTime_Re = std::chrono::system_clock::now();
+					isTimeout = false;
+				}
+				else if (key == 27) {
+					break;
+				}
+			}
+			continue; // 跳过后续游戏逻辑
+		}//倒计时超时
 
 		drawGame();
 		FlushBatchDraw();
@@ -256,21 +354,33 @@ void drawGame() {
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(SSIZE * 50 + 50, 50, movesText);
 
-	//绘制时间
-	time_t currentTime;
-	if (isWinning) {
-		currentTime = endTime;
-	}
-	else {
-		time(&currentTime);
-	}
-	int elapsed = difftime(currentTime, startTime);
-	int minutes = elapsed / 60;
-	int seconds = elapsed % 60;
+	//绘制计时时间
+	if (Tmode == 0) {
+		time_t currentTime;
+		if (isWinning) {
+			currentTime = endTime;
+		}
+		else {
+			time(&currentTime);
+		}
+		int elapsed = difftime(currentTime, startTime);
+		int minutes = elapsed / 60;
+		int seconds = elapsed % 60;
 
-	TCHAR timeText[50];
-	_stprintf_s(timeText, _T("时间: %02d:%02d"), minutes, seconds);
-	outtextxy(SSIZE * 50 + 50, 80, timeText);  // 调整位置避免重叠
+		TCHAR timeText[50];
+		_stprintf_s(timeText, _T("时间: %02d:%02d"), minutes, seconds);
+		outtextxy(SSIZE * 50 + 50, 80, timeText);  // 调整位置避免重叠
+	}
+	else if (Tmode == 1) {
+		int minutes = remaining / 60;
+		int seconds = remaining % 60;
+
+		TCHAR timeText[50];
+		_stprintf_s(timeText, _T("剩余时间: %02d:%02d"), minutes, seconds);
+		settextcolor(RED);  // 用红色强调时间
+		outtextxy(SSIZE * 50 + 50, 80, timeText);
+		settextcolor(BLACK); // 恢复默认颜色
+	}
 
 	// 绘制游戏方块
 	for (int i = 0; i < SSIZE; i++) {
@@ -325,24 +435,30 @@ void showWin() {
 	// 覆盖整个窗口
 	graphics.FillRectangle(&brush, 0, 0, getwidth(), getheight());
 
-	// 计算总用时
-	int total = difftime(endTime, startTime);
-	int minutes = total / 60;
-	int seconds = total % 60;
 	settextcolor(BLACK);
 	settextstyle(40, 0, _T("宋体"));
 	outtextxy(SSIZE*50-20, SSIZE*100+230, _T("恭喜你赢了!"));
 
-	TCHAR resultText[50];
-	_stprintf_s(resultText, _T("移动次数: %d  用时: %02d:%02d"), moves, minutes, seconds);
+	TCHAR resultText[100];
+	if (Tmode == 0) {
+		int total = difftime(endTime, startTime);
+		int minutes = total / 60;
+		int seconds = total % 60;
+		_stprintf_s(resultText, _T("移动次数: %d  用时: %02d:%02d"), moves, minutes, seconds);
+	}
+	else  if (Tmode == 1) {
+		_stprintf_s(resultText, _T("移动次数: %d  剩余时间: %02d:%02d"),
+			moves,
+			static_cast<int>(totalTime - used.count()) / 60,
+			static_cast<int>(totalTime - used.count()) % 60);
+	}
 	settextstyle(30, 0, _T("宋体"));
 	outtextxy(SSIZE * 50 - 20, SSIZE * 100 + 270, resultText);
 
 
 	settextstyle(20, 0, _T("宋体"));
-	outtextxy(150, SSIZE*100+310, _T("按任意键继续"));
-	outtextxy(150, SSIZE*100+330, _T("ESC退出游戏"));
-
+	outtextxy(150, SSIZE * 100 + 310, _T("按任意键继续"));
+	outtextxy(150, SSIZE * 100 + 330, _T("ESC退出游戏"));
 	FlushBatchDraw();
 
 

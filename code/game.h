@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <gdiplus.h>
+#include <chrono>
 #pragma comment(lib,"gdiplus.lib")
 using namespace Gdiplus;
 using namespace std;
