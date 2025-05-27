@@ -3,6 +3,8 @@
 #define BLOCK_SIZE 100
 #define MARGIN  50
 
+time_t startTime, endTime;
+bool isWinning = false;
 int SSIZE;
 vector<vector<int>> board;
 vector<IMAGE> blockImgs;
@@ -52,6 +54,8 @@ int main() {
 
 	initBoard();
 	shuffleBoard();
+	time(&startTime);
+	isWinning = false;
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
 	loadSoundBgm("./assets/audio/bgm_long.wav", sound_bgm, buffer_bgm);
@@ -78,6 +82,8 @@ int main() {
 		}
 
 		if (isWin()) {
+			time(&endTime);
+			isWinning = true;
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
 			cout << "showWin finished" << endl;
@@ -85,6 +91,8 @@ int main() {
 			initBoard();
 			shuffleBoard();
 			moves = 0;
+			isWinning = false;
+			time(&startTime);
 			continue;
 		}
 
@@ -95,15 +103,24 @@ int main() {
 				initBoard();
 				shuffleBoard();
 				moves = 0;
+				time(&startTime);  // 重置开始时间
+				isWinning = false;
 			}
 			else if (key == 27) {
 				break;
 			}
 			if (key == 'a') {
+				time(&endTime);
+				isWinning = true;
+				cout << "WOW~~ isWin!" << endl;
 				showWin();
+				cout << "showWin finished" << endl;
+
 				initBoard();
 				shuffleBoard();
 				moves = 0;
+				isWinning = false;
+				time(&startTime);
 				continue;
 			}
 			if (key == 'b') {
@@ -239,6 +256,22 @@ void drawGame() {
 	settextstyle(20, 0, _T("宋体"));
 	outtextxy(SSIZE * 50 + 50, 50, movesText);
 
+	//绘制时间
+	time_t currentTime;
+	if (isWinning) {
+		currentTime = endTime;
+	}
+	else {
+		time(&currentTime);
+	}
+	int elapsed = difftime(currentTime, startTime);
+	int minutes = elapsed / 60;
+	int seconds = elapsed % 60;
+
+	TCHAR timeText[50];
+	_stprintf_s(timeText, _T("时间: %02d:%02d"), minutes, seconds);
+	outtextxy(SSIZE * 50 + 50, 80, timeText);  // 调整位置避免重叠
+
 	// 绘制游戏方块
 	for (int i = 0; i < SSIZE; i++) {
 		for (int j = 0; j < SSIZE; j++) {
@@ -292,14 +325,18 @@ void showWin() {
 	// 覆盖整个窗口
 	graphics.FillRectangle(&brush, 0, 0, getwidth(), getheight());
 
+	// 计算总用时
+	int total = difftime(endTime, startTime);
+	int minutes = total / 60;
+	int seconds = total % 60;
 	settextcolor(BLACK);
 	settextstyle(40, 0, _T("宋体"));
 	outtextxy(SSIZE*50-20, SSIZE*100+230, _T("恭喜你赢了!"));
 
 	TCHAR resultText[50];
-	_stprintf_s(resultText, _T("移动次数: %d"), moves);
+	_stprintf_s(resultText, _T("移动次数: %d  用时: %02d:%02d"), moves, minutes, seconds);
 	settextstyle(30, 0, _T("宋体"));
-	outtextxy(SSIZE*50, SSIZE*100+270, resultText);
+	outtextxy(SSIZE * 50 - 20, SSIZE * 100 + 270, resultText);
 
 
 	settextstyle(20, 0, _T("宋体"));
