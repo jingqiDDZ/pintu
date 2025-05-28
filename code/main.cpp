@@ -31,6 +31,7 @@ void drawGame();//绘制游戏界面
 bool isWin();//胜利判定
 void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
+bool handleKeyboard();//键盘移动处理
 void Gameopen();//游戏启动界面
 void Debuff_jojo(sf::Sound& kingCrimson);//红王debuff，随机移动两步
 void Buff_jojo(sf::Sound& killerQueen,int n);//败者食尘buff，回退n步
@@ -127,7 +128,7 @@ int main() {
 			bgm_start = true;
 			sound_bgm.play();
 		}
-		if (handleMouse()) {
+		if (handleMouse()||handleKeyboard()) {
 			sound_click.play();
 		}
 
@@ -175,7 +176,7 @@ int main() {
 			else if (key == 27) {
 				break;
 			}
-			if (key == 'a') {
+			if (key == 'z') {
 				if (Tmode == 0) {
 					time(&endTime);
 					isWinning = true;
@@ -199,7 +200,7 @@ int main() {
 				}
 				continue;
 			}
-			if (key == 'b') {
+			if (key == 'x') {
 				Debuff_jojo(kingCrimson);
 			}
 			if (key == 'v') {
@@ -521,6 +522,40 @@ bool handleMouse() {
 	return false;
 }
 
+bool handleKeyboard() {
+	if (_kbhit()) {
+		int key = _getch();
+		int targetRow = emptyRow;
+		int targetCol = emptyCol;
+
+		// 计算目标位置
+		if (key == 'w' || key == 'W') {
+			targetRow--;
+		}
+		else if (key == 'a' || key == 'A') {
+			targetCol--;
+		}
+		else if (key == 'd' || key == 'D') {
+			targetCol++;
+		}
+		else if (key == 's' || key == 'S') {
+			targetRow++;
+		}
+		else {
+			return false; // 不是方向键，不处理
+		}
+
+		// 检查目标位置是否在有效范围内
+		if (targetRow >= 0 && targetRow < SSIZE &&
+			targetCol >= 0 && targetCol < SSIZE)
+		{
+			moveTile(targetRow, targetCol);
+			return true;
+		}
+	}
+	return false;
+}
+
 void Shuffle(int times) {
 	srand((unsigned)time(NULL));
 	int preDir[1][2];//先前移动的反方向
@@ -565,6 +600,12 @@ void Shuffle(int times) {
 			int targetCol = validNeighbors[idx][1];
 			preDir[0][0] = emptyRow;
 			preDir[0][1] = emptyCol;
+
+			// 保存当前状态到历史记录
+			history.push_back(board);
+			// 保持最多50步历史记录
+			if (history.size() > 50) history.erase(history.begin());
+
 			// 执行交换（模拟移动）
 			board[emptyRow][emptyCol] = board[targetRow][targetCol];
 			board[targetRow][targetCol] = 0;
