@@ -19,6 +19,10 @@ chrono::duration<double> used;
 bool  isTimeout = false;//倒计时胜利判定的
 bool Played_count = false;//倒计时音乐是否播放过了
 int Tmode = 1;//0表示计时模式，1表示倒计时模式
+DWORD lastMoveTime = 0;       // 移动键最后触发时间
+DWORD lastFunctionTime = 0;   // 功能键最后触发时间
+const DWORD moveDelay = 150;  // 移动键冷却时间（毫秒）
+const DWORD functionDelay = 300; // 功能键冷却时间（毫秒）
 
 
 void Shuffle(int times);//根据次数打乱棋盘(算步数的)
@@ -33,6 +37,11 @@ void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
 bool handleKeyboard();//键盘移动处理
 void Gameopen();//游戏启动界面
+void handleFunctionKeys(
+	sf::Sound& kingCrimson,
+	sf::Sound& killerQueen,
+	sf::Sound& killerQueen_de
+);//功能键处理函数
 void Debuff_jojo(sf::Sound& kingCrimson);//红王debuff，随机移动两步
 void Buff_jojo(sf::Sound& killerQueen,int n);//败者食尘buff，回退n步
 
@@ -77,7 +86,7 @@ int main() {
 	}
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
-	loadSoundBgm("./assets/audio/bgm_long.wav", sound_bgm, buffer_bgm);
+	loadSoundBgm("./assets/audio/Stay.wav", sound_bgm, buffer_bgm);
 
 	sf::Sound sound_click;
 	sf::SoundBuffer buffer_click;
@@ -128,10 +137,13 @@ int main() {
 			bgm_start = true;
 			sound_bgm.play();
 		}
-		if (handleMouse()||handleKeyboard()) {
+
+		if (handleMouse()|| handleKeyboard()) {
 			sound_click.play();
 		}
 
+
+		//胜利检测
 		if (isWin()) {
 			if (Tmode == 0) {
 				time(&endTime);
@@ -144,76 +156,16 @@ int main() {
 			}
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
-			cout << "showWin finished" << endl;
-
-			initBoard();
-			shuffleBoard();
-			moves = 0;
-			Played_count = false;
-			if (Tmode == 0) {
-				isWinning = false;
-				time(&startTime);
-			}
+			
 			continue;
 		}
 
-		//处理键盘输入（重启和退出）
-		if (_kbhit()) {
-			int key = _getch();
-			if (key == 'r' || key == 'R') {
-				initBoard();
-				shuffleBoard();
-				moves = 0;
-				if (Tmode == 0) {
-					time(&startTime);  // 重置开始时间
-					isWinning = false;
-				}
-				else if (Tmode == 1) {
-					startTime_Re = std::chrono::system_clock::now(); // 重置计时器
-					isTimeout = false;
-				}
-			}
-			else if (key == 27) {
-				break;
-			}
-			if (key == 'z') {
-				if (Tmode == 0) {
-					time(&endTime);
-					isWinning = true;
-				}
-				else  if (Tmode == 1) {
-					// 计算用时
-					auto endTime_Re = std::chrono::system_clock::now();
-					used = endTime_Re - startTime_Re;
-				}
-				cout << "WOW~~ isWin!" << endl;
-				showWin();
-				cout << "showWin finished" << endl;
+		//处理功能键
+		handleFunctionKeys(kingCrimson, killerQueen, killerQueen_de);
 
-				initBoard();
-				shuffleBoard();
-				moves = 0;
-				Played_count = false;
-				if (Tmode == 0) {
-					isWinning = false;
-					time(&startTime);
-				}
-				continue;
-			}
-			if (key == 'x') {
-				Debuff_jojo(kingCrimson);
-			}
-			if (key == 'v') {
-				if (history.size() >= backTracking) {
-					Buff_jojo(killerQueen, 3);
-				}
-				else {
-					killerQueen_de.play();
-				}
-			}
-		}
 
-		if (isTimeout&&Tmode==1) {
+		//超时检测
+		if (isTimeout && Tmode==1) {
 			// 绘制超时界面
 			setbkcolor(RGB(240, 240, 240));
 			cleardevice();
@@ -228,20 +180,26 @@ int main() {
 
 			FlushBatchDraw();
 
-			// 处理输入
-			if (_kbhit()) {
-				int key = _getch();
-				if (key == 'r' || key == 'R') {
+			// 非阻塞按键检测
+			while (true) {
+				// 检测R键
+				if (GetAsyncKeyState('R') & 0x8000) {
 					initBoard();
 					shuffleBoard();
 					moves = 0;
 					Played_count = false;
 					startTime_Re = std::chrono::system_clock::now();
 					isTimeout = false;
-				}
-				else if (key == 27) {
 					break;
 				}
+				// 检测ESC键
+				else if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+					closegraph();
+					exit(0);
+				}
+
+				// 避免CPU占用过高
+				Sleep(50);
 			}
 			continue; // 跳过后续游戏逻辑
 		}//倒计时超时
@@ -491,14 +449,38 @@ void showWin() {
 
 
 	while (true) {
-		//cout << "kk" << endl;
-
+		// 检测功能键
 		if (_kbhit()) {
-			int key = _getch();
-			if (key == 27) exit(0);
 			break;
 		}
-		Sleep(100);
+		/*if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) { // 退出
+			exit(0);
+		}
+		// 检测任意键继续
+		bool anyKeyPressed = false;
+		for (int vKey = 0; vKey < 256; vKey++) {
+			if (GetAsyncKeyState(vKey) & 0x8000) {
+				anyKeyPressed = true;
+				break;
+			}
+		}
+		if (anyKeyPressed) break;*/
+		Sleep(50);
+	}
+
+	//按任意键重置棋盘
+	initBoard();
+	shuffleBoard();
+	moves = 0;
+	Played_count = false;
+
+	if (Tmode == 0) {
+		isWinning = false;
+		time(&startTime);
+	}
+	else if (Tmode == 1) {
+		startTime_Re = std::chrono::system_clock::now();
+		isTimeout = false;
 	}
 }
 
@@ -522,36 +504,39 @@ bool handleMouse() {
 	return false;
 }
 
+
 bool handleKeyboard() {
-	if (_kbhit()) {
-		int key = _getch();
-		int targetRow = emptyRow;
-		int targetCol = emptyCol;
+	DWORD currentTime = GetTickCount();	// 如果距离上次移动时间太短，则不处理
+	if (currentTime - lastMoveTime < moveDelay) {
+		return false;
+	}
 
-		// 计算目标位置
-		if (key == 'w' || key == 'W') {
-			targetRow--;
-		}
-		else if (key == 'a' || key == 'A') {
-			targetCol--;
-		}
-		else if (key == 'd' || key == 'D') {
-			targetCol++;
-		}
-		else if (key == 's' || key == 'S') {
-			targetRow++;
-		}
-		else {
-			return false; // 不是方向键，不处理
-		}
+	int targetRow = emptyRow;
+	int targetCol = emptyCol;
+	bool moved = false;
 
-		// 检查目标位置是否在有效范围内
-		if (targetRow >= 0 && targetRow < SSIZE &&
-			targetCol >= 0 && targetCol < SSIZE)
-		{
-			moveTile(targetRow, targetCol);
-			return true;
-		}
+	// 检测 WASD 和方向键
+	if (GetAsyncKeyState('W') & 0x8000 || GetAsyncKeyState(VK_UP) & 0x8000) {
+		targetRow--;
+		moved = true;
+	}
+	else if (GetAsyncKeyState('S') & 0x8000 || GetAsyncKeyState(VK_DOWN) & 0x8000) {
+		targetRow++;
+		moved = true;
+	}
+	else if (GetAsyncKeyState('A') & 0x8000 || GetAsyncKeyState(VK_LEFT) & 0x8000) {
+		targetCol--;
+		moved = true;
+	}
+	else if (GetAsyncKeyState('D') & 0x8000 || GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+		targetCol++;
+		moved = true;
+	}
+
+	if (moved && targetRow >= 0 && targetRow < SSIZE && targetCol >= 0 && targetCol < SSIZE) {
+		moveTile(targetRow, targetCol);
+		lastMoveTime = currentTime;
+		return true;
 	}
 	return false;
 }
@@ -649,5 +634,71 @@ void Buff_jojo(sf::Sound& killerQueen, int n) {
 
 		drawGame();
 		FlushBatchDraw();
+	}
+}
+
+void handleFunctionKeys(
+	sf::Sound& kingCrimson,
+	sf::Sound& killerQueen,
+	sf::Sound& killerQueen_de
+) {
+	DWORD currentTime = GetTickCount();
+
+	// 检查是否在冷却时间内
+	if (currentTime - lastFunctionTime < functionDelay) {
+		return;
+	}
+
+	// 检测 R 键：重启游戏
+	if (GetAsyncKeyState('R') & 0x8000) {
+		initBoard();
+		shuffleBoard();
+		moves = 0;
+		if (Tmode == 0) {
+			time(&startTime);
+			isWinning = false;
+		}
+		else if (Tmode == 1) {
+			startTime_Re = std::chrono::system_clock::now();
+			isTimeout = false;
+		}
+		lastFunctionTime = currentTime;
+	}
+	// 检测 ESC 键：退出游戏
+	else if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+		exit(0);
+	}
+	// 检测 X 键：随机移动
+	else if (GetAsyncKeyState('X') & 0x8000) {
+		Debuff_jojo(kingCrimson);
+		lastFunctionTime = currentTime;
+	}
+	// 检测 V 键：回退操作
+	else if (GetAsyncKeyState('V') & 0x8000) {
+		if (history.size() >= backTracking) {
+			Buff_jojo(killerQueen, 3);
+		}
+		else {
+			killerQueen_de.play();
+		}
+		lastFunctionTime = currentTime;
+	}
+	// 检测 Z 键：测试胜利
+	else if (GetAsyncKeyState('Z') & 0x8000) {
+		if (Tmode == 0) {
+			time(&endTime);
+			isWinning = true;
+		}
+		else  if (Tmode == 1) {
+			// 计算用时
+			auto endTime_Re = std::chrono::system_clock::now();
+			used = endTime_Re - startTime_Re;
+		}
+		cout << "WOW~~ isWin!" << endl;
+		showWin();
+		cout << "showWin finished" << endl;
+
+		
+		lastFunctionTime = currentTime;
 	}
 }
