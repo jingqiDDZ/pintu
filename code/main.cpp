@@ -7,10 +7,12 @@ time_t startTime, endTime;//计时时间
 bool isWinning = false;//计时的胜利判定用的
 int SSIZE;
 vector<vector<int>> board;
+vector<vector<vector<int>>> history; // 操作历史记录
 vector<IMAGE> blockImgs;
 int emptyRow, emptyCol;
 int moves = 0;
-int totalTime = 15;//倒计时总时间
+int backTracking = 3;//回溯次数
+int totalTime = 300;//倒计时总时间
 int remaining;
 chrono::time_point<chrono::system_clock>startTime_Re, currentTime_Re;
 chrono::duration<double> used;
@@ -31,13 +33,15 @@ void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
 void Gameopen();//游戏启动界面
 void Debuff_jojo(sf::Sound& kingCrimson);//红王debuff，随机移动两步
+void Buff_jojo(sf::Sound& killerQueen,int n);//败者食尘buff，回退n步
 
 int main() {
 	SSIZE = 3;
 	board.resize(SSIZE, vector<int>(SSIZE));
 	blockImgs.resize(SSIZE * SSIZE);
 
-	initgraph(SSIZE * 100 + 200, SSIZE * 100 + 400);//游戏板大小
+
+	initgraph(SSIZE * 100 + 400, SSIZE * 100 + 600);//游戏板大小
 	loadImages();
 	BeginBatchDraw();//双缓冲防止游戏闪烁
 	Gameopen();
@@ -78,11 +82,18 @@ int main() {
 	sf::SoundBuffer buffer_click;
 	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
 
-	//后期位置可能变化
+	//buff音乐
 	sf::Sound kingCrimson;
 	sf::SoundBuffer buffer_kingCrimson;
 	loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, buffer_kingCrimson);
-	//标记一下
+
+	sf::Sound killerQueen;
+	sf::SoundBuffer buffer_killerQueen;
+	loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, buffer_killerQueen);//发动败者食尘成功的音乐
+	sf::Sound killerQueen_de;
+	sf::SoundBuffer buffer_killerQueen_de;
+	loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, buffer_killerQueen_de);//发动败者食尘失败的音乐
+	//标记
 
 	//倒计时音乐
 	sf::Sound sound_Timeout;
@@ -191,6 +202,14 @@ int main() {
 			if (key == 'b') {
 				Debuff_jojo(kingCrimson);
 			}
+			if (key == 'v') {
+				if (history.size() >= backTracking) {
+					Buff_jojo(killerQueen, 3);
+				}
+				else {
+					killerQueen_de.play();
+				}
+			}
 		}
 
 		if (isTimeout&&Tmode==1) {
@@ -229,7 +248,7 @@ int main() {
 		drawGame();
 		FlushBatchDraw();
 		Sleep(0.1);
-	}
+	}//游戏运行
 
 	closegraph();
 	return 0;
@@ -268,6 +287,7 @@ void initBoard() {
 	emptyRow = SSIZE - 1;
 	emptyCol = SSIZE - 1;
 	board[emptyRow][emptyCol] = 0;
+	history.clear();
 }
 
 void shuffleBoard() {
@@ -323,6 +343,7 @@ void shuffleBoard() {
 		}
 	}
 	moves = 0;
+	history.clear();
 }
 
 bool canMove(int row, int col) {
@@ -332,6 +353,12 @@ bool canMove(int row, int col) {
 
 void moveTile(int row, int col) {
 	if (canMove(row, col)) {
+
+		// 保存当前状态到历史记录
+		history.push_back(board);
+		// 保持最多50步历史记录
+		if (history.size() > 50) history.erase(history.begin());
+
 		board[emptyRow][emptyCol] = board[row][col];
 		board[row][col] = 0;
 		emptyRow = row;
@@ -555,4 +582,31 @@ void Debuff_jojo(sf::Sound& kingCrimson) {
 	Shuffle(3);
 	FlushBatchDraw();
 	Sleep(1000);//听bgm;
+}
+
+void Buff_jojo(sf::Sound& killerQueen, int n) {
+	killerQueen.play();
+	for (int i = 0;i < n;i++) {
+		if (!history.empty()) {
+			// 恢复上一个状态
+			board = history.back();
+			history.pop_back();
+			moves--;
+
+			// 更新空白块位置
+			for (int i = 0; i < SSIZE; i++) {
+				for (int j = 0; j < SSIZE; j++) {
+					if (board[i][j] == 0) {
+						emptyRow = i;
+						emptyCol = j;
+					}
+				}
+			}
+		}
+
+		//刷新
+
+		drawGame();
+		FlushBatchDraw();
+	}
 }
