@@ -72,7 +72,36 @@ int main() {
 
 	FlushBatchDraw();  // 刷新缓冲区，显示初始界面
 
-	_getch();
+	// 步骤1：等待所有按键松开
+	bool keyStillDown = true;
+	while (keyStillDown) {
+		keyStillDown = false;
+		for (int vKey = 8; vKey <= 255; vKey++) {
+			if (GetAsyncKeyState(vKey) & 0x8000) {
+				keyStillDown = true;
+				break;
+			}
+		}
+		Sleep(30);
+	}
+
+	// 步骤2：等待玩家按下任意键
+	while (true) {
+		// 检查ESC
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+			closegraph();
+			exit(0);
+		}
+		// 检查任意键
+		for (int vKey = 8; vKey <= 255; vKey++) {
+			if (GetAsyncKeyState(vKey) & 0x8000) {
+				goto CONTINUE_GAME;
+			}
+		}
+		Sleep(30);
+	}
+CONTINUE_GAME:
+	//按任意键进入游戏
 
 	initBoard();
 	shuffleBoard();
@@ -448,25 +477,35 @@ void showWin() {
 	FlushBatchDraw();
 
 
-	while (true) {
-		// 检测功能键
-		if (_kbhit()) {
-			break;
-		}
-		/*if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) { // 退出
-			exit(0);
-		}
-		// 检测任意键继续
-		bool anyKeyPressed = false;
-		for (int vKey = 0; vKey < 256; vKey++) {
+	// 步骤1：等待所有按键松开
+	bool keyStillDown = true;
+	while (keyStillDown) {
+		keyStillDown = false;
+		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
-				anyKeyPressed = true;
+				keyStillDown = true;
 				break;
 			}
 		}
-		if (anyKeyPressed) break;*/
-		Sleep(50);
+		Sleep(30);
 	}
+
+	// 步骤2：等待玩家按下任意键
+	while (true) {
+		// 检查ESC
+		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+			closegraph();
+			exit(0);
+		}
+		// 检查任意键
+		for (int vKey = 8; vKey <= 255; vKey++) {
+			if (GetAsyncKeyState(vKey) & 0x8000) {
+				goto CONTINUE_GAME;
+			}
+		}
+		Sleep(30);
+	}
+CONTINUE_GAME:
 
 	//按任意键重置棋盘
 	initBoard();
