@@ -24,7 +24,6 @@ DWORD lastFunctionTime = 0;   // 功能键最后触发时间
 const DWORD moveDelay = 150;  // 移动键冷却时间（毫秒）
 const DWORD functionDelay = 300; // 功能键冷却时间（毫秒）
 
-
 void Shuffle(int times);//根据次数打乱棋盘(算步数的)
 void loadImages();//加载方块图片资源
 void initBoard();//初始化游戏板
@@ -115,7 +114,7 @@ CONTINUE_GAME:
 	}
 	sf::Sound sound_bgm;
 	sf::SoundBuffer buffer_bgm;
-	loadSoundBgm("./assets/audio/Stay.wav", sound_bgm, buffer_bgm);
+	loadSoundBgm("./assets/audio/sound_win.wav", sound_bgm, buffer_bgm);
 
 	sf::Sound sound_click;
 	sf::SoundBuffer buffer_click;
@@ -138,6 +137,12 @@ CONTINUE_GAME:
 	sf::Sound sound_Timeout;
 	sf::SoundBuffer buffer_Timeout;
 	loadSoundClip("./assets/audio/Countdown.wav", sound_Timeout, buffer_Timeout);
+	//标记
+
+	//胜利音乐
+	//sf::Sound sound_win;
+	//sf::SoundBuffer buffer_win;
+	//loadSoundClip("./assets/audio/win.wav", sound_win, buffer_win);
 	//标记
 
 	bool bgm_start = false;
@@ -476,6 +481,10 @@ void showWin() {
 	outtextxy(150, SSIZE * 100 + 330, _T("ESC退出游戏"));
 	FlushBatchDraw();
 
+	// 暂停BGM，播放胜利音乐
+	//sound_bgm.pause();
+	//sound_win.play();
+
 
 	// 步骤1：等待所有按键松开
 	bool keyStillDown = true;
@@ -506,6 +515,9 @@ void showWin() {
 		Sleep(30);
 	}
 CONTINUE_GAME:
+
+	//sound_bgm.play();
+	//sound_win.pause();
 
 	//按任意键重置棋盘
 	initBoard();
