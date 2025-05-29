@@ -37,13 +37,28 @@ void showWin();//胜利结算
 bool handleMouse();//鼠标点击处理
 bool handleKeyboard();//键盘移动处理
 void Gameopen();//游戏启动界面
-void handleFunctionKeys(
-	sf::Sound& kingCrimson,
-	sf::Sound& killerQueen,
-	sf::Sound& killerQueen_de
-);//功能键处理函数
-void Debuff_jojo(sf::Sound& kingCrimson);//红王debuff，随机移动两步
-void Buff_jojo(sf::Sound& killerQueen,int n);//败者食尘buff，回退n步
+void handleFunctionKeys();//功能键处理函数
+void Debuff_jojo();//红王debuff，随机移动两步
+void Buff_jojo(int n);//败者食尘buff，回退n步
+
+
+Sound sound_bgm;//背景音乐
+SoundBuffer buffer_bgm;
+Sound sound_click;//点击音效
+SoundBuffer buffer_click;
+Sound kingCrimson;//debuff_jojo音乐
+SoundBuffer buffer_kingCrimson;
+Sound killerQueen;//buff_jojo音乐
+SoundBuffer buffer_killerQueen;
+Sound killerQueen_de;//buff_jojo发动失败音乐
+SoundBuffer buffer_killerQueen_de;
+Sound sound_Timeout;//倒计时音乐
+SoundBuffer buffer_Timeout;
+Sound sound_win;//胜利音乐
+SoundBuffer buffer_win;
+
+
+
 
 int main() {
 	SSIZE = 3;
@@ -113,32 +128,22 @@ CONTINUE_GAME:
 		startTime_Re = chrono::system_clock::now();
 		isTimeout = false;
 	}
-	sf::Sound sound_bgm;
-	sf::SoundBuffer buffer_bgm;
-	loadSoundBgm("./assets/audio/Stay.wav", sound_bgm, buffer_bgm);
 
-	sf::Sound sound_click;
-	sf::SoundBuffer buffer_click;
+	loadSoundBgm("./assets/audio/S.T.A.Y.wav", sound_bgm, buffer_bgm);
+
+
 	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
 
-	//buff音乐
-	sf::Sound kingCrimson;
-	sf::SoundBuffer buffer_kingCrimson;
+
 	loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, buffer_kingCrimson);
 
-	sf::Sound killerQueen;
-	sf::SoundBuffer buffer_killerQueen;
 	loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, buffer_killerQueen);//发动败者食尘成功的音乐
-	sf::Sound killerQueen_de;
-	sf::SoundBuffer buffer_killerQueen_de;
-	loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, buffer_killerQueen_de);//发动败者食尘失败的音乐
-	//标记
 
-	//倒计时音乐
-	sf::Sound sound_Timeout;
-	sf::SoundBuffer buffer_Timeout;
-	loadSoundClip("./assets/audio/Countdown.wav", sound_Timeout, buffer_Timeout);
-	//标记
+	loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, buffer_killerQueen_de);//发动败者食尘失败的音乐
+
+	loadSoundClip("./assets/audio/Countdown.wav", sound_Timeout, buffer_Timeout);//倒计时音乐
+
+	loadSoundBgm("./assets/audio/sound_win.wav", sound_win, buffer_win);//胜利音乐
 
 	bool bgm_start = false;
 
@@ -190,7 +195,7 @@ CONTINUE_GAME:
 		}
 
 		//处理功能键
-		handleFunctionKeys(kingCrimson, killerQueen, killerQueen_de);
+		handleFunctionKeys();
 
 
 		//超时检测
@@ -444,7 +449,7 @@ void showWin() {
 
 	// 创建半透明画刷
 	Graphics graphics(hdc);
-	Color color(128, 0, 0, 0); // ARGB(透明度, R, G, B)
+	Gdiplus::Color color(128, 0, 0, 0); // ARGB(透明度, R, G, B)
 	SolidBrush brush(color);
 
 	// 覆盖整个窗口
@@ -477,6 +482,9 @@ void showWin() {
 	FlushBatchDraw();
 
 
+	sound_bgm.pause();//暂停背景音乐
+	sound_win.play();//播放胜利音乐
+
 	// 步骤1：等待所有按键松开
 	bool keyStillDown = true;
 	while (keyStillDown) {
@@ -506,6 +514,10 @@ void showWin() {
 		Sleep(30);
 	}
 CONTINUE_GAME:
+
+	sound_bgm.play();
+	sound_win.pause();
+
 
 	//按任意键重置棋盘
 	initBoard();
@@ -640,7 +652,7 @@ void Shuffle(int times) {
 	}
 }
 
-void Debuff_jojo(sf::Sound& kingCrimson) {
+void Debuff_jojo() {
 	int mark = 0;
 	//kingCrimson.setVolume(200);
 	kingCrimson.play();
@@ -649,7 +661,7 @@ void Debuff_jojo(sf::Sound& kingCrimson) {
 	Sleep(1000);//听bgm;
 }
 
-void Buff_jojo(sf::Sound& killerQueen, int n) {
+void Buff_jojo(int n) {
 	killerQueen.play();
 	for (int i = 0;i < n;i++) {
 		if (!history.empty()) {
@@ -676,11 +688,7 @@ void Buff_jojo(sf::Sound& killerQueen, int n) {
 	}
 }
 
-void handleFunctionKeys(
-	sf::Sound& kingCrimson,
-	sf::Sound& killerQueen,
-	sf::Sound& killerQueen_de
-) {
+void handleFunctionKeys() {
 	DWORD currentTime = GetTickCount();
 
 	// 检查是否在冷却时间内
@@ -709,13 +717,13 @@ void handleFunctionKeys(
 	}
 	// 检测 X 键：随机移动
 	else if (GetAsyncKeyState('X') & 0x8000) {
-		Debuff_jojo(kingCrimson);
+		Debuff_jojo();
 		lastFunctionTime = currentTime;
 	}
 	// 检测 V 键：回退操作
 	else if (GetAsyncKeyState('V') & 0x8000) {
 		if (history.size() >= backTracking) {
-			Buff_jojo(killerQueen, 3);
+			Buff_jojo(3);
 		}
 		else {
 			killerQueen_de.play();
