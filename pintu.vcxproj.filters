@@ -21,7 +21,16 @@
     <ClCompile Include="code\PlayMusic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="code\menu.cpp">
+    <ClCompile Include="code\Record.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\button.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\MenuDrawing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,6 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\head.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\menu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\button.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\record.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

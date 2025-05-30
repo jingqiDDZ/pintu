@@ -1,56 +1,10 @@
-﻿#include <iostream>   // 输入输出流（用于cout/cin等）
-#include <fstream>    // 文件输入输出流（用于文件读写）
-#include <vector>     // 动态数组容器（用于存储已购物品列表）
-#include "json.hpp"   // JSON库头文件（需要确保该文件在项目目录中）
+﻿#include "head.h"
+#include "record.h"
+#include "button.h"
 
-// 使用nlohmann库的json类型别名（简化代码）
-using json = nlohmann::json;
-using namespace std;
-
-//所有函数的声明
-void loadSave();
-void loadConfig();
-void saveData();
-
-
-//游戏数据结构体声明
-struct ShopItemConfig {
-    string id;
-    string text;
-    int price;
-    bool unique;
-};
-
-struct AchievementConfig {
-    string id;
-    string text;
-    json reward;
-};
-
-struct ItemStatus {
-    string id;
-    int number;
-};
-
-struct AchievementStatus {
-    string id;
-    bool unlock;
-};
-
-struct PlayerData {
-    int coins;
-    int unlockLevel;
-    vector <ItemStatus> items;
-    vector <AchievementStatus> achs;
-};
-
-//全局数据 
-PlayerData player; // 玩家动态数据
-vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
-vector<AchievementConfig> achConfigs; // 成就配置（只读）
 
 //加载静态配置数据(游戏启动时调用一次)
-void loadConfig() {
+void loadConfig(vector<ShopItemConfig>& shopConfigs, vector<AchievementConfig>& achConfigs) {
     ifstream file("config.json");
     if (!file.is_open()) {
         cout << "无法打开 config.json 文件！" << endl;
@@ -84,7 +38,7 @@ void loadConfig() {
 
 
 //加载存档数据
-void loadSave() {
+void loadSave(PlayerData& player) {
     ifstream file("save.json");
     if (!file.is_open()) {
         cout << "无存档，使用默认初始数据" << endl;
@@ -95,7 +49,7 @@ void loadSave() {
 
     json js = json::parse(file);      //解析json格式数据
 
-    player.coins = js["player"]["coins"];
+    player.coins = js["player"]["coins"];       //开始从js读取相应的数据存放与player内（自动识别变量类型）
     player.unlockLevel = js["player"]["unlockedLevel"];
 
     for (auto it : js["itemStatus"]) {
@@ -118,7 +72,7 @@ void loadSave() {
 
 
 //保存游戏数据
-void saveData() {
+void saveData(PlayerData player) {      //这里不传引用
     json j;
 
     //保存玩家数据
@@ -152,3 +106,10 @@ void saveData() {
     }
 }
 
+
+/*
+//原本在这里定义的全局数据
+PlayerData player; // 玩家动态数据
+vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
+vector<AchievementConfig> achConfigs; // 成就配置（只读）
+*/
