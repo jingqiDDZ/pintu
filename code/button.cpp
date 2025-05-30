@@ -155,23 +155,23 @@ vector<unique_ptr<BaseButton>> initBagBtn(PlayerData player, vector <ShopItemCon
 	double paceY = 0.12f;
 	double startX = 0.15f;
 	double startY = 0.2f;
-	int itemnum = 0;
 
 	for (int i = 0;i < player.items.size();i++) {		//遍历所有玩家可持有的物品
 
-		if (player.items[i].number <= 0) {				//若没有此物品则不显示
-			continue;
+		string imagepath;
+		imagepath = path + to_string(i + 1) + ".png";
+
+		if (player.items[i].number <= 0) {				//若没有此物品则使用伪按钮
+			buttons.emplace_back(make_unique <FakeButton>(
+				startX, startY + paceY * i,
+				btnsize, btnsize, imagepath, true)
+			);
 		}
 		else {
-
-			string imagepath;
-			imagepath = path + to_string(i + 1) + ".png";
-
 			buttons.emplace_back(make_unique <ImageButton>(
-				startX, startY + paceY * itemnum,
+				startX, startY + paceY * i,
 				btnsize, btnsize, imagepath)
 			);
-			itemnum++;
 		}
 	}
 

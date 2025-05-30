@@ -131,9 +131,7 @@ CONTINUE_GAME:
 
 	loadSoundBgm("./assets/audio/S.T.A.Y.wav", sound_bgm, buffer_bgm);
 
-
 	loadSoundClip("./assets/audio/click.wav", sound_click, buffer_click);
-
 
 	loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, buffer_kingCrimson);
 

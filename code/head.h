@@ -32,5 +32,5 @@ using namespace Gdiplus;
 using namespace std;
 using namespace sf;
 
-#define WD_width 1000		//window_width,图形窗口的宽度
-#define WD_height 800
+#define WD_width 1500		//window_width,图形窗口的宽度
+#define WD_height 950

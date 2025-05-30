@@ -12,7 +12,7 @@
  *   - 多场景按钮初始化接口
  *
  * 修改记录:
- *   2025-05-30 v1.0
+ *   2025-05-30 v1.0 同日添加了伪按钮
  ***************************************************************/
 
 #pragma once 
@@ -100,9 +100,7 @@ public:
 
 };
 
-
-
-//基于sfml库的显示图片的按钮
+//显示图片的按钮
 class ImageButton : public BaseButton {
 public:
 	IMAGE image;		//按钮图片
@@ -143,6 +141,52 @@ private:
 
 		Graphics graphics(hdc);
 		Gdiplus::Color color(alpha, 255, 255, 255); // ARGB: Alpha, R, G, B
+		SolidBrush brush(color);
+
+		graphics.FillRectangle(&brush, x, y, width, height);
+	}
+};
+
+
+//显示图片的伪按钮(不可交互，可以添加黑色覆盖层)
+class FakeButton : public BaseButton {
+public:
+	IMAGE image;		//按钮图片
+	bool is_dark = false;
+	// 构造函数
+	FakeButton() {}
+
+	FakeButton(double x_pos, double y_pos, int w, int h, const string& imagePath, bool dark)		//同样传入相对位置x_pos，y_pos（图像中心点相对窗口位置），还有image对应的文件位置
+		:BaseButton(
+			(int)(WD_width* x_pos - w / 2),
+			(int)(WD_height* y_pos - h / 2),
+			w, h, false) {
+
+		wstring wpath(imagePath.begin(), imagePath.end());
+		loadimage(&image, wpath.c_str(), width, height);
+		is_dark = dark;
+	}
+
+	// 绘制按钮
+	void draw() override {
+		putimage(x, y, &image);
+		if (is_dark) {
+			DrawAlphaRect(x, y, width, height, 170);
+		}
+	}
+
+	// 检查鼠标是否在按钮上方（敷衍一下
+	bool checkAbove(int mouseX, int mouseY) override {
+		return false;
+	}
+
+private:
+	//绘制黑色半透明矩形
+	void DrawAlphaRect(int x, int y, int width, int height, int alpha) {		//alpha: 0 全透明； 255 不透明
+		HDC hdc = GetImageHDC(); // 获取 EasyX 的 HDC
+
+		Graphics graphics(hdc);
+		Gdiplus::Color color(alpha, 0, 0, 0); // ARGB: Alpha, R, G, B
 		SolidBrush brush(color);
 
 		graphics.FillRectangle(&brush, x, y, width, height);
