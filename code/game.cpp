@@ -673,7 +673,7 @@ void Debuff_jojo() {
 	int mark = 0;
 	kingCrimson.play();
 
-	debuffAnimation.setAlpha(200);
+	debuffAnimation.setAlpha(5);
 
 	debuffAnimation.play(
 		getwidth() / 2 - 200,  // 起始X（水平居中）

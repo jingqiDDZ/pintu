@@ -2,6 +2,11 @@
 #include "Animation.h"
 #include <algorithm>
 #include <comdef.h>
+#include <gdiplus.h>
+#pragma comment(lib, "gdiplus.lib")
+
+// 在文件顶部添加
+using namespace Gdiplus;
 
 // 构造函数
 Animation::Animation()
@@ -70,8 +75,55 @@ void Animation::play(int startX, int startY, int endX, int endY,
             static_cast<int>(elapsed / frameDuration_));
 
         // 绘制动画帧
-        putimage(currentX, currentY, width_, height_,
-            &frames_[frameIndex], 0, 0, rop);
+        if (alpha_ == 255) {
+            // 完全不透明
+            putimage(currentX, currentY, width_, height_,
+                &frames_[frameIndex], 0, 0, rop);
+        }
+        else {
+            // 使用 GDI+ 实现透明度
+            HDC hdc = GetImageHDC();
+            Graphics graphics(hdc);
+
+            // 创建 GDI+ 位图
+            Bitmap bmp(width_, height_, PixelFormat32bppARGB);
+            BitmapData bmpData;
+            Rect rect(0, 0, width_, height_);
+            bmp.LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
+
+            // 从 EasyX IMAGE 复制数据
+            BYTE* src = (BYTE*)GetImageBuffer(&frames_[frameIndex]);
+            int srcPitch = width_ * 4; // 32位图像每行字节数
+            BYTE* dst = (BYTE*)bmpData.Scan0;
+            for (int y = 0; y < height_; y++) {
+                for (int x = 0; x < width_; x++) {
+                    int idx = y * srcPitch + x * 4;
+
+                    // 直接获取BGRA分量（EasyX使用BGRA格式）
+                    BYTE b = src[idx];
+                    BYTE g = src[idx + 1];
+                    BYTE r = src[idx + 2];
+                    BYTE originalAlpha = src[idx + 3];
+
+                    // 计算实际透明度：结合设置的alpha和原始透明度
+                    BYTE a = (originalAlpha * alpha_) / 255;
+
+                    // 保持BGRA顺序写入目标位图
+                    dst[0] = b;
+                    dst[1] = g;
+                    dst[2] = r;
+                    dst[3] = a;
+
+                    dst += 4;
+                }
+                // 处理目标位图的行填充
+                dst += bmpData.Stride - width_ * 4;
+            }
+            bmp.UnlockBits(&bmpData);
+
+            // 绘制到屏幕
+            graphics.DrawImage(&bmp, currentX, currentY);
+        }
 
         FlushBatchDraw();
 
