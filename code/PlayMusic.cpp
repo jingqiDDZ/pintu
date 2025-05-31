@@ -1,4 +1,4 @@
-﻿#include "game.h"
+﻿#include "music.h"
 
 void loadSoundBgm(const string path, sf::Sound& sound, sf::SoundBuffer& buffer) { // 注意 sf::Sound&
     if (!buffer.loadFromFile(path)) {

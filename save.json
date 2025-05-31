@@ -20,15 +20,15 @@
     "itemStatus": [
         {
             "id": "红豆香囊",
-            "number": 0
+            "number": 1
         },
         {
             "id": "绿豆香囊",
-            "number": 1
+            "number": 2
         }
     ],
     "player": {
-        "coins": 9800,
+        "coins": 9400,
         "unlockedLevel": 3
     }
 }

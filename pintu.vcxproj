@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="code\button.cpp" />
     <ClCompile Include="code\game.cpp" />
+    <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
@@ -33,6 +34,7 @@
     <ClInclude Include="code\button.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\head.h" />
+    <ClInclude Include="code\level.h" />
     <ClInclude Include="code\menu.h" />
     <ClInclude Include="code\record.h" />
   </ItemGroup>

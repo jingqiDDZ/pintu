@@ -2,8 +2,11 @@
 #include "record.h"
 #include "button.h"
 #include "menu.h"
+#include "music.h"
+#include "level.h"
 
 //全局数据 
+Level levelgame(0, 3, 1);	//关卡
 PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）
@@ -90,6 +93,7 @@ int main() {
 								}
 								else {
 									//此处添加关卡代码
+									levelgame.play();
 									cout << "开始关卡" << level << endl;
 								}
 							}
