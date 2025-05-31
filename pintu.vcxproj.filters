@@ -33,6 +33,9 @@
     <ClCompile Include="code\MenuDrawing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="code\Animation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav">
@@ -53,6 +56,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="code\record.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFunctions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

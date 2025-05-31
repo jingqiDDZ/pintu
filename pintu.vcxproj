@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\Animation.cpp" />
     <ClCompile Include="code\button.cpp" />
     <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\main.cpp" />
@@ -30,11 +31,13 @@
     <Media Include="assets\audio\along.wav" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="code\button.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\head.h" />
     <ClInclude Include="code\menu.h" />
     <ClInclude Include="code\record.h" />
+    <ClInclude Include="PathFunctions.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

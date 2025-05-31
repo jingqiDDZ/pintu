@@ -8,7 +8,7 @@ PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）
 
-int main() {
+int main_menu() {
 	//加载游戏数据
 	loadConfig(shopConfigs, achConfigs);
 	loadSave(player);
