@@ -45,7 +45,7 @@ public:
 	int moves = 0;                  // 移动步数计数器
 
 	CountdownData countdownData;	//存储倒计时相关数据
-	TimeData timeData;	//存储倒计时相关数据
+	TimeData timeData;	//存储计时相关数据
 
 	// 游戏资源
 	vector<IMAGE> blockImgs;        // 拼图图片资源

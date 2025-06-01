@@ -1,4 +1,5 @@
 ﻿#include "game.h"
+#include "Animation.h"
 
 #define BLOCK_SIZE 100
 #define MARGIN  50
@@ -24,6 +25,7 @@ DWORD lastFunctionTime = 0;   // 功能键最后触发时间
 const DWORD moveDelay = 150;  // 移动键冷却时间（毫秒）
 const DWORD functionDelay = 300; // 功能键冷却时间（毫秒）
 
+Animation debuffAnimation;
 
 void Shuffle(int times);//根据次数打乱棋盘(算步数的)
 void loadImages();//加载方块图片资源
@@ -40,6 +42,8 @@ void Gameopen();//游戏启动界面
 void handleFunctionKeys();//功能键处理函数
 void Debuff_jojo();//红王debuff，随机移动两步
 void Buff_jojo(int n);//败者食尘buff，回退n步
+void initAnimations();// 声明动画初始化函数
+
 
 
 Sound sound_bgm;//背景音乐
@@ -143,9 +147,9 @@ CONTINUE_GAME:
 
 	loadSoundBgm("./assets/audio/sound_win.wav", sound_win, buffer_win);//胜利音乐
 
+	initAnimations();
+
 	bool bgm_start = false;
-
-
 
 	while (true) {
 
@@ -170,8 +174,17 @@ CONTINUE_GAME:
 			sound_bgm.play();
 		}
 
-		if (handleMouse() || handleKeyboard()) {
-			sound_click.play();
+		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
+			(debuffAnimation.getType() == Animation::BLOCKING); // 检查是否有阻塞动画在播放
+
+		// 非动画期间处理输入
+		if (!isBlockingAnimation) {
+			if (handleMouse() || handleKeyboard()) {
+				sound_click.play();
+			}
+
+			// 处理功能键（包括Debuff按键）
+			handleFunctionKeys();
 		}
 
 
@@ -192,8 +205,10 @@ CONTINUE_GAME:
 			continue;
 		}
 
-		//处理功能键
-		handleFunctionKeys();
+		if (isBlockingAnimation) {
+			// 阻塞动画有自己的绘制逻辑，跳过常规绘制
+			continue;
+		}
 
 
 		//超时检测
@@ -651,12 +666,22 @@ void Shuffle(int times) {
 }
 
 void Debuff_jojo() {
-	int mark = 0;
-	//kingCrimson.setVolume(200);
 	kingCrimson.play();
+
+	debuffAnimation.setAlpha(5);
+
+	debuffAnimation.play(
+		getwidth() / 2 - 200,  // 起始X（水平居中）
+		getheight() / 2 - 150, // 起始Y（垂直居中）
+		getwidth() / 2 - 200,  // 结束X（水平居中）
+		getheight() / 2 - 150, // 结束Y（垂直居中）
+		[](float progress, int& x, int& y, int sx, int sy, int ex, int ey) {
+			PathFunctions::heartbeat(progress, x, y, ex, ey);
+		},
+		SRCCOPY
+	);
+
 	Shuffle(3);
-	FlushBatchDraw();
-	Sleep(1000);//听bgm;
 }
 
 void Buff_jojo(int n) {
@@ -745,5 +770,30 @@ void handleFunctionKeys() {
 
 
 		lastFunctionTime = currentTime;
+	}
+}
+
+// 初始化所有动画
+void initAnimations() {
+	// 初始化debuff动画
+	debuffAnimation.init(
+		{
+			L"./assets/anim/0.png",
+			L"./assets/anim/1.png",
+			L"./assets/anim/2.png",
+			L"./assets/anim/3.png",
+			L"./assets/anim/4.png",
+			L"./assets/anim/5.png",
+			L"./assets/anim/6.png",
+			L"./assets/anim/7.png",
+			L"./assets/anim/8.png",
+			L"./assets/anim/9.png"
+		},
+		400, 300, Animation::BLOCKING, 1000, 100
+	);
+
+	// 加载动画资源
+	if (!debuffAnimation.loadFrames()) {
+		MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
 	}
 }
