@@ -93,8 +93,14 @@ int main() {
 								}
 								else {
 									//此处添加关卡代码
-									levelgame.play();
 									cout << "开始关卡" << level << endl;
+									LevelResult result = levelgame.play();
+									levelgame.sound_bgm.stop();		//停止播放关卡音频
+									levelgame.sound_win.stop();
+									//返回关卡选择界面
+									currentState = LEVEL_SELECT;
+									buttons = initLevelBtn(player);
+
 								}
 							}
 							else if (i == 9) {		//返回按钮

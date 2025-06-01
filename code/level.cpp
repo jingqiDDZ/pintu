@@ -51,7 +51,7 @@ Level::Level(int tid, int tSSIZE, int tTmode) :
 	cout << "关卡" << id << "初始化完毕" << endl;
 }
 
-void Level::play() {
+LevelResult Level::play() {
 	//SSIZE = 3;
 	//board.resize(SSIZE, vector<int>(SSIZE));
 	//blockImgs.resize(SSIZE * SSIZE);
@@ -78,8 +78,7 @@ void Level::play() {
 	while (true) {
 		// 检查ESC
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-			closegraph();
-			exit(0);
+			return LevelResult::Exit;
 		}
 		// 检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
@@ -148,9 +147,11 @@ CONTINUE_GAME:
 			continue;
 		}
 
-		//处理功能键
-		handleFunctionKeys();
-
+		//处理功能键		这里还要改，推出窗口之类的问题
+		int funcReturn = handleFunctionKeys();
+		if (funcReturn == 1) {
+			return LevelResult::Exit;
+		}
 
 		//超时检测
 		if (Tmode == 1 && countdownData.isTimeout) {
@@ -182,8 +183,7 @@ CONTINUE_GAME:
 				}
 				// 检测ESC键
 				else if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-					closegraph();
-					exit(0);
+					return LevelResult::Exit;
 				}
 
 				// 避免CPU占用过高		牛逼，还考虑这种，真是太棒啦~
@@ -198,7 +198,7 @@ CONTINUE_GAME:
 	}//游戏运行
 
 	//closegraph();		游戏结束不关闭窗口
-	return;
+	return LevelResult::Exit;
 }
 
 
@@ -426,7 +426,7 @@ void Level::showWin() {
 	while (true) {
 		// 检查ESC
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-			closegraph();
+			closegraph();			//这里也要改
 			exit(0);
 		}
 		// 检查任意键
@@ -543,13 +543,13 @@ bool Level::handleKeyboard() {
 	return false;
 }
 
-//功能键处理 jojo注释掉了
-void Level::handleFunctionKeys() {
+//功能键处理 jojo注释掉了，修改返回值，如果退出的话play函数要返回值
+int Level::handleFunctionKeys() {
 	DWORD currentTime = GetTickCount();
 
 	// 检查是否在冷却时间内
 	if (currentTime - lastFunctionTime < functionDelay) {
-		return;
+		return 0;
 	}
 
 	// 检测 R 键：重启游戏
@@ -569,7 +569,7 @@ void Level::handleFunctionKeys() {
 	}
 	// 检测 ESC 键：退出游戏
 	else if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-		exit(0);
+		return 1;
 	}
 
 	// 检测 Z 键：测试胜利

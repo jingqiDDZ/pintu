@@ -5,11 +5,17 @@
 #define BLOCK_SIZE 100
 #define MARGIN  50
 
+//关卡play的返回值
+enum class LevelResult {
+	Win,   // 通关
+	Lose,      // 失败
+	Exit,        // 主动退出（如按返回键）
+};
+
 //存储正记时相关数据的结构体
 struct TimeData {
 	time_t startTime, endTime;      // 计时模式用的时间变量
 };
-
 
 //存储倒计时相关数据的结构体
 struct CountdownData {
@@ -60,7 +66,7 @@ public:
 
 	//构造函数（三个变量初始化，素材引入）
 	Level(int tid, int tSSIZE, int tTmode);
-	void play();		//原来的main函数部分
+	LevelResult play();		//原来的main函数部分
 
 private:
 	//游戏界面
@@ -74,7 +80,7 @@ private:
 	bool canMove(int row, int  col);	//检查点击方块是否可以移动
 	bool handleMouse();					//鼠标点击处理
 	bool handleKeyboard();				//键盘移动处理
-	void handleFunctionKeys();			//功能键处理函数
+	int handleFunctionKeys();			//功能键处理函数
 
 	void shuffleBoard();				//打乱游戏板
 	void moveTile(int row, int col);	//处理方块移动
