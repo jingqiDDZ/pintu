@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\Animation.cpp" />
     <ClCompile Include="code\button.cpp" />
     <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\level.cpp" />
@@ -31,6 +32,7 @@
     <Media Include="assets\audio\along.wav" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\Animation.h" />
     <ClInclude Include="code\button.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\head.h" />
