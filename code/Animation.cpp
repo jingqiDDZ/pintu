@@ -99,21 +99,21 @@ void Animation::play(int startX, int startY, int endX, int endY,
                 for (int x = 0; x < width_; x++) {
                     int idx = y * srcPitch + x * 4;
 
-                    // 直接获取BGRA分量（EasyX使用BGRA格式）
+                    BYTE originalAlpha = src[idx + 3];
+                    if (originalAlpha == 0) {  // 完全透明的像素跳过
+                        dst += 4;
+                        continue;
+                    }
+
                     BYTE b = src[idx];
                     BYTE g = src[idx + 1];
                     BYTE r = src[idx + 2];
-                    BYTE originalAlpha = src[idx + 3];
-
-                    // 计算实际透明度：结合设置的alpha和原始透明度
                     BYTE a = (originalAlpha * alpha_) / 255;
 
-                    // 保持BGRA顺序写入目标位图
                     dst[0] = b;
                     dst[1] = g;
                     dst[2] = r;
                     dst[3] = a;
-
                     dst += 4;
                 }
                 // 处理目标位图的行填充

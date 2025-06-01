@@ -9,6 +9,7 @@ sf::SoundBuffer Buffer_killerQueen;
 sf::Sound kingCrimson;
 sf::SoundBuffer Buffer_kingCrimson;
 
+
 LevelResult Level_TE::play() {
 	//SSIZE = 3;
 	//board.resize(SSIZE, vector<int>(SSIZE));
@@ -69,6 +70,8 @@ CONTINUE_GAME:
 
 	initAnimations();
 	bool bgm_start = false;			//负责第一次进入循环时开始播放bgm
+
+
 
 	while (true) {
 
@@ -365,7 +368,7 @@ void Level_TE::Shuffle(int times) {
 void Level_TE::Debuff_jojo() {
 	kingCrimson.play();
 
-	debuffAnimation.setAlpha(5);
+	debuffAnimation.setAlpha(50);
 
 	debuffAnimation.play(
 		getwidth() / 2 - 200,  // 起始X（水平居中）

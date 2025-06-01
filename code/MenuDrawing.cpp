@@ -21,6 +21,7 @@ void drawMainMenu(vector<unique_ptr<BaseButton>>& buttons, PlayerData player) {
 	TCHAR coinText[50];
 	_stprintf_s(coinText, _T("金币: %d"), player.coins);
 	outtextxy(850, 30, coinText);
+
 }
 
 
