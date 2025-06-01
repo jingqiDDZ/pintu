@@ -7,7 +7,7 @@
 
 
 //全局数据 
-Level levelgame(0, 3, 1);	//关卡
+Level_TE levelgame(0, 3, 1);	//关卡
 PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）

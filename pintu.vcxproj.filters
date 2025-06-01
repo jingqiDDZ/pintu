@@ -27,9 +27,6 @@
     <ClCompile Include="code\button.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="code\game.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="code\MenuDrawing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -37,6 +34,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="code\Animation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\buff.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

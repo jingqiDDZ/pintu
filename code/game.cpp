@@ -42,7 +42,7 @@ void Gameopen();//游戏启动界面
 void handleFunctionKeys();//功能键处理函数
 void Debuff_jojo();//红王debuff，随机移动两步
 void Buff_jojo(int n);//败者食尘buff，回退n步
-void initAnimations();// 声明动画初始化函数
+int initAnimations();// 声明动画初始化函数
 
 
 
@@ -774,7 +774,8 @@ void handleFunctionKeys() {
 }
 
 // 初始化所有动画
-void initAnimations() {
+
+int initAnimations() {
 	// 初始化debuff动画
 	debuffAnimation.init(
 		{
@@ -796,4 +797,5 @@ void initAnimations() {
 	if (!debuffAnimation.loadFrames()) {
 		MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
 	}
+	return 1;
 }
