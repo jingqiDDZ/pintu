@@ -35,7 +35,7 @@ public:
 
 	//需要直接初始化的变量
 	int id = 0;						// 关卡名，关联到后续的地址
-	int SSIZE = 3;                  // 游戏板尺寸 (3x3, 4x4等)
+	int SSIZE = 3;                  // 游戏板尺寸 (3x3, 4x4等) 
 	int Tmode = 1;                  // 0=计时模式, 1=倒计时模式
 
 	bool isWinning = false;         // 胜利标志
@@ -66,9 +66,10 @@ public:
 
 	//构造函数（三个变量初始化，素材引入）
 	Level(int tid, int tSSIZE, int tTmode);
-	LevelResult play();		//原来的main函数部分
+	LevelResult virtual play();		//原来的main函数部分
 
-private:
+
+protected:
 	//游戏界面
 	void initBoard();				//初始化游戏板
 	void drawGame();				//绘制游戏界面

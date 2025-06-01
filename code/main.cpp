@@ -5,6 +5,7 @@
 #include "music.h"
 #include "level.h"
 
+
 //全局数据 
 Level levelgame(0, 3, 1);	//关卡
 PlayerData player; // 玩家动态数据
