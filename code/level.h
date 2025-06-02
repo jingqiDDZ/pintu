@@ -3,6 +3,7 @@
 #include "music.h"
 #include "Animation.h"
 
+
 #define BLOCK_SIZE 100
 #define MARGIN  50
 
@@ -69,11 +70,11 @@ public:
 	Level(int tid, int tSSIZE, int tTmode);
 	LevelResult virtual play();		//原来的main函数部分
 
-	void drawGame();				//绘制游戏界面
+	virtual void drawGame();				//绘制游戏界面
 
 protected:
 	//游戏界面
-	void initBoard();				//初始化游戏板
+	virtual void initBoard();				//初始化游戏板
 	                                //绘制游戏界面我移到public中去了
 	bool isWin();					//胜利判定
 	void showWin();					//胜利结算
@@ -86,7 +87,7 @@ protected:
 	virtual int handleFunctionKeys();   //功能键处理函数
 
 	void shuffleBoard();				//打乱游戏板
-	void moveTile(int row, int col);	//处理方块移动
+	virtual void moveTile(int row, int col);	//处理方块移动
 
 };
 
@@ -94,12 +95,22 @@ protected:
 
 class Level_TE :public Level {
 public:
-	Level_TE(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {}
+	Level_TE(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+		alphaBoard.resize(SSIZE, vector<BYTE>(SSIZE, 255)); // 初始透明度255
+	}
 	LevelResult play() override;
 	int handleFunctionKeys() override;
 	void Debuff_jojo();
 	void Shuffle(int n);
 	void Buff_jojo(int n);
+
+	void initBoard() override;
+	void moveTile(int row, int col) override;
+	void drawGame()override;
+
+	vector<vector<BYTE>> alphaBoard;  // 每个拼图块的透明度
+	const BYTE alphaDecrement = 20;   // 每次移动减少的透明度值
+	const BYTE minAlpha = 50;         // 最小透明度
 };
 void initAnimations();
 //extern Animation debuffAnimation;

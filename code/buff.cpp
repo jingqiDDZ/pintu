@@ -1,4 +1,5 @@
 #include "level.h"
+#include <algorithm>
 
 Animation debuffAnimation;
 sf::Sound killerQueen_de;
@@ -382,4 +383,164 @@ void Level_TE::Debuff_jojo() {
 	);
 
 	Shuffle(3);
+}
+
+void Level_TE::initBoard() {
+	Level::initBoard();
+	// 重置所有透明度为255（完全不透明）
+	for (int i = 0; i < SSIZE; i++) {
+		for (int j = 0; j < SSIZE; j++) {
+			alphaBoard[i][j] = 255;
+		}
+	}
+}
+
+void Level_TE::moveTile(int row, int col) {
+	if (canMove(row, col)) {
+		// 保存当前状态到历史记录
+		history.push_back(board);
+		if (history.size() > 50) history.erase(history.begin());
+
+		// 获取被移动方块的值
+		int movedValue = board[row][col];
+
+		// 计算该方块的正确位置
+		int correctRow = (movedValue - 1) / SSIZE;
+		int correctCol = (movedValue - 1) % SSIZE;
+
+		// 检查移动前是否在正确位置
+		bool wasInCorrectPosition = (row == correctRow && col == correctCol);
+
+		// 减少被移动块的透明度（无论是否在正确位置）
+		if (alphaBoard[row][col] > minAlpha) {
+			alphaBoard[row][col] = minAlpha > (alphaBoard[row][col] - alphaDecrement) ? minAlpha : (alphaBoard[row][col] - alphaDecrement);
+		}
+
+		// 执行移动
+		board[emptyRow][emptyCol] = movedValue;
+		board[row][col] = 0;
+
+		// 移动后检查是否在正确位置
+		bool nowInCorrectPosition = (emptyRow == correctRow && emptyCol == correctCol);
+
+		// 更新透明度数组 - 透明度应跟随方块移动
+		BYTE movedAlpha = alphaBoard[row][col];
+		alphaBoard[emptyRow][emptyCol] = nowInCorrectPosition ? 255 : movedAlpha;
+
+		// 如果方块离开正确位置，重置其原始位置的透明度
+		if (wasInCorrectPosition && !nowInCorrectPosition) {
+			alphaBoard[row][col] = 255; // 重置原始位置的透明度
+		}
+
+		// 更新空白位置
+		emptyRow = row;
+		emptyCol = col;
+		moves++;
+	}
+}
+
+void Level_TE::drawGame() {
+	setbkcolor(RGB(240, 240, 240));
+	cleardevice();
+
+	// 绘制标题和移动次数（保持不变）
+	settextcolor(BLACK);
+	settextstyle(30, 0, _T("宋体"));
+	outtextxy(SSIZE * 50, 10, _T("数字华容道"));
+
+	TCHAR movesText[50];
+	_stprintf_s(movesText, _T("移动次数: %d"), moves);
+	settextstyle(20, 0, _T("宋体"));
+	outtextxy(SSIZE * 50 + 50, 50, movesText);
+
+	//绘制计时时间
+	if (Tmode == 0) {
+		time_t currentTime;
+		if (isWinning) {
+			currentTime = timeData.endTime;
+		}
+		else {
+			time(&currentTime);
+		}
+		int elapsed = difftime(currentTime, timeData.startTime);
+		int minutes = elapsed / 60;
+		int seconds = elapsed % 60;
+
+		TCHAR timeText[50];
+		_stprintf_s(timeText, _T("时间: %02d:%02d"), minutes, seconds);
+		outtextxy(SSIZE * 50 + 50, 80, timeText);  // 调整位置避免重叠
+	}
+	else if (Tmode == 1) {
+		int minutes = countdownData.remaining / 60;
+		int seconds = countdownData.remaining % 60;
+
+		TCHAR timeText[50];
+		_stprintf_s(timeText, _T("剩余时间: %02d:%02d"), minutes, seconds);
+		settextcolor(RED);  // 用红色强调时间
+		outtextxy(SSIZE * 50 + 50, 80, timeText);
+		settextcolor(BLACK); // 恢复默认颜色
+	}
+
+	// 绘制游戏方块（带透明度）
+	for (int i = 0; i < SSIZE; i++) {
+		for (int j = 0; j < SSIZE; j++) {
+			int value = board[i][j];
+			if (value == 0) continue; // 空白块不绘制
+
+			int x = MARGIN + j * BLOCK_SIZE;
+			int y = MARGIN + i * BLOCK_SIZE + 80;
+			BYTE alpha = alphaBoard[i][j];
+
+			// 使用GDI+绘制带透明度的图像
+			HDC hdc = GetImageHDC();
+			Graphics graphics(hdc);
+
+			// 创建临时位图
+			Bitmap bmp(BLOCK_SIZE, BLOCK_SIZE, PixelFormat32bppARGB);
+			BitmapData bmpData;
+			Gdiplus::Rect rect(0, 0, BLOCK_SIZE, BLOCK_SIZE);
+			bmp.LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
+
+			// 获取原始图片数据
+			DWORD* pSrc = (DWORD*)GetImageBuffer(&blockImgs[value]);
+			BYTE* pDst = (BYTE*)bmpData.Scan0;
+
+			for (int y = 0; y < BLOCK_SIZE; y++) {
+				for (int x = 0; x < BLOCK_SIZE; x++) {
+					int idx = y * BLOCK_SIZE + x;
+					DWORD color = pSrc[idx];
+
+					BYTE b = GetBValue(color);
+					BYTE g = GetGValue(color);
+					BYTE r = GetRValue(color);
+					BYTE originalAlpha = (color >> 24) & 0xFF;
+
+					// 应用当前透明度
+					BYTE finalAlpha = (originalAlpha * alpha) / 255;
+
+					// 设置到目标位图
+					pDst[0] = b;
+					pDst[1] = g;
+					pDst[2] = r;
+					pDst[3] = finalAlpha;
+					pDst += 4;
+				}
+			}
+			bmp.UnlockBits(&bmpData);
+
+			// 绘制到屏幕
+			graphics.DrawImage(&bmp, x, y);
+
+			// 绘制边框
+			setlinecolor(BLACK);
+			rectangle(x, y, x + BLOCK_SIZE, y + BLOCK_SIZE);
+		}
+	}
+
+	// 绘制操作说明（保持不变）
+	settextstyle(16, 0, _T("宋体"));
+	outtextxy(50, SSIZE * 100 + 150, _T("操作说明:"));
+	outtextxy(50, SSIZE * 100 + 170, _T("鼠标点击 - 移动方块"));
+	outtextxy(50, SSIZE * 100 + 190, _T("R - 重新开始"));
+	outtextxy(50, SSIZE * 100 + 210, _T("ESC - 退出游戏"));
 }
