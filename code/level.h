@@ -73,6 +73,8 @@ public:
 
 	virtual void drawGame();				//绘制游戏界面
 
+	void fadeImage(IMAGE* img, int x, int y, int fadeInTime, int stayTime, int fadeOutTime);//插入图片的淡入淡出
+
 protected:
 	//游戏界面
 	virtual void initBoard();				//初始化游戏板
