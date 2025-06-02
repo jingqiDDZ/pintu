@@ -2,6 +2,7 @@
 #include "head.h"
 #include "music.h"
 #include "Animation.h"
+#include "dialogue.h"
 
 
 #define BLOCK_SIZE 100
@@ -51,7 +52,7 @@ public:
 
 	// 游戏资源
 	vector<IMAGE> blockImgs;        // 拼图图片资源
-	IMAGE bkImg;                   // 背景图
+	IMAGE bkImg;					// 背景图
 	Sound sound_bgm;                // 背景音乐
 	SoundBuffer buffer_bgm;         // 背景音乐缓冲区
 	Sound sound_click;             // 点击音效

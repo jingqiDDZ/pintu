@@ -1,0 +1,38 @@
+﻿[
+    {
+        "name": "我",
+        "text": "我是傻逼",
+        "imgpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "少女",
+        "text": "为什么呢",
+        "imgpath": "./assets/image/chara/ancient_girl.png"
+    },
+    {
+        "name": "少女",
+        "text": "你看起来不像是傻逼呀",
+        "imgpath": "./assets/image/chara/ancient_girl.png"
+    },
+    {
+        "name": "少女",
+        "text": "好奇怪我怎么会说这种话",
+        "imgpath": "./assets/image/chara/ancient_girl1.png"
+    },
+    {
+        "name": "少女",
+        "text": "操这是个测试对话",
+        "imgpath": "./assets/image/chara/ancient_girl2.png"
+    },
+    {
+        "name": "我",
+        "text": "也就是说……",
+        "imgpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "少女",
+        "text": "妈的，你就是个傻逼",
+        "imgpath": "./assets/image/chara/girl.png"
+    }
+
+]

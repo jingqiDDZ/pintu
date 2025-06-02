@@ -18,6 +18,7 @@
 #pragma once 
 #include "head.h"
 #include "record.h"
+#include "putimage_pro.h"
 
  //按钮基类
 class BaseButton {
@@ -121,7 +122,7 @@ public:
 
 	// 绘制按钮
 	void draw() override {
-		putimage(x, y, &image);
+		putimage_alpha(x, y, &image);
 		if (is_pressed) {
 			DrawAlphaRect(x, y, width, height, 90);
 		}

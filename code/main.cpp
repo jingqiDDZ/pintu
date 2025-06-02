@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "music.h"
 #include "level.h"
+#include "dialogue.h"
 
 
 //全局数据 
@@ -29,12 +30,16 @@ int main() {
 	setbkcolor(WHITE);
 	cleardevice();
 	BeginBatchDraw();			//先在内存里面绘图
+	
+	//测试对话
+	testDia.draw();
 
 	// 初始化菜单状态
 	MenuState currentState = MAIN_MENU;
 	vector<unique_ptr<BaseButton>> buttons = initMainMenuBtn();
 	string imgpath;				//=main/……
 	//vector<ImageButton> imgbuttons = initShopImgBtn(player, shopConfigs,".assets/image/shop/");
+
 
 	//主循环
 	while (true) {

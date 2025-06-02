@@ -22,10 +22,13 @@
     <ClCompile Include="code\Animation.cpp" />
     <ClCompile Include="code\buff.cpp" />
     <ClCompile Include="code\button.cpp" />
+    <ClCompile Include="code\dialogue.cpp" />
+    <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
+    <ClCompile Include="code\putimage_pro.cpp" />
     <ClCompile Include="code\Record.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,10 +37,12 @@
   <ItemGroup>
     <ClInclude Include="code\Animation.h" />
     <ClInclude Include="code\button.h" />
+    <ClInclude Include="code\dialogue.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\head.h" />
     <ClInclude Include="code\level.h" />
     <ClInclude Include="code\menu.h" />
+    <ClInclude Include="code\putimage_pro.h" />
     <ClInclude Include="code\record.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
