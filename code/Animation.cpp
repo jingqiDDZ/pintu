@@ -53,26 +53,74 @@ void Animation::play(int startX, int startY, int endX, int endY,
     DWORD rop)
 {
     isPlaying_ = true;
+    isStaying_ = false; // 重置停留状态
     DWORD startTime = GetTickCount();
+
+    // === 保存背景区域 ===
+    IMAGE background;
+    int saveWidth = width_ + 20;  // 稍大一些防止边缘残留
+    int saveHeight = height_ + 20;
+    Resize(&background, saveWidth, saveHeight);
+
+    // 保存起始位置的背景
+    getimage(&background,
+        startX - 10, startY - 10,
+        saveWidth, saveHeight);
+
+    int lastX = startX;
+    int lastY = startY;
 
     while (isPlaying_) {
         DWORD elapsed = GetTickCount() - startTime;
         float progress = min(1.0f, static_cast<float>(elapsed) / duration_);
 
+        // === 检查是否进入停留阶段 ===
+        if (progress >= 1.0f && stayDuration_ > 0 && !isStaying_) {
+            isStaying_ = true;
+            stayStartTime_ = GetTickCount(); // 记录停留开始时间
+        }
+
         // 计算当前位置
         int currentX = startX;
         int currentY = startY;
 
-        if (pathFunc) {
-            pathFunc(progress, currentX, currentY, startX, startY, endX, endY);
+        // 如果不是停留状态，更新位置
+        if (!isStaying_) {
+            if (pathFunc) {
+                pathFunc(progress, currentX, currentY, startX, startY, endX, endY);
+            }
+            else {
+                PathFunctions::linear(progress, currentX, currentY, startX, startY, endX, endY);
+            }
         }
         else {
-            PathFunctions::linear(progress, currentX, currentY, startX, startY, endX, endY);
+            // 停留状态，保持在终点位置
+            currentX = endX;
+            currentY = endY;
         }
 
+        // === 恢复上一帧背景 ===
+        putimage(lastX - 10, lastY - 10, &background);
+
+        // 更新背景为当前位置
+        getimage(&background,
+            currentX - 10, currentY - 10,
+            saveWidth, saveHeight);
+        // =========================
+
+        lastX = currentX;
+        lastY = currentY;
+
         // 计算当前帧
-        int frameIndex = min(static_cast<int>(frames_.size()) - 1,
-            static_cast<int>(elapsed / frameDuration_));
+        int frameIndex;
+        if (!isStaying_) {
+            frameIndex = min(static_cast<int>(frames_.size()) - 1,
+                static_cast<int>(elapsed / frameDuration_));
+        }
+        else {
+            // 停留状态，使用最后一帧
+            frameIndex = frames_.size() - 1;
+        }
 
         // 绘制动画帧
         if (alpha_ == 255) {
@@ -127,10 +175,24 @@ void Animation::play(int startX, int startY, int endX, int endY,
 
         FlushBatchDraw();
 
-        // 检查动画结束
-        if (elapsed >= duration_) {
-            isPlaying_ = false;
-        }
+        // == = 检查动画结束 == =
+            if (isStaying_) {
+                // 停留阶段，检查停留时间是否结束
+                if (GetTickCount() - stayStartTime_ >= stayDuration_) {
+                    isPlaying_ = false;
+                }
+            }
+        // 检查动画结束（非停留状态）
+            else if (elapsed >= duration_) {
+                // 如果有停留时间，进入停留状态而不是立即结束
+                if (stayDuration_ > 0) {
+                    isStaying_ = true;
+                    stayStartTime_ = GetTickCount();
+                }
+                else {
+                    isPlaying_ = false;
+                }
+            }
 
         // 允许退出
         if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
@@ -138,7 +200,8 @@ void Animation::play(int startX, int startY, int endX, int endY,
             exit(0);
         }
 
-        Sleep(10); // 减少CPU占用
+        Sleep(0);
+        // Sleep(max(1, static_cast<int>(frameDuration_ - (GetTickCount() - startTime - elapsed))));
     }
 }
 

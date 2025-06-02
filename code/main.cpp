@@ -9,6 +9,7 @@
 
 //全局数据 
 Level_TE levelgame(0, 3, 1);	//关卡
+
 PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）
@@ -32,7 +33,7 @@ int main() {
 	BeginBatchDraw();			//先在内存里面绘图
 	
 	//测试对话
-	testDia.draw();
+	//testDia.draw();
 
 	// 初始化菜单状态
 	MenuState currentState = MAIN_MENU;
