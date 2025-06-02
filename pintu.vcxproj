@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\button.cpp" />
+    <ClCompile Include="code\dialogue.cpp" />
     <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\main.cpp" />
@@ -32,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\button.h" />
+    <ClInclude Include="code\dialogue.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\head.h" />
     <ClInclude Include="code\level.h" />
