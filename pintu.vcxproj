@@ -26,6 +26,7 @@
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
+    <ClCompile Include="code\putimage_pro.cpp" />
     <ClCompile Include="code\Record.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,6 +39,7 @@
     <ClInclude Include="code\head.h" />
     <ClInclude Include="code\level.h" />
     <ClInclude Include="code\menu.h" />
+    <ClInclude Include="code\putimage_pro.h" />
     <ClInclude Include="code\record.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,4 +1,5 @@
 ﻿#include "dialogue.h"
+#include "putimage_pro.h"
 #include <Windows.h> // 需要包含 Windows 头文件（utf_8转换）
 
 	
@@ -80,18 +81,7 @@ std::wstring utf8_to_wstring(const std::string& str) {
 	return result;
 }
 
-// 加载后预处理alpha通道
-void preprocessAlpha(IMAGE* pImg) {
-	DWORD* pBuf = GetImageBuffer(pImg);
-	int size = pImg->getwidth() * pImg->getheight();
 
-	for (int i = 0; i < size; i++) {
-		BYTE alpha = (pBuf[i] >> 24) & 0xFF;
-		if (alpha == 0) {
-			pBuf[i] = 0x00000000; // 确保完全透明像素为0
-		}
-	}
-}
 
 //绘制对话（整个数组都要）
 bool Dialogue::draw() {
@@ -106,15 +96,12 @@ bool Dialogue::draw() {
 		IMAGE charaImg;
 		wstring wpath(it.imgpath.begin(), it.imgpath.end());
 		loadimage(&charaImg, wpath.c_str(), charaW, charaH, true);
-		preprocessAlpha(&charaImg);
 		//绘制说话人物
-		putimage(charaX, charaY, &charaImg, SRCAND);
-		//putimage(charaX, charaY, &charaImg, SRCPAINT);
-		//putimage_alpha(x, y, &img);
+		putimage_alpha(charaX, charaY, &charaImg);
 
 		//绘制通用的对话框和姓名框
-		putimage(boxX, boxY, &textBox);
-		putimage(nameX, nameY, &nameBox);
+		putimage_alpha(boxX, boxY, &textBox);
+		putimage_alpha(nameX, nameY, &nameBox);
 
 
 		

@@ -39,6 +39,9 @@
     <ClCompile Include="code\dialogue.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="code\putimage_pro.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav">
@@ -65,6 +68,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="code\dialogue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\putimage_pro.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
