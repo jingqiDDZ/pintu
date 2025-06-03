@@ -26,7 +26,7 @@ Level::Level(int tid, int tSSIZE, int tTmode) :
 	//图片素材
 	tmppath = imagePath + "background.png";
 	wstring wpath(tmppath.begin(), tmppath.end());		//转换字符串类型
-	loadimage(&bkImg, wpath.c_str(), BLOCK_SIZE, BLOCK_SIZE);
+	loadimage(&bkImg, wpath.c_str(), 1500, 950);
 
 	for (int i = 0;i < SSIZE * SSIZE;i++) {
 		tmppath = imagePath + to_string(i) + ".png";
@@ -45,9 +45,6 @@ Level::Level(int tid, int tSSIZE, int tTmode) :
 		loadSoundClip(tmppath, countdownData.sound, countdownData.buffer);
 	}
 	cout << "倒计时素材导入完毕" << endl;
-
-
-
 	cout << "关卡" << id << "初始化完毕" << endl;
 }
 
@@ -83,11 +80,16 @@ LevelResult Level::play() {
 		// 检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
+				//展示对话剧情之后再开始游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
 				goto CONTINUE_GAME;
 			}
 		}
 		Sleep(30);
 	}
+
 
 CONTINUE_GAME:
 
@@ -144,7 +146,13 @@ CONTINUE_GAME:
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
 
-			continue;
+			//结算之后，展示对话剧情再结束游戏
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
+			//赢了之后直接return Win
+			return LevelResult::Win;
+			//continue;
 		}
 
 		//处理功能键		这里还要改，推出窗口之类的问题
@@ -207,6 +215,9 @@ void Level::drawGame() {
 	setbkcolor(RGB(240, 240, 240));
 	cleardevice();
 
+	//绘制背景
+	//putimage_alpha(0,0,&bkImg);
+
 	// 绘制标题和移动次数（保持不变）
 	settextcolor(BLACK);
 	settextstyle(30, 0, _T("宋体"));
@@ -265,6 +276,16 @@ void Level::drawGame() {
 	outtextxy(50, SSIZE * 100 + 170, _T("鼠标点击 - 移动方块"));
 	outtextxy(50, SSIZE * 100 + 190, _T("R - 重新开始"));
 	outtextxy(50, SSIZE * 100 + 210, _T("ESC - 退出游戏"));
+}
+
+void Level::drawDialogue(string path) {
+	//加载此处的对话数据
+	cout << "加载对话" << path << endl;
+	delete dialogue;
+	cout << "加载对话" << path << endl;
+	dialogue = new Dialogue(path);
+	cout << "加载对话" << path << endl;
+	dialogue->draw();
 }
 
 
@@ -426,17 +447,20 @@ void Level::showWin() {
 	while (true) {
 		// 检查ESC
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-			closegraph();			//这里也要改
-			exit(0);
+			//closegraph();			//这里也要改
+			//exit(0);
+			return;
 		}
 		// 检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
-				goto CONTINUE_GAME;
+				//goto CONTINUE_GAME;
+				return;
 			}
 		}
 		Sleep(30);
 	}
+/*
 CONTINUE_GAME:
 
 	sound_bgm.play();
@@ -457,6 +481,8 @@ CONTINUE_GAME:
 		countdownData.startTime = std::chrono::system_clock::now();
 		countdownData.isTimeout = false;
 	}
+
+*/
 }
 
 

@@ -28,9 +28,11 @@ Dialogue::Dialogue(string path) {			//path为json文件地址
 	//初始化对话框图片
 	loadimage(&textBox, _T("./assets/image/ui/text_box.png"), boxW, boxH, true);
 	loadimage(&nameBox, _T("./assets/image/ui/name_box.png"), nameW, nameH, true);
+	cout << "ui路径初始化完毕" << endl;
 
 	// 加载对话内容
 	loadText(path);
+	cout << "对话初始化完毕" << endl;
 }
 
 //从json文件加载数据
@@ -49,6 +51,7 @@ void Dialogue::loadText(string path){
 		mnow.name = it["name"];
 		mnow.text = it["text"];
 		mnow.imgpath = it["imgpath"];
+		mnow.bkpath = it["bkpath"];
 		members.emplace_back(mnow);
 	}
 }
@@ -77,7 +80,6 @@ std::wstring utf8_to_wstring(const std::string& str) {
 		str.c_str(), (int)str.size(),
 		&result[0], size_needed
 	);
-
 	return result;
 }
 
@@ -92,19 +94,22 @@ bool Dialogue::draw() {
 	for (auto it : members) {
 		cleardevice(); // 清屏，防止内容叠加
 
+		//绘制对话背景
+		IMAGE bkImg;
+		wstring wpath(it.bkpath.begin(), it.bkpath.end());
+		loadimage(&bkImg, wpath.c_str(), WD_width, WD_height, true);
+		putimage_alpha(0, 0, &bkImg);
+
 		//加载人物图片
 		IMAGE charaImg;
-		wstring wpath(it.imgpath.begin(), it.imgpath.end());
-		loadimage(&charaImg, wpath.c_str(), charaW, charaH, true);
+		wstring wpathh(it.imgpath.begin(), it.imgpath.end());
+		loadimage(&charaImg, wpathh.c_str(), charaW, charaH, true);
 		//绘制说话人物
 		putimage_alpha(charaX, charaY, &charaImg);
 
 		//绘制通用的对话框和姓名框
 		putimage_alpha(boxX, boxY, &textBox);
 		putimage_alpha(nameX, nameY, &nameBox);
-
-
-		
 
 		//绘制说话人姓名
 		wstring wname = utf8_to_wstring(it.name);
@@ -118,7 +123,7 @@ bool Dialogue::draw() {
 		//绘制对话内容
 		settextcolor(BLACK);
 		setbkmode(TRANSPARENT);
-		settextstyle((int)nameH * 0.7, 0, _T("宋体"));
+		settextstyle((int)nameH * 0.6, 0, _T("宋体"));
 		//wstring wtext(it.text.begin(), it.text.end());
 		outtextxy(boxX + 50, boxY + 50, wtext.c_str());
 

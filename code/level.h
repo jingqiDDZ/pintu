@@ -59,6 +59,7 @@ public:
 	SoundBuffer buffer_click;       // 点击音效缓冲区
 	Sound sound_win;                // 胜利音效
 	SoundBuffer buffer_win;         // 胜利音效缓冲区
+	Dialogue* dialogue = nullptr;				//用于展示剧情的对话对象指针
 
 	// 输入控制相关(暂时没明白)
 	DWORD lastMoveTime = 0;         // 移动键最后触发时间(用于冷却)
@@ -70,7 +71,7 @@ public:
 	//构造函数（三个变量初始化，素材引入）
 	Level(int tid, int tSSIZE, int tTmode);
 	LevelResult virtual play();		//原来的main函数部分
-
+	virtual void drawDialogue(string);		//关卡开始/结束时展示剧情对话用
 	virtual void drawGame();				//绘制游戏界面
 
 protected:

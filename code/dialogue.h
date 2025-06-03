@@ -4,12 +4,10 @@
 
 struct DiaMember {
 	string imgpath;			//人物头像路径
+	string bkpath;			//背景图路径
 	string name;			//说话人名称
 	string text;			//对话内容文本
 };
-
-
-
 
 class Dialogue {
 public:

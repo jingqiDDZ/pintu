@@ -23,7 +23,6 @@
     <ClCompile Include="code\buff.cpp" />
     <ClCompile Include="code\button.cpp" />
     <ClCompile Include="code\dialogue.cpp" />
-    <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />

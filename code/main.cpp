@@ -8,7 +8,10 @@
 
 
 //全局数据 
-Level_TE levelgame(0, 3, 1);	//关卡
+vector<unique_ptr<Level>> levelgames;
+//Level_TE levelgame(0, 3, 1);	//关卡
+//Level levelnormal(2, 3, 1);		//一般关卡测试
+//Dialogue testDia("./assets/text/level/0/dialogue.json");
 PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）
@@ -20,6 +23,8 @@ int main() {
 	cout << player.items.size() << endl;
 	cout << shopConfigs.size() << endl;
 	cout << "存档处理完毕，展示用户持有物品id" << endl;
+
+
 	for (int i = 0;i < player.items.size();i++) {
 		cout << player.items[i].id << endl;
 	}
@@ -30,9 +35,15 @@ int main() {
 	setbkcolor(WHITE);
 	cleardevice();
 	BeginBatchDraw();			//先在内存里面绘图
+
+	//初始化关卡列表
+	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
+	levelgames.push_back(make_unique<Level>(1, 3, 1));
+	levelgames.push_back(make_unique<Level>(2, 3, 1));
 	
+	FlushBatchDraw();
 	//测试对话
-	testDia.draw();
+	//testDia.draw();
 
 	// 初始化菜单状态
 	MenuState currentState = MAIN_MENU;
@@ -100,9 +111,15 @@ int main() {
 								else {
 									//此处添加关卡代码
 									cout << "开始关卡" << level << endl;
-									LevelResult result = levelgame.play();
-									levelgame.sound_bgm.stop();		//停止播放关卡音频
-									levelgame.sound_win.stop();
+									LevelResult result = levelgames[i]->play();
+									levelgames[i]->sound_bgm.stop();		//停止播放关卡音频
+									levelgames[i]->sound_win.stop();
+									/*
+									LevelResult result = levelnormal.play();
+									levelnormal.sound_bgm.stop();		//停止播放关卡音频
+									levelnormal.sound_win.stop();
+									*/
+
 									//返回关卡选择界面
 									currentState = LEVEL_SELECT;
 									buttons = initLevelBtn(player);
