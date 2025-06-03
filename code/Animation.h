@@ -44,6 +44,9 @@ public:
     void setAlpha(BYTE alpha) { alpha_ = alpha; }
     BYTE getAlpha() const { return alpha_; }
 
+    // 设置停留时间
+    void setStayDuration(DWORD duration) { stayDuration_ = duration; }
+    DWORD getStayDuration() const { return stayDuration_; }
 private:
     std::vector<std::wstring> framePaths_;  // 帧路径
     std::vector<IMAGE> frames_;       // 帧图像
@@ -54,6 +57,9 @@ private:
     DWORD frameDuration_;             // 每帧时长(毫秒)
     bool isPlaying_ = false;          // 播放状态
     BYTE alpha_ = 255;                //默认不透明
+    DWORD stayDuration_ = 0;       // 停留时间（毫秒）
+    DWORD stayStartTime_ = 0;      // 停留开始时间
+    bool isStaying_ = false;       // 是否在停留状态
 };
 
 // 路径函数库

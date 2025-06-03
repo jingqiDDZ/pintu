@@ -286,19 +286,21 @@ void initAnimations() {
 	// 初始化debuff动画
 	debuffAnimation.init(
 		{
-			L"./assets/anim/0.png",
-			L"./assets/anim/1.png",
-			L"./assets/anim/2.png",
-			L"./assets/anim/3.png",
-			L"./assets/anim/4.png",
-			L"./assets/anim/5.png",
-			L"./assets/anim/6.png",
-			L"./assets/anim/7.png",
-			L"./assets/anim/8.png",
-			L"./assets/anim/9.png"
+			L"./assets/anim/te.png",
+			L"./assets/anim/te1.png",
+			L"./assets/anim/te2.png",
+			L"./assets/anim/te3.png",
+			L"./assets/anim/te4.png",
+			L"./assets/anim/te5.png",
+			L"./assets/anim/te6.png",
+			L"./assets/anim/te7.png",
+			L"./assets/anim/te8.png",
+			L"./assets/anim/te9.png"
 		},
 		400, 300, Animation::BLOCKING, 1000, 100
 	);
+
+	//debuffAnimation.init({ L"./assets/anim/te.png" }, 400, 300, Animation::NON_BLOCKING, 1000, 1000);
 
 	// 加载动画资源
 	if (!debuffAnimation.loadFrames()) {
@@ -369,9 +371,10 @@ void Level_TE::Shuffle(int times) {
 void Level_TE::Debuff_jojo() {
 	kingCrimson.play();
 
-	debuffAnimation.setAlpha(50);
+	debuffAnimation.setAlpha(250);
+	debuffAnimation.setStayDuration(1000);
 
-	debuffAnimation.play(
+	/*debuffAnimation.play(
 		getwidth() / 2 - 200,  // 起始X（水平居中）
 		getheight() / 2 - 150, // 起始Y（垂直居中）
 		getwidth() / 2 - 200,  // 结束X（水平居中）
@@ -379,6 +382,20 @@ void Level_TE::Debuff_jojo() {
 		[](float progress, int& x, int& y, int sx, int sy, int ex, int ey) {
 			PathFunctions::heartbeat(progress, x, y, ex, ey);
 		},
+		SRCCOPY
+	);*/
+
+	// 计算屏幕中心位置
+	int centerX = getwidth() / 2 - 200;  // 动画宽度400
+	int centerY = getheight() / 2 - 150; // 动画高度300
+
+	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
+	debuffAnimation.play(
+		getwidth(),          // 起始X：屏幕右侧外
+		-300,                // 起始Y：屏幕上方外
+		centerX,             // 结束X：水平居中
+		centerY,             // 结束Y：垂直居中
+		PathFunctions::linear, // 使用线性移动路径
 		SRCCOPY
 	);
 

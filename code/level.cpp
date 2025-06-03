@@ -1,4 +1,5 @@
 ﻿#include "level.h"
+#include <thread>
 
 Level::Level(int tid, int tSSIZE, int tTmode) :
 	id(tid), SSIZE(tSSIZE), Tmode(tTmode) {
@@ -291,7 +292,7 @@ void Level::drawDialogue(string path) {
 
 //显示游戏界面背景，我感觉这里可以加过场动画社么的，先保留了
 void Level::Gameopen() {
-	putimage(0, 0, &bkImg);
+	fadeImage(&bkImg, 0, 0, 1000, 1000, 1000);
 	FlushBatchDraw();
 }
 
@@ -634,4 +635,98 @@ int Level::handleFunctionKeys() {
 		lastFunctionTime = currentTime;
 	}
 	*/
+}
+
+void Level::fadeImage(IMAGE* img, int x, int y, int fadeInTime, int stayTime, int fadeOutTime) {
+	// 初始化GDI+（如果尚未初始化）
+	static bool gdiplusInitialized = false;
+	static ULONG_PTR gdiplusToken;
+	if (!gdiplusInitialized) {
+		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+		Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+		gdiplusInitialized = true;
+	}
+
+	// 获取当前窗口的HDC
+	HDC hdc = GetImageHDC();
+	Graphics graphics(hdc);
+
+	// 将EasyX的IMAGE转换为GDI+的Bitmap
+	int width = img->getwidth();
+	int height = img->getheight();
+	Bitmap bmp(width, height, PixelFormat32bppARGB);
+	BitmapData bmpData;
+	Gdiplus::Rect rect(0, 0, width, height);
+	bmp.LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
+
+	// 复制图像数据
+	DWORD* src = (DWORD*)GetImageBuffer(img);
+	DWORD* dst = (DWORD*)bmpData.Scan0;
+	int pitch = bmpData.Stride / 4; // 每行DWORD数
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			dst[i * pitch + j] = src[i * width + j];
+		}
+	}
+	bmp.UnlockBits(&bmpData);
+
+	// 淡入效果
+	for (int alpha = 0; alpha <= 255; alpha += 5) {
+		cleardevice();
+
+		// 设置透明度
+		ColorMatrix matrix = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		ImageAttributes attr;
+		attr.SetColorMatrix(&matrix);
+
+		// 绘制图像
+		graphics.DrawImage(
+			&bmp,
+			Gdiplus::Rect(x, y, width, height),
+			0, 0, width, height,
+			UnitPixel, &attr
+		);
+
+		FlushBatchDraw();
+		Sleep(fadeInTime / 50); // 控制淡入速度
+	}
+
+	// 停留效果
+	Sleep(stayTime);
+
+	// 淡出效果
+	for (int alpha = 255; alpha >= 0; alpha -= 5) {
+		cleardevice();
+
+		// 设置透明度
+		ColorMatrix matrix = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+
+		ImageAttributes attr;
+		attr.SetColorMatrix(&matrix);
+
+		// 绘制图像
+		graphics.DrawImage(
+			&bmp,
+			Gdiplus::Rect(x, y, width, height),
+			0, 0, width, height,
+			UnitPixel, &attr
+		);
+
+		FlushBatchDraw();
+		Sleep(fadeOutTime / 50); // 控制淡出速度
+	}
 }
