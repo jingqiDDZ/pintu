@@ -1,63 +1,87 @@
 [
     {
-        "name": "林夏",
-        "text": "（松开少女的手）差不多……成型了",
+        "name": "旁白",
+        "text": "黄沙漫天，旌旗猎猎。",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/4/background.png"
     },
     {
-        "name": "少女",
-        "text": "(惊喜)好厉害！但……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "name": "旁白",
+        "text": "他站在一列士兵之中，铠甲沉重",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
     },
     {
-        "name": "少女",
-        "text": "他们估计也不信我能做出这样的好的陶器吧",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "name": "旁白",
+        "text": "远处，一队华丽的马车缓缓前行",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "车帘被风掀起一角，露出一张熟悉的面容——",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "是那个仰韶少女，是鲁班坊里的学徒",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "而现在，她是即将远嫁匈奴的王昭君",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "林夏的心脏猛地一缩。他想冲上前，可双脚却像生了根",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "士兵",
+        "text": "（叹气）真是可惜啊……",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "士兵",
+        "text": "如此美人，却要嫁到蛮荒之地和亲",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
     },
     {
         "name": "林夏",
-        "text": "你有什么喜欢的东西吗？",
+        "text": "（握紧拳头，指甲深深掐进掌心）",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/level/4/background.png"
     },
     {
-        "name": "少女",
-        "text": "欸？怎么了？",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "name": "旁白",
+        "text": "昭君出塞，和亲匈奴，一生再未归汉",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "风卷起沙尘，迷了他的眼",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "等他再抬头时，车队已变成天边的一抹黑影",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/4/background.png"
     },
     {
         "name": "林夏",
-        "text": "我…我是说可以用铁砂在盆上面画点喜欢的东西",
+        "text": "至少……让我再和她说一句话……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "林夏",
-        "text": "这样大家就知道，这是你做的陶盆了",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "铁砂？妈耶！你怎么想到的！",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "少女",
-        "text": "我比较喜欢……吃鱼吧……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/level/4/background.png"
     }
 ]
     

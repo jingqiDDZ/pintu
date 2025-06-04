@@ -123,16 +123,21 @@ int main() {
 									//此处添加关卡代码
 									main_bgm.pause();	//终止main_bgm
 									//main_bgm.stop();
-									bgm_play = false;
+									bgm_play = false; 
+
 									cout << "开始关卡" << level << endl;
 									LevelResult result = levelgames[i]->play();
 									levelgames[i]->sound_bgm.stop();		//停止播放关卡音频
 									levelgames[i]->sound_win.stop();
-									/*
-									LevelResult result = levelnormal.play();
-									levelnormal.sound_bgm.stop();		//停止播放关卡音频
-									levelnormal.sound_win.stop();
-									*/
+
+									//处理返回值，如果win则开始结算目前的关卡进度，金币数，道具
+									if (result == LevelResult::Win) {
+										player.coins += 100 + 1*10;
+										if (player.unlockLevel == i + 1 && player.unlockLevel != 9) {
+											player.unlockLevel++;
+										}
+										saveData(player);
+									}
 
 									//返回关卡选择界面
 									currentState = LEVEL_SELECT;
