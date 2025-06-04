@@ -8,6 +8,8 @@
 // 在文件顶部添加
 using namespace Gdiplus;
 
+
+
 // 构造函数
 Animation::Animation()
     : width_(0), height_(0), type_(BLOCKING),
@@ -47,7 +49,7 @@ bool Animation::loadFrames() {
     return true;
 }
 
-// 播放动画
+// 播放动画（阻塞动画专用）
 void Animation::play(int startX, int startY, int endX, int endY,
     PathFunction pathFunc,
     DWORD rop)
@@ -204,6 +206,146 @@ void Animation::play(int startX, int startY, int endX, int endY,
         // Sleep(max(1, static_cast<int>(frameDuration_ - (GetTickCount() - startTime - elapsed))));
     }
 }
+
+// 开始非阻塞动画
+void Animation::startNonBlocking(int startX, int startY, int endX, int endY,
+    PathFunction pathFunc,
+    DWORD rop)
+{
+    isPlaying_ = true;
+    isStaying_ = false;
+    startTime_ = GetTickCount();
+    startX_ = startX;
+    startY_ = startY;
+    endX_ = endX;
+    endY_ = endY;
+    pathFunc_ = pathFunc;
+    rop_ = rop;
+    lastX_ = startX;
+    lastY_ = startY;
+
+    // 保存背景
+    saveWidth_ = width_ + 20;
+    saveHeight_ = height_ + 20;
+    Resize(&background_, saveWidth_, saveHeight_);
+    getimage(&background_, startX - 10, startY - 10, saveWidth_, saveHeight_);
+}
+
+// 更新非阻塞动画
+bool Animation::updateNonBlocking() {
+    if (!isPlaying_) return false;
+
+    DWORD elapsed = GetTickCount() - startTime_;
+    float progress = min(1.0f, static_cast<float>(elapsed) / duration_);
+
+    // 检查是否进入停留阶段
+    if (progress >= 1.0f && stayDuration_ > 0 && !isStaying_) {
+        isStaying_ = true;
+        stayStartTime_ = GetTickCount();
+    }
+
+    // 计算当前位置
+    int currentX = startX_;
+    int currentY = startY_;
+
+    if (!isStaying_) {
+        if (pathFunc_) {
+            pathFunc_(progress, currentX, currentY, startX_, startY_, endX_, endY_);
+        }
+        else {
+            PathFunctions::linear(progress, currentX, currentY, startX_, startY_, endX_, endY_);
+        }
+    }
+    else {
+        currentX = endX_;
+        currentY = endY_;
+    }
+
+    // === 删除背景恢复和保存操作 ===
+
+    // 计算当前帧
+    int frameIndex;
+    if (!isStaying_) {
+        frameIndex = min(static_cast<int>(frames_.size()) - 1,
+            static_cast<int>(elapsed / frameDuration_));
+    }
+    else {
+        frameIndex = frames_.size() - 1;
+    }
+
+    // 绘制动画帧（带透明度）
+    if (alpha_ == 255) {
+        putimage(currentX, currentY, width_, height_,
+            &frames_[frameIndex], 0, 0, rop_);
+    }
+    else {
+        // ... [保持原有的透明度绘制代码] ...
+    }
+
+    // 使用 GDI+ 实现透明度
+    HDC hdc = GetImageHDC();
+    Graphics graphics(hdc);
+
+    // 创建 GDI+ 位图
+    Bitmap bmp(width_, height_, PixelFormat32bppARGB);
+    BitmapData bmpData;
+    Rect rect(0, 0, width_, height_);
+    bmp.LockBits(&rect, ImageLockModeWrite, PixelFormat32bppARGB, &bmpData);
+
+    // 从 EasyX IMAGE 复制数据
+    BYTE* src = (BYTE*)GetImageBuffer(&frames_[frameIndex]);
+    int srcPitch = width_ * 4; // 32位图像每行字节数
+    BYTE* dst = (BYTE*)bmpData.Scan0;
+    for (int y = 0; y < height_; y++) {
+        for (int x = 0; x < width_; x++) {
+            int idx = y * srcPitch + x * 4;
+
+            BYTE originalAlpha = src[idx + 3];
+            if (originalAlpha == 0) {  // 完全透明的像素跳过
+                dst += 4;
+                continue;
+            }
+
+            BYTE b = src[idx];
+            BYTE g = src[idx + 1];
+            BYTE r = src[idx + 2];
+            BYTE a = (originalAlpha * alpha_) / 255;
+
+            dst[0] = b;
+            dst[1] = g;
+            dst[2] = r;
+            dst[3] = a;
+            dst += 4;
+        }
+        // 处理目标位图的行填充
+        dst += bmpData.Stride - width_ * 4;
+    }
+    bmp.UnlockBits(&bmpData);
+
+    // 绘制到屏幕
+    graphics.DrawImage(&bmp, currentX, currentY);
+
+    // 检查动画结束
+    if (isStaying_) {
+        if (GetTickCount() - stayStartTime_ >= stayDuration_) {
+            isPlaying_ = false;
+            return false;
+        }
+    }
+    else if (elapsed >= duration_) {
+        if (stayDuration_ > 0) {
+            isStaying_ = true;
+            stayStartTime_ = GetTickCount();
+        }
+        else {
+            isPlaying_ = false;
+            return false;
+        }
+    }
+
+    return true;
+}
+
 
 // 检查是否正在播放
 bool Animation::isPlaying() const {

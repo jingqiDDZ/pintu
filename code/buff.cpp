@@ -2,6 +2,7 @@
 #include <algorithm>
 
 Animation debuffAnimation;
+Animation display;
 sf::Sound killerQueen_de;
 sf::SoundBuffer Buffer_killerQueen_de;
 sf::Sound killerQueen;
@@ -97,8 +98,16 @@ CONTINUE_GAME:
 			sound_bgm.play();
 		}
 
+		drawGame();
+
+		// 更新非阻塞动画
+		if (display.isPlaying() && display.getType() == Animation::NON_BLOCKING) {
+			display.updateNonBlocking();
+		}
+
+		// 检查是否有阻塞动画在播放（如debuffAnimation）
 		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
-			(debuffAnimation.getType() == Animation::BLOCKING); // 检查是否有阻塞动画在播放
+			(debuffAnimation.getType() == Animation::BLOCKING);
 
 		// 非动画期间处理输入
 		if (!isBlockingAnimation) {
@@ -106,7 +115,7 @@ CONTINUE_GAME:
 				sound_click.play();
 			}
 
-			//处理功能键		这里还要改，推出窗口之类的问题
+			//处理功能键
 			int funcReturn = handleFunctionKeys();
 			if (funcReturn == 1) {
 				return LevelResult::Exit;
@@ -174,7 +183,6 @@ CONTINUE_GAME:
 			continue; // 跳过后续游戏逻辑
 		}//倒计时超时
 
-		drawGame();
 		FlushBatchDraw();
 		Sleep(0.1);
 	}//游戏运行
@@ -246,7 +254,18 @@ int Level_TE::handleFunctionKeys() {
 		}
 		lastFunctionTime = currentTime;
 	}
-	
+	//检测C键:展示图片
+	else if (GetAsyncKeyState('C') & 0x8000) {
+		if (!display.isPlaying()) {
+			IMAGE all;
+			loadimage(&all, _T("./assets/image/level/0/all.png"), BLOCK_SIZE, BLOCK_SIZE);
+			int X = WD_width / 4 * 3;
+			int Y = WD_height / 4 * 3;
+			display.setStayDuration(5000);
+			display.startNonBlocking(X, Y, X, Y);
+		}
+		lastFunctionTime = currentTime;
+	}
 }
 
 
@@ -300,10 +319,15 @@ void initAnimations() {
 		400, 300, Animation::BLOCKING, 1000, 100
 	);
 
+	display.init({ L"./assets/image/level/0/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+
 	//debuffAnimation.init({ L"./assets/anim/te.png" }, 400, 300, Animation::NON_BLOCKING, 1000, 1000);
 
 	// 加载动画资源
 	if (!debuffAnimation.loadFrames()) {
+		MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
+	}
+	if (!display.loadFrames()) {
 		MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
 	}
 }
