@@ -5,10 +5,12 @@
 #include "music.h"
 #include "level.h"
 #include "dialogue.h"
+#include "pause.h"
 
 
 //全局数据 
 vector<unique_ptr<Level>> levelgames;
+ConfirmWindow confirm_window(_T("是否确认"));
 //Level_TE levelgame(0, 3, 1);	//关卡
 //Level levelnormal(2, 3, 1);		//一般关卡测试
 //Dialogue testDia("./assets/text/level/0/dialogue.json");
@@ -37,9 +39,9 @@ int main() {
 	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
 	levelgames.push_back(make_unique<Level>(1, 3, 1));
 	levelgames.push_back(make_unique<Level>(2, 3, 0));
-	levelgames.push_back(make_unique<Level_3>(3, 3, 1));
-	levelgames.push_back(make_unique<Level_4>(4, 3, 0));
-	levelgames.push_back(make_unique<Level>(5, 4, 1));
+	//levelgames.push_back(make_unique<Level_3>(3, 3, 1));
+	//levelgames.push_back(make_unique<Level_4>(4, 3, 0));
+	//levelgames.push_back(make_unique<Level>(5, 4, 1));
 
 	// 初始化窗口
 	initgraph(WD_width, WD_height);
@@ -120,23 +122,45 @@ int main() {
 									cout << "关卡未解锁" << endl;
 								}
 								else {
-									//此处添加关卡代码
-									main_bgm.pause();	//终止main_bgm
-									//main_bgm.stop();
-									bgm_play = false; 
-
-									cout << "开始关卡" << level << endl;
-									LevelResult result = levelgames[i]->play();
-									levelgames[i]->sound_bgm.stop();		//停止播放关卡音频
-									levelgames[i]->sound_win.stop();
-
-									//处理返回值，如果win则开始结算目前的关卡进度，金币数，道具
-									if (result == LevelResult::Win) {
-										player.coins += 100 + 1*10;
-										if (player.unlockLevel == i + 1 && player.unlockLevel != 9) {
-											player.unlockLevel++;
+									//暂停画面，并弹出确认弹窗
+									//confirm_window.show();
+									bool confirmed = false;		//确认是否进行关卡
+									drawLevelSelect(buttons, player);
+									confirm_window.draw();
+									FlushBatchDraw();
+									while (true) {
+										msg = GetMouseMsg();
+										if (msg.uMsg == WM_LBUTTONDOWN) {
+											if (confirm_window.confirmbtn.checkAbove(msg.x, msg.y)) {
+												confirmed = true;
+												break;
+											}
+											else if (confirm_window.backbtn.checkAbove(msg.x, msg.y)) {
+												confirmed = false;
+												break;
+											}
 										}
-										saveData(player);
+									}
+									main_bgm.pause();	//终止main_bgm
+
+									if (confirmed) {
+										//此处添加关卡代码
+										//main_bgm.stop();
+										bgm_play = false;
+
+										cout << "开始关卡" << level << endl;
+										LevelResult result = levelgames[i]->play();
+										levelgames[i]->sound_bgm.stop();		//停止播放关卡音频
+										levelgames[i]->sound_win.stop();
+
+										//处理返回值，如果win则开始结算目前的关卡进度，金币数，道具
+										if (result == LevelResult::Win) {
+											player.coins += 100 + 1 * 10;
+											if (player.unlockLevel == i + 1 && player.unlockLevel != 9) {
+												player.unlockLevel++;
+											}
+											saveData(player);
+										}
 									}
 
 									//返回关卡选择界面

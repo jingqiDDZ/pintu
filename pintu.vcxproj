@@ -26,6 +26,7 @@
     <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />
+    <ClCompile Include="code\pause.cpp" />
     <ClCompile Include="code\PlayMusic.cpp" />
     <ClCompile Include="code\putimage_pro.cpp" />
     <ClCompile Include="code\Record.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="code\head.h" />
     <ClInclude Include="code\level.h" />
     <ClInclude Include="code\menu.h" />
+    <ClInclude Include="code\pause.h" />
     <ClInclude Include="code\putimage_pro.h" />
     <ClInclude Include="code\record.h" />
   </ItemGroup>
