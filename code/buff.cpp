@@ -3,10 +3,7 @@
 
 Animation debuffAnimation;
 Animation display;
-sf::Sound killerQueen_de;
-sf::SoundBuffer Buffer_killerQueen_de;
-sf::Sound killerQueen;
-sf::SoundBuffer Buffer_killerQueen;
+
 
 sf::Sound kingCrimson;
 sf::SoundBuffer Buffer_kingCrimson;
