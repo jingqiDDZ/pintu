@@ -53,6 +53,7 @@ public:
 	// 游戏资源
 	vector<IMAGE> blockImgs;        // 拼图图片资源
 	IMAGE bkImg;					// 背景图
+	//IMAGE bkImg;					// 背景图
 	Sound sound_bgm;                // 背景音乐
 	SoundBuffer buffer_bgm;         // 背景音乐缓冲区
 	Sound sound_click;             // 点击音效
@@ -75,7 +76,8 @@ public:
 	virtual void drawGame();				//绘制游戏界面
 
 	void fadeImage(IMAGE* img, int x, int y, int fadeInTime, int stayTime, int fadeOutTime);//插入图片的淡入淡出
-
+	void fadeInImage(IMAGE* img, int x, int y, int);
+	void fadeOutImage(IMAGE* img, int x, int y, int);
 protected:
 	//游戏界面
 	virtual void initBoard();				//初始化游戏板

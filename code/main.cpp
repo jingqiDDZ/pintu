@@ -15,6 +15,9 @@ vector<unique_ptr<Level>> levelgames;
 PlayerData player; // 玩家动态数据
 vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
 vector<AchievementConfig> achConfigs; // 成就配置（只读）
+Sound main_bgm;
+SoundBuffer main_buffer;
+bool bgm_play = false;
 
 int main() {
 	//加载游戏数据
@@ -23,11 +26,20 @@ int main() {
 	cout << player.items.size() << endl;
 	cout << shopConfigs.size() << endl;
 	cout << "存档处理完毕，展示用户持有物品id" << endl;
-
+	bgm_play = false;
+	loadSoundBgm("./assets/audio/main/main_pure.wav", main_bgm, main_buffer);
 
 	for (int i = 0;i < player.items.size();i++) {
 		cout << player.items[i].id << endl;
 	}
+
+	//初始化关卡列表
+	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
+	levelgames.push_back(make_unique<Level>(1, 3, 1));
+	levelgames.push_back(make_unique<Level>(2, 3, 0));
+	levelgames.push_back(make_unique<Level>(3, 3, 1));
+	levelgames.push_back(make_unique<Level>(4, 3, 0));
+	levelgames.push_back(make_unique<Level>(5, 4, 1));
 
 	// 初始化窗口
 	initgraph(WD_width, WD_height);
@@ -36,10 +48,7 @@ int main() {
 	cleardevice();
 	BeginBatchDraw();			//先在内存里面绘图
 
-	//初始化关卡列表
-	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
-	levelgames.push_back(make_unique<Level>(1, 3, 1));
-	levelgames.push_back(make_unique<Level>(2, 3, 1));
+	
 	
 	FlushBatchDraw();
 	//测试对话
@@ -48,14 +57,16 @@ int main() {
 	// 初始化菜单状态
 	MenuState currentState = MAIN_MENU;
 	vector<unique_ptr<BaseButton>> buttons = initMainMenuBtn();
-	string imgpath;				//=main/……
-	//vector<ImageButton> imgbuttons = initShopImgBtn(player, shopConfigs,".assets/image/shop/");
-
+	string imgpath;				
 
 	//主循环
 	while (true) {
 		cleardevice();
 
+		if (!bgm_play) {
+			main_bgm.play();
+			bgm_play = true;
+		}
 		//检查鼠标位置
 		MOUSEMSG msg;
 		if (MouseHit()) {
@@ -110,6 +121,9 @@ int main() {
 								}
 								else {
 									//此处添加关卡代码
+									main_bgm.pause();	//终止main_bgm
+									//main_bgm.stop();
+									bgm_play = false;
 									cout << "开始关卡" << level << endl;
 									LevelResult result = levelgames[i]->play();
 									levelgames[i]->sound_bgm.stop();		//停止播放关卡音频
@@ -123,7 +137,8 @@ int main() {
 									//返回关卡选择界面
 									currentState = LEVEL_SELECT;
 									buttons = initLevelBtn(player);
-
+									main_bgm.play();	//播放main_bgm
+									bgm_play = true;
 								}
 							}
 							else if (i == 9) {		//返回按钮

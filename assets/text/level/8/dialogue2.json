@@ -1,0 +1,63 @@
+[
+    {
+        "name": "林夏",
+        "text": "（松开少女的手）差不多……成型了",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "(惊喜)好厉害！但……",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "少女",
+        "text": "他们估计也不信我能做出这样的好的陶器吧",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "林夏",
+        "text": "你有什么喜欢的东西吗？",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "少女",
+        "text": "欸？怎么了？",
+        "imgpath": "./assets/image/chara/ancient_girl2.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "林夏",
+        "text": "我…我是说可以用铁砂在盆上面画点喜欢的东西",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "这样大家就知道，这是你做的陶盆了",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "铁砂？妈耶！你怎么想到的！",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "少女",
+        "text": "我比较喜欢……吃鱼吧……",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    }
+]
+    
