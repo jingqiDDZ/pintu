@@ -1,6 +1,10 @@
 ﻿#include "level.h"
 #include <thread>
 
+
+bool Level::gdiplusInitialized = false;
+ULONG_PTR Level::gdiplusToken = 0;
+
 Level::Level(int tid, int tSSIZE, int tTmode) :
 	id(tid), SSIZE(tSSIZE), Tmode(tTmode) {
 

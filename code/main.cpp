@@ -37,8 +37,8 @@ int main() {
 	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
 	levelgames.push_back(make_unique<Level>(1, 3, 1));
 	levelgames.push_back(make_unique<Level>(2, 3, 0));
-	levelgames.push_back(make_unique<Level>(3, 3, 1));
-	levelgames.push_back(make_unique<Level>(4, 3, 0));
+	levelgames.push_back(make_unique<Level_3>(3, 3, 1));
+	levelgames.push_back(make_unique<Level_4>(4, 3, 0));
 	levelgames.push_back(make_unique<Level>(5, 4, 1));
 
 	// 初始化窗口
