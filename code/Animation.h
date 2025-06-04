@@ -16,6 +16,8 @@ public:
         BLOCKING        // 阻塞动画（禁止用户操作）
     };
 
+    
+
     // 构造函数
     Animation();
 
@@ -29,10 +31,18 @@ public:
     // 加载动画帧
     bool loadFrames();
 
-    // 播放动画
+    // 播放动画（阻塞动画专用）
     void play(int startX, int startY, int endX, int endY,
         PathFunction pathFunc = nullptr,
         DWORD rop = SRCCOPY);
+
+    // 开始非阻塞动画
+    void startNonBlocking(int startX, int startY, int endX, int endY,
+        PathFunction pathFunc = nullptr,
+        DWORD rop = SRCCOPY);
+
+    // 更新非阻塞动画
+    bool updateNonBlocking();
 
     // 检查是否正在播放
     bool isPlaying() const;
@@ -60,6 +70,16 @@ private:
     DWORD stayDuration_ = 0;       // 停留时间（毫秒）
     DWORD stayStartTime_ = 0;      // 停留开始时间
     bool isStaying_ = false;       // 是否在停留状态
+
+    // 非阻塞动画专用状态
+    int lastX_ = 0, lastY_ = 0;
+    int startX_ = 0, startY_ = 0;
+    int endX_ = 0, endY_ = 0;
+    DWORD startTime_ = 0;
+    PathFunction pathFunc_ = nullptr;
+    DWORD rop_ = SRCCOPY;
+    IMAGE background_;
+    int saveWidth_ = 0, saveHeight_ = 0;
 };
 
 // 路径函数库
