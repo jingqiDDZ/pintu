@@ -51,6 +51,8 @@ void loadSave(PlayerData& player) {
 
     player.coins = js["player"]["coins"];       //开始从js读取相应的数据存放与player内（自动识别变量类型）
     player.unlockLevel = js["player"]["unlockedLevel"];
+    player.skillQ = js["player"]["skillQ"];
+    player.skillE = js["player"]["skillE"];
 
     for (auto it : js["itemStatus"]) {
         ItemStatus Now;
@@ -78,6 +80,8 @@ void saveData(PlayerData player) {      //这里不传引用
     //保存玩家数据
     j["player"]["coins"] = player.coins;
     j["player"]["unlockedLevel"] = player.unlockLevel;
+    j["player"]["skillQ"] = player.skillQ;
+    j["player"]["skillE"] = player.skillE;
 
     //商店（背包物品）数据
     for (auto it : player.items) {

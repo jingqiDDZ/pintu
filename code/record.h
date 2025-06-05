@@ -43,6 +43,8 @@ struct AchievementStatus {
 struct PlayerData {
 	int coins;
 	int unlockLevel;
+	int skillQ;
+	int skillE;
 	vector <ItemStatus> items;
 	vector <AchievementStatus> achs;
 };

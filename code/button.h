@@ -19,6 +19,7 @@
 #include "head.h"
 #include "record.h"
 #include "putimage_pro.h"
+#include "ReadJson.h"
 
  //按钮基类
 class BaseButton {
@@ -188,6 +189,76 @@ private:
 
 		Graphics graphics(hdc);
 		Gdiplus::Color color(alpha, 0, 0, 0); // ARGB: Alpha, R, G, B
+		SolidBrush brush(color);
+
+		graphics.FillRectangle(&brush, x, y, width, height);
+	}
+};
+
+
+//背包按钮(附带显示文字的功能)(本来想重载ImageButton没成功)
+class BagButton : public BaseButton {
+public:
+	string id;
+	string text;
+	IMAGE image;		//按钮图片
+
+	// 构造函数
+	BagButton() {}
+
+	BagButton(double x_pos, double y_pos, int w, int h, const string& imagePath, string tid, string ttext)		//同样传入相对位置x_pos，y_pos（图像中心点相对窗口位置），还有image对应的文件位置
+		:BaseButton(
+			(int)(WD_width* x_pos - w / 2),
+			(int)(WD_height* y_pos - h / 2),
+			w, h, false) {
+		wstring wpath(imagePath.begin(), imagePath.end());
+		loadimage(&image, wpath.c_str(), width, height);
+		id = tid;
+		text = ttext;
+	}
+
+	// 绘制按钮
+	void draw() override {
+		//cout << "绘制背包按钮" << endl;
+		putimage(x, y, &image);
+		if (is_pressed) {
+			DrawAlphaRect(x, y, width, height, 90);
+		}
+
+		//绘制文字
+		setbkmode(TRANSPARENT);
+		settextcolor(BLACK);
+
+		int font_size = height * 0.28; // 适配按钮高度
+		settextstyle(font_size, 0, _T("宋体"));
+
+		int textX = x + width + 12; // 按钮右侧留出间距
+		int textY = y;
+
+		//绘制物品id,介绍
+		wstring wid = utf8_to_wstring(id);
+		wstring wtext = utf8_to_wstring(text);
+		outtextxy(textX, textY, wid.c_str());
+		outtextxy(textX, textY + 20, wtext.c_str());
+
+		
+	}
+
+	// 检查鼠标是否在按钮上方
+	bool checkAbove(int mouseX, int mouseY) override {
+		is_pressed = (mouseX >= x && mouseY >= y &&
+			mouseX <= x + width && mouseY <= y + height);
+		return is_pressed;
+	}
+
+
+private:
+	//绘制白色半透明矩形的函数
+	void DrawAlphaRect(int x, int y, int width, int height, int alpha) {		//alpha: 0 全透明； 255 不透明
+		HDC hdc = GetImageHDC(); // 获取 EasyX 的 HDC
+
+		Graphics graphics(hdc);
+		Gdiplus::Color color(alpha, 255, 255, 255); // ARGB: Alpha, R, G, B
 		SolidBrush brush(color);
 
 		graphics.FillRectangle(&brush, x, y, width, height);

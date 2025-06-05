@@ -100,14 +100,8 @@ void drawAchieve(vector<unique_ptr<BaseButton>>& buttons, PlayerData player, vec
 	//绘制按钮
 	for (auto& btn : buttons) {
 		btn->draw();
-
-		//同时在按钮后方显示物品名(出现了问题，按钮似乎没办法告知自己是什么物品)
-
 	}
 
 	//显示金币数量
-	settextstyle(20, 0, _T("宋体"));
-	TCHAR coinText[50];
-	_stprintf_s(coinText, _T("金币: %d"), player.coins);
-	outtextxy(780, 30, coinText);
+	
 }

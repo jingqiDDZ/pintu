@@ -14,12 +14,15 @@ struct ImgSet {		//包含图片以及其位置大小
 class ConfirmWindow {
 public:
 	const TCHAR* text;			//介绍文本（eg.“是否开始关卡？”）
+	const TCHAR* back;			//返回键文本（E）
+	const TCHAR* confirm;			
 	ImgSet imgset;				//窗口图图片素材
 	Button backbtn;				//返回按钮
 	Button confirmbtn;			//确认按钮
 	//bool visible;				//确认是否可见
 
-	ConfirmWindow(const TCHAR* ttext) : text(ttext) {
+	ConfirmWindow(const TCHAR* ttext, const TCHAR* tback = _T("返回"), const TCHAR* tconfirm = _T("确认")) :
+		text(ttext) , back(tback), confirm(tconfirm) {
 		//加载默认弹窗图片
 		imgset.w = 400, imgset.h = 300;
 		imgset.x = (WD_width - imgset.w) / 2;
@@ -27,8 +30,8 @@ public:
 		loadimage(&imgset.img, _T("./assets/image/ui/window.png"), imgset.w, imgset.h, true);
 
 		//初始化按钮
-		backbtn = Button(0.43, 0.58, 110, 50, _T("返回"), RGB(200, 200, 200), RGB(180, 180, 180));
-		confirmbtn = Button(0.57, 0.58, 110, 50, _T("确认"), RGB(200, 200, 200), RGB(180, 180, 180));
+		backbtn = Button(0.43, 0.58, 110, 50, back, RGB(200, 200, 200), RGB(180, 180, 180));
+		confirmbtn = Button(0.57, 0.58, 110, 50, confirm, RGB(200, 200, 200), RGB(180, 180, 180));
 	}
 
 	void draw() {

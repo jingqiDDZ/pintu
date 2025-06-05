@@ -1,6 +1,6 @@
 ﻿#include "dialogue.h"
 #include "putimage_pro.h"
-#include <Windows.h> // 需要包含 Windows 头文件（utf_8转换）
+#include "ReadJson.h"
 
 	
 Dialogue::Dialogue(string path) {			//path为json文件地址
@@ -54,33 +54,6 @@ void Dialogue::loadText(string path){
 		mnow.bkpath = it["bkpath"];
 		members.emplace_back(mnow);
 	}
-}
-
-//ai代码，防止outtextxy输出json读取的中文显示乱码
-std::wstring utf8_to_wstring(const std::string& str) {
-	if (str.empty()) return L"";
-
-	// 计算需要的宽字符缓冲区大小
-	int size_needed = MultiByteToWideChar(
-		CP_UTF8, 0,
-		str.c_str(), (int)str.size(),
-		NULL, 0
-	);
-
-	if (size_needed <= 0) {
-		return L"转换失败";
-	}
-
-	// 分配缓冲区
-	std::wstring result(size_needed, 0);
-
-	// 执行转换
-	MultiByteToWideChar(
-		CP_UTF8, 0,
-		str.c_str(), (int)str.size(),
-		&result[0], size_needed
-	);
-	return result;
 }
 
 

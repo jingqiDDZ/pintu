@@ -168,9 +168,11 @@ vector<unique_ptr<BaseButton>> initBagBtn(PlayerData player, vector <ShopItemCon
 			);
 		}
 		else {
-			buttons.emplace_back(make_unique <ImageButton>(
+			string id = shopConfigs[i].id;
+			string text = shopConfigs[i].text;
+			buttons.emplace_back(make_unique <BagButton>(
 				startX, startY + paceY * i,
-				btnsize, btnsize, imagepath)
+				btnsize, btnsize, imagepath,id,text)
 			);
 		}
 	}
@@ -193,10 +195,10 @@ vector<unique_ptr<BaseButton>> initAchieveBtn(PlayerData player, vector<Achievem
 
 	int imgbtnW = 180;
 	int imgbtnH = 380;
-	double imgpaceX = 0.22f;
-	//double paceY = 0.2f;
+	double imgpaceX = 0.15f;
+	//double paceY = 0.3f;
 	double imgstartX = 0.1f;
-	double imgstartY = 0.4f;
+	double imgstartY = 0.2f;
 
 	for (int i = 0;i < achConfigs.size();i++) {		//遍历所有成就
 

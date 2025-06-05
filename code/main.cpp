@@ -38,12 +38,12 @@ int main() {
 
 	//初始化关卡列表
 	levelgames.push_back(make_unique<Level_TE>(0, 3, 1));
-	levelgames.push_back(make_unique<Level>(1, 3, 1));
-	levelgames.push_back(make_unique<Level>(2, 3, 0));
-	levelgames.push_back(make_unique<Level_3>(3, 3, 1));
-	levelgames.push_back(make_unique<Level_4>(4, 3, 0));
-	levelgames.push_back(make_unique<Level>(5, 4, 1));
-	levelgames.push_back(make_unique<Level_6>(7, 4, 1));
+	//levelgames.push_back(make_unique<Level>(1, 3, 1));
+	//levelgames.push_back(make_unique<Level>(2, 3, 0));
+	//levelgames.push_back(make_unique<Level_3>(3, 3, 1));
+	//levelgames.push_back(make_unique<Level_4>(4, 3, 0));
+	//levelgames.push_back(make_unique<Level>(5, 4, 1));
+	//levelgames.push_back(make_unique<Level_6>(6, 4, 1));
 
 
 	// 初始化窗口
@@ -225,7 +225,35 @@ int main() {
 
 						//背包界面按钮处理
 						else if (currentState == BAG) {
+							if (i < buttons.size() - 1) {		//背包详情
+								confirm_window = ConfirmWindow(_T("将此物品设定为技能——"), _T("E"), _T("Q"));
 
+								bool Qed = false;		//确认是否设定为Q技能
+								drawBag(buttons, player, shopConfigs);
+								confirm_window.draw();
+								FlushBatchDraw();
+								while (true) {
+									msg = GetMouseMsg();
+									if (msg.uMsg == WM_LBUTTONDOWN) {
+										if (confirm_window.confirmbtn.checkAbove(msg.x, msg.y)) {
+											Qed = true;
+											break;
+										}
+										else if (confirm_window.backbtn.checkAbove(msg.x, msg.y)) {
+											Qed = false;
+											break;
+										}
+									}
+								}
+
+								if (Qed && player.skillE != i + 1) {
+									player.skillQ = i+1;
+								}
+								else if(!Qed && player.skillQ != i + 1){
+									player.skillE = i + 1;
+								}
+								saveData(player);
+							}
 							if (i == buttons.size() - 1) {		//返回按钮
 								currentState = MAIN_MENU;
 								buttons = initMainMenuBtn();
