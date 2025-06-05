@@ -5,8 +5,7 @@ Animation debuffAnimation;
 Animation display;
 
 
-sf::Sound kingCrimson;
-sf::SoundBuffer Buffer_kingCrimson;
+
 
 
 LevelResult Level_TE::play() {

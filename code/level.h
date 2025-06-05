@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <ctime>
 #include "head.h"
 #include "music.h"
 #include "Animation.h"
@@ -64,6 +65,8 @@ public:
 	sf::SoundBuffer Buffer_killerQueen_de;
 	sf::Sound killerQueen;
 	sf::SoundBuffer Buffer_killerQueen;
+	sf::Sound kingCrimson;
+	sf::SoundBuffer Buffer_kingCrimson;
 	Dialogue* dialogue = nullptr;				//用于展示剧情的对话对象指针
 
 	// 输入控制相关(暂时没明白)
@@ -825,6 +828,9 @@ public:
 	Animation display;
 	Animation debuffAnimation;
 	IMAGE all;
+	const static int Prob=40;
+	int stepsize = 5;
+	int Minvalue_Prob=5;
 
 	void initAnimation() {
 		display.init({ L"./assets/image/level/6/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
@@ -859,6 +865,9 @@ public:
 		initAnimations();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
 		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);//发动败者食尘失败的音乐
+		loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, Buffer_kingCrimson);
+		srand((unsigned)time(nullptr));
+
 
 	}
 
@@ -869,5 +878,9 @@ public:
 	void Buff_jojo(int n);
 
 	void Debuff_jojo();
+
 	void Shuffle(int n);
+
+	void moveTile(int row, int col)override;
 };
+
