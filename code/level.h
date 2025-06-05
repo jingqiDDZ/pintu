@@ -690,8 +690,13 @@ public:
 		// 更新透明度 (仅移动的方块)
 		if (alphaBoard[row][col] > minAlpha) {
 			alphaBoard[row][col] =
-				minAlpha > (alphaBoard[row][col] - alphaDecrement) ? minAlpha : (alphaBoard[row][col] - alphaDecrement);
+				(alphaBoard[row][col] - alphaDecrement < minAlpha) ?
+				minAlpha : (alphaBoard[row][col] - alphaDecrement);
 		}
+
+		// 保存移动前的空白位置
+		int oldEmptyRow = emptyRow;
+		int oldEmptyCol = emptyCol;
 
 		// 移动方块
 		swap(board[emptyRow][emptyCol], board[row][col]);
@@ -701,6 +706,19 @@ public:
 		emptyRow = row;
 		emptyCol = col;
 		moves++;
+
+		// +++ 新增：检查移动后的方块是否在正确位置 +++
+		int movedValue = board[oldEmptyRow][oldEmptyCol];  // 被移动的方块值
+		if (movedValue != 0) {
+			// 计算正确位置（行和列）
+			int correctRow = (movedValue - 1) / SSIZE;
+			int correctCol = (movedValue - 1) % SSIZE;
+
+			// 如果当前在正确位置，重置透明度
+			if (oldEmptyRow == correctRow && oldEmptyCol == correctCol) {
+				alphaBoard[oldEmptyRow][oldEmptyCol] = 255;  // 完全透明
+			}
+		}
 	}
 
 
@@ -821,6 +839,22 @@ public:
 	vector<vector<BYTE>> alphaBoard;  // 每个拼图块的透明度
 	const BYTE alphaDecrement = 30;   // 每次移动减少的透明度值
 	const BYTE minAlpha = 25;         // 最小透明度
+};
+
+class Level_5 {
+public:
+	Animation display;
+	IMAGE all;
+
+	void initAnimations() {
+
+		display.init({ L"./assets/image/level/5/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+
+		// 加载动画资源
+		if (!display.loadFrames()) {
+			MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
+		}
+	}
 };
 
 class Level_6 :public Level {
