@@ -819,3 +819,55 @@ public:
 	const BYTE alphaDecrement = 30;   // 每次移动减少的透明度值
 	const BYTE minAlpha = 25;         // 最小透明度
 };
+
+class Level_6 :public Level {
+public:
+	Animation display;
+	Animation debuffAnimation;
+	IMAGE all;
+
+	void initAnimation() {
+		display.init({ L"./assets/image/level/6/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+		debuffAnimation.init(
+			{
+			L"./assets/anim/te.png",
+			L"./assets/anim/te1.png",
+			L"./assets/anim/te2.png",
+			L"./assets/anim/te3.png",
+			L"./assets/anim/te4.png",
+			L"./assets/anim/te5.png",
+			L"./assets/anim/te6.png",
+			L"./assets/anim/te7.png",
+			L"./assets/anim/te8.png",
+			L"./assets/anim/te9.png"
+			},
+			400, 300, Animation::BLOCKING, 1000, 100
+		);
+		
+			
+		// 加载动画资源
+		if (!display.loadFrames()) {
+			MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
+		}
+		if (!debuffAnimation.loadFrames()) {
+			MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
+		}
+	}
+
+	Level_6(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+		loadimage(&all, _T("./assets/image/level/6/all.png"), BLOCK_SIZE, BLOCK_SIZE);
+		initAnimations();
+		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
+		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);//发动败者食尘失败的音乐
+
+	}
+
+	int handleFunctionKeys() override;
+
+	LevelResult play() override;
+
+	void Buff_jojo(int n);
+
+	void Debuff_jojo();
+	void Shuffle(int n);
+};

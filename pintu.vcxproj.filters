@@ -45,6 +45,9 @@
     <ClCompile Include="code\putimage_pro.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="code\Level_6.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\audio\along.wav">
