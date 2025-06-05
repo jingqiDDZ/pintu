@@ -1,63 +1,62 @@
 [
     {
-        "name": "林夏",
-        "text": "（松开少女的手）差不多……成型了",
+        "name": "",
+        "text": "“这……这是什么曲子？”有人皱眉",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
     },
     {
-        "name": "少女",
-        "text": "(惊喜)好厉害！但……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "少女",
-        "text": "他们估计也不信我能做出这样的好的陶器吧",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "你有什么喜欢的东西吗？",
+        "name": "",
+        "text": "“调子倒是新鲜，可总觉得不够庄重……”一位老乐师摇头",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
 
     },
     {
-        "name": "少女",
-        "text": "欸？怎么了？",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "name": "",
+        "text": "“像是有绵绵情意在其中……”锦衣公子摇扇沉吟",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
 
     },
     {
         "name": "林夏",
-        "text": "我…我是说可以用铁砂在盆上面画点喜欢的东西",
+        "text": "（轻笑）",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
+
     },
     {
         "name": "林夏",
-        "text": "这样大家就知道，这是你做的陶盆了",
+        "text": "弦急处，是她策马过江南，马蹄踏碎杏花雨",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "铁砂？妈耶！你怎么想到的！",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
 
     },
     {
-        "name": "少女",
-        "text": "我比较喜欢……吃鱼吧……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "name": "林夏",
+        "text": "弦缓时，是夜半无人私语，瓷胎上未干的泪痕。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "",
+        "text": "满座寂然",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "琵琶女",
+        "text": "（抬眸，眼神颤动）公子……",
+        "imgpath": "./assets/image/chara/pipa_girl.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
 
+    },
+    {
+        "name": "琵琶女",
+        "text": "（忽然微笑）公子耳力倒是极好",
+        "imgpath": "./assets/image/chara/pipa_girl.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
     }
 ]
     

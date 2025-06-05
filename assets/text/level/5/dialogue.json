@@ -1,102 +1,73 @@
 [
     {
         "name": "旁白",
-        "text": "少年睁开眼睛时，刺眼的阳光洒在陌生的土地上。",
+        "text": "长安城的灯火如星河倾泻，丝竹管弦声从四面八方涌来",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/background.png"
     },
     {
         "name": "旁白",
-        "text": "他茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
+        "text": "他穿着锦缎华服，手中折扇轻摇，俨然是个意气风发的贵公子。",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/background.png"
 
     },
     {
-        "name": "旁白",
-        "text": "几个身着兽皮的人正围在火堆旁忙碌。",
+        "name": "小厮",
+        "text": "公子今日可要听曲？",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "（低头查看自己的麻布衣）我的衣服怎么...？",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "旁白",
-        "text": "不远处，传来低低的啜泣声。",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "旁白",
-        "text": "一个少女蹲在河边，手中捏着一个潦草的毫无特色的泥盆",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
+        "bkpath": "./assets/image/level/5/background.png"
 
     },
     {
         "name": "林夏",
-        "text": "（试探）你在做什么？",
+        "text": "（怔了怔，随即大笑）去！为何不去？",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（吓了一跳，抬头看向少年）",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（咬着嘴唇）我……我想做一个陶盆，可它总是塌掉。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "大家都笑我笨，说我不配当祭司的女儿。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "欸不对？我们最近没有外地访客啊……",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "林夏",
-        "text": "（斟酌用词）我来自...黄河下游的部落！",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/background.png"
+
     },
     {
         "name": "旁白",
-        "text": "少女脖子上系着彩色贝壳串，正是课本里仰韶文化典型的装饰品。",
+        "text": "教坊内，觥筹交错，舞袖翩跹。",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/background.png"
     },
     {
-        "name": "林夏",
-        "text": "（鼓起勇气）呃…我们那儿做陶器会用慢轮辅助定型。",
+        "name": "",
+        "text": "“铮————”",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
     },
     {
-        "name": "少女",
-        "text": "(疑惑)",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "name": "旁白",
+        "text": "纱帘轻挑，一名女子怀抱琵琶坐在台上……",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
+
     },
     {
-        "name": "林夏",
-        "text": "(努力回忆)先揉匀黏土，再慢慢塑形……不能太急。",
+        "name": "旁白",
+        "text": "那张脸，林夏再熟悉不过",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "旁白",
+        "text": "琵琶女指尖一挑，众人期待的《霓裳羽衣》却未响起",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "旁白",
+        "text": "取而代之的是一段从未听过的清泠又温婉的旋律",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "旁白",
+        "text": "伴随着那段旋律，少年的脑中开始构建一幅画面……",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
     }
 ]
     

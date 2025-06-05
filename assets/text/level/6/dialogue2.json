@@ -1,63 +1,75 @@
 [
     {
-        "name": "林夏",
-        "text": "（松开少女的手）差不多……成型了",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
         "name": "少女",
-        "text": "(惊喜)好厉害！但……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "少女",
-        "text": "他们估计也不信我能做出这样的好的陶器吧",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "（一愣，眯起眼睛）哦？那您看看，大娘这'坎纹'入'离宫'，是不是主火厄？",
+        "imgpath": "./assets/image/chara/girl.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
-        "text": "你有什么喜欢的东西吗？",
+        "text": "非也非也！您看这'坤位'饱满，分明是......",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "少女",
-        "text": "欸？怎么了？",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "是什么？",
+        "imgpath": "./assets/image/chara/girl.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
-        "text": "我…我是说可以用铁砂在盆上面画点喜欢的东西",
+        "text": "是......是您长得真好看",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "人群哄然大笑",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "喂！……这算什么啊",
+        "imgpath": "./assets/image/chara/girl.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "夕阳西下，两个没骗到钱的'半仙'蹲在街角分食一个偷来的包子",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "其实我根本不会算命",
+        "imgpath": "./assets/image/chara/girl.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
-        "text": "这样大家就知道，这是你做的陶盆了",
+        "text": "巧了，我也是",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "少女",
-        "text": "铁砂？妈耶！你怎么想到的！",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "那你怎么知道丙寅日灶君当值？",
+        "imgpath": "./assets/image/chara/girl.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
-        "name": "少女",
-        "text": "我比较喜欢……吃鱼吧……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "name": "林夏",
+        "text": "蒙的",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少女哈哈大笑，笑声惊起屋檐下的麻雀",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
     }
 ]
     

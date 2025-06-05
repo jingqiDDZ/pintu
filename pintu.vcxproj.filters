@@ -45,7 +45,7 @@
     <ClCompile Include="code\putimage_pro.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="code\Level_6.cpp">
+    <ClCompile Include="code\pause.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,6 +80,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="code\putimage_pro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="code\pause.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

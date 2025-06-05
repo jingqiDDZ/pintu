@@ -617,7 +617,12 @@ int Level::handleFunctionKeys() {
 		cout << "WOW~~ isWin!" << endl;
 		showWin();
 		cout << "showWin finished" << endl;
-
+		//结算之后，展示对话剧情再结束游戏
+		string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+		drawDialogue(tmppath);
+		FlushBatchDraw();
+		//赢了之后直接return Win
+		//return LevelResult::Win;
 
 		lastFunctionTime = currentTime;
 	}
