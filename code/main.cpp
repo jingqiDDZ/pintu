@@ -11,6 +11,7 @@
 //全局数据 
 vector<unique_ptr<Level>> levelgames;
 ConfirmWindow confirm_window(_T("是否确认"));
+ImageWindow image_window;
 //Level_TE levelgame(0, 3, 1);	//关卡
 //Level levelnormal(2, 3, 1);		//一般关卡测试
 //Dialogue testDia("./assets/text/level/0/dialogue.json");
@@ -179,15 +180,27 @@ int main() {
 						//商店界面按钮处理
 						else if (currentState == SHOP) {
 							cout << "成功进入商店" << endl;
-							if (i < shopConfigs.size()) {		//点击购买按钮
-								bool canbuy = false;
-								if (shopConfigs[i].unique == false || (shopConfigs[i].unique && player.items[i].number == 0)) {		//根据物品是否可以购买来使用不同的颜色
-									canbuy = true;
+
+							if (i < shopConfigs.size() && (shopConfigs[i].unique == false || (shopConfigs[i].unique && player.items[i].number == 0))) {		//点击购买按钮且可以购买
+								bool confirmed = false;		//确认是否进行购买
+								drawShop(buttons, player);
+								confirm_window.draw();
+								FlushBatchDraw();
+								while (true) {
+									msg = GetMouseMsg();
+									if (msg.uMsg == WM_LBUTTONDOWN) {
+										if (confirm_window.confirmbtn.checkAbove(msg.x, msg.y)) {
+											confirmed = true;
+											break;
+										}
+										else if (confirm_window.backbtn.checkAbove(msg.x, msg.y)) {
+											confirmed = false;
+											break;
+										}
+									}
 								}
-								if (!canbuy) {
-									cout << "该物品持有数已达上限" << endl;
-								}
-								else {
+
+								if (confirmed) {
 									cout << "正在购买: 编号" << i << " " << shopConfigs[i].id << endl;
 									//此处添加购买代码
 									if (shopConfigs[i].price <= player.coins) {
@@ -200,7 +213,6 @@ int main() {
 									else {
 										cout << "资金不足，购买失败" << endl;
 									}
-
 								}
 							}
 							else if (i == 2 * shopConfigs.size()) {		//返回按钮
@@ -220,8 +232,22 @@ int main() {
 
 						//成就界面按钮处理
 						else if (currentState == ACHIEVE) {
-
-							if (i == buttons.size() - 1) {		//返回按钮
+							if (i < buttons.size() - 1) {		//成就详情
+								imgpath = "./assets/image/achievement/" + to_string(i) + "/";
+								image_window = ImageWindow(0.6, 0.6, imgpath);
+								drawAchieve(buttons, player, achConfigs);
+								image_window.draw();
+								FlushBatchDraw();
+								while (true) {
+									msg = GetMouseMsg();
+									if (msg.uMsg == WM_LBUTTONDOWN) {
+										if (image_window.backbtn.checkAbove(msg.x, msg.y)) {
+											break;
+										}
+									}
+								}
+							}
+							else if (i == buttons.size() - 1) {		//返回按钮
 								currentState = MAIN_MENU;
 								buttons = initMainMenuBtn();
 							}

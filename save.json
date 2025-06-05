@@ -24,11 +24,11 @@
         },
         {
             "id": "绿豆香囊",
-            "number": 2
+            "number": 3
         }
     ],
     "player": {
-        "coins": 10060,
+        "coins": 9970,
         "unlockedLevel": 7
     }
 }
