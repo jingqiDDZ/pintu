@@ -52,11 +52,14 @@ void Level_6::Debuff_jojo(){
 
 	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
 	debuffAnimation.play(
-		getwidth(),          // 起始X：屏幕右侧外
-		-300,                // 起始Y：屏幕上方外
-		centerX,             // 结束X：水平居中
-		centerY,             // 结束Y：垂直居中
-		PathFunctions::linear, // 使用线性移动路径
+		getwidth(),          // startX
+		-300,                // startY
+		centerX,             // endX
+		centerY,             // endY
+		[](float progress, int& x, int& y, int sx, int sy, int ex, int ey) {
+			// 使用lambda正确转发参数
+			PathFunctions::linear(progress, x, y, sx, sy, ex, ey);
+		},  // 正确传递6个参数
 		SRCCOPY
 	);
 
@@ -182,7 +185,7 @@ int Level_6::handleFunctionKeys() {
 
 
 	//检测C键:展示图片
-	if (GetAsyncKeyState('C') & 0x8000) {
+	else if (GetAsyncKeyState('C') & 0x8000) {
 		if (!display.isPlaying()) {
 			int X = WD_width / 4 * 3;
 			int Y = WD_height / 4 * 3;
@@ -268,22 +271,22 @@ CONTINUE_GAME:
 			display.updateNonBlocking();
 		}
 
-		/*// 检查是否有阻塞动画在播放（如debuffAnimation）
+		// 检查是否有阻塞动画在播放（如debuffAnimation）
 		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
 			(debuffAnimation.getType() == Animation::BLOCKING);
-		*/
+		
 		// 非动画期间处理输入
-		//if (!isBlockingAnimation) {
-		if (handleMouse() || handleKeyboard()) {
-			sound_click.play();
-		}
+		if (!isBlockingAnimation) {
+			if (handleMouse() || handleKeyboard()) {
+				sound_click.play();
+			}
 
-		//处理功能键
-		int funcReturn = handleFunctionKeys();
-		if (funcReturn == 1) {
-			return LevelResult::Exit;
+			//处理功能键
+			int funcReturn = handleFunctionKeys();
+			if (funcReturn == 1) {
+				return LevelResult::Exit;
+			}
 		}
-		//}
 
 		//胜利检测
 		if (isWin()) {
@@ -302,10 +305,10 @@ CONTINUE_GAME:
 			continue;
 		}
 
-		/*if (isBlockingAnimation) {
+		if (isBlockingAnimation) {
 			// 阻塞动画有自己的绘制逻辑，跳过常规绘制
 			continue;
-		}*/
+		}
 
 		//超时检测
 		if (Tmode == 1 && countdownData.isTimeout) {

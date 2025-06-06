@@ -1,7 +1,7 @@
 #include "level.h"
 #include <algorithm>
 
-Animation debuffAnimation;
+Animation DebuffAnimation;
 Animation display;
 
 
@@ -102,8 +102,8 @@ CONTINUE_GAME:
 		}
 
 		// 检查是否有阻塞动画在播放（如debuffAnimation）
-		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
-			(debuffAnimation.getType() == Animation::BLOCKING);
+		bool isBlockingAnimation = DebuffAnimation.isPlaying() &&
+			(DebuffAnimation.getType() == Animation::BLOCKING);
 
 		// 非动画期间处理输入
 		if (!isBlockingAnimation) {
@@ -299,7 +299,7 @@ void Level_TE::Buff_jojo(int n) {
 
 void initAnimations() {
 	// 初始化debuff动画
-	debuffAnimation.init(
+	DebuffAnimation.init(
 		{
 			L"./assets/anim/te.png",
 			L"./assets/anim/te1.png",
@@ -320,7 +320,7 @@ void initAnimations() {
 	//debuffAnimation.init({ L"./assets/anim/te.png" }, 400, 300, Animation::NON_BLOCKING, 1000, 1000);
 
 	// 加载动画资源
-	if (!debuffAnimation.loadFrames()) {
+	if (!DebuffAnimation.loadFrames()) {
 		MessageBox(GetHWnd(), _T("Debuff动画资源加载失败"), _T("错误"), MB_OK);
 	}
 	if (!display.loadFrames()) {
@@ -391,8 +391,8 @@ void Level_TE::Shuffle(int times) {
 void Level_TE::Debuff_jojo() {
 	kingCrimson.play();
 
-	debuffAnimation.setAlpha(250);
-	debuffAnimation.setStayDuration(1000);
+	DebuffAnimation.setAlpha(250);
+	DebuffAnimation.setStayDuration(1000);
 
 	/*debuffAnimation.play(
 		getwidth() / 2 - 200,  // 起始X（水平居中）
@@ -410,7 +410,7 @@ void Level_TE::Debuff_jojo() {
 	int centerY = getheight() / 2 - 150; // 动画高度300
 
 	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
-	debuffAnimation.play(
+	DebuffAnimation.play(
 		getwidth(),          // 起始X：屏幕右侧外
 		-300,                // 起始Y：屏幕上方外
 		centerX,             // 结束X：水平居中
