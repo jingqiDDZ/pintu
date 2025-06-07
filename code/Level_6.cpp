@@ -51,7 +51,7 @@ void Level_6::Debuff_jojo(){
 	int centerY = getheight() / 2 - 150; // 动画高度300
 
 	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
-	debuffAnimation.play(
+	/*debuffAnimation.play(
 		getwidth(),          // startX
 		-300,                // startY
 		centerX,             // endX
@@ -61,7 +61,8 @@ void Level_6::Debuff_jojo(){
 			PathFunctions::linear(progress, x, y, sx, sy, ex, ey);
 		},  // 正确传递6个参数
 		SRCCOPY
-	);
+	);*/
+	debuffAnimation.startNonBlocking(centerX, centerY, centerX, centerY);
 
 	Shuffle(3);
 }
@@ -175,8 +176,54 @@ int Level_6::handleFunctionKeys() {
 
 		lastFunctionTime = currentTime;
 	}
+	if (GetAsyncKeyState('Q') & 0x8000) {
+		if (skillQ == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 0) {
+			skill0.play();
+		}
+	}
+	else if (GetAsyncKeyState('E') & 0x8000) {
+		if (skillE == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 0) {
+			skill0.play();
+		}
+	}
 	//回退操作
-	else if (GetAsyncKeyState('V') & 0x8000) {
+	/*else if (GetAsyncKeyState('V') & 0x8000) {
 		if (history.size() >= 3) {
 			Buff_jojo(3);
 		}
@@ -196,7 +243,7 @@ int Level_6::handleFunctionKeys() {
 			display.startNonBlocking(X, Y, X, Y);
 		}
 		lastFunctionTime = currentTime;
-	}
+	}*/
 }
 
 LevelResult Level_6::play(){
@@ -277,13 +324,16 @@ CONTINUE_GAME:
 		if (display.isPlaying() && display.getType() == Animation::NON_BLOCKING) {
 			display.updateNonBlocking();
 		}
+		if (debuffAnimation.isPlaying() && debuffAnimation.getType() == Animation::NON_BLOCKING) {
+			debuffAnimation.updateNonBlocking();
+		}
 
 		// 检查是否有阻塞动画在播放（如debuffAnimation）
-		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
-			(debuffAnimation.getType() == Animation::BLOCKING);
+		//bool isBlockingAnimation = debuffAnimation.isPlaying() &&
+		//	(debuffAnimation.getType() == Animation::BLOCKING);
 		
 		// 非动画期间处理输入
-		if (!isBlockingAnimation) {
+		//if (!isBlockingAnimation) {
 			if (handleMouse() || handleKeyboard()) {
 				sound_click.play();
 			}
@@ -293,7 +343,7 @@ CONTINUE_GAME:
 			if (funcReturn == 1) {
 				return LevelResult::Exit;
 			}
-		}
+		//}
 
 		//胜利检测
 		if (isWin()) {
@@ -315,10 +365,10 @@ CONTINUE_GAME:
 			return LevelResult::Win;
 		}
 
-		if (isBlockingAnimation) {
+		/*if (isBlockingAnimation) {
 			// 阻塞动画有自己的绘制逻辑，跳过常规绘制
 			continue;
-		}
+		}*/
 
 		//超时检测
 		if (Tmode == 1 && countdownData.isTimeout) {
