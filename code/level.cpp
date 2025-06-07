@@ -5,8 +5,8 @@
 bool Level::gdiplusInitialized = false;
 ULONG_PTR Level::gdiplusToken = 0;
 
-Level::Level(int tid, int tSSIZE, int tTmode) :
-	id(tid), SSIZE(tSSIZE), Tmode(tTmode) {
+Level::Level(int tid, int tSSIZE, int tTmode,int tskillQ,int tskillE) :
+	id(tid), SSIZE(tSSIZE), Tmode(tTmode) ,skillQ(tskillQ),skillE(tskillE){
 
 	moves = 0;
 	isWinning = false;
@@ -26,6 +26,7 @@ Level::Level(int tid, int tSSIZE, int tTmode) :
 	loadSoundClip(tmppath, sound_click, buffer_click);
 	tmppath = audioPath + "win.wav";
 	loadSoundClip(tmppath, sound_win, buffer_win);
+	loadSoundClip("./assets/audio/skill0.wav", skill0, Buffer_skill0);
 	cout << "音频素材导入完毕" << endl;
 
 	//图片素材
@@ -40,6 +41,16 @@ Level::Level(int tid, int tSSIZE, int tTmode) :
 	}
 	cout << "图片素材导入完毕" << endl;
 
+	loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);
+	loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);
+
+	//初始化华容道总图片
+	std::wstring displayPath = L"./assets/image/level/" + std::to_wstring(id) + L"/all.png";
+	display.init({ displayPath }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+	loadimage(&all, displayPath.c_str(), BLOCK_SIZE, BLOCK_SIZE);
+	if (!display.loadFrames()) {
+		MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
+	}
 
 	//若是倒计时模式则导入倒计时音频，初始化倒计时变量
 	if (Tmode == 1) {
@@ -108,6 +119,7 @@ CONTINUE_GAME:
 		countdownData.startTime = chrono::system_clock::now();
 	}
 
+
 	bool bgm_start = false;			//负责第一次进入循环时开始播放bgm
 
 	while (true) {
@@ -131,6 +143,13 @@ CONTINUE_GAME:
 		if (!bgm_start) {
 			bgm_start = true;
 			sound_bgm.play();
+		}
+
+		drawGame();
+
+		// 更新非阻塞动画
+		if (display.isPlaying() && display.getType() == Animation::NON_BLOCKING) {
+			display.updateNonBlocking();
 		}
 
 		if (handleMouse() || handleKeyboard()) {
@@ -205,7 +224,6 @@ CONTINUE_GAME:
 			continue; // 跳过后续游戏逻辑
 		}//倒计时超时
 
-		drawGame();
 		FlushBatchDraw();
 		Sleep(0.1);
 	}//游戏运行
@@ -626,7 +644,52 @@ int Level::handleFunctionKeys() {
 
 		lastFunctionTime = currentTime;
 	}
-
+	else if (GetAsyncKeyState('Q') & 0x8000) {
+		if (skillQ == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 0) {
+			skill0.play();
+		}
+	}
+	else if (GetAsyncKeyState('E') & 0x8000) {
+		if (skillE == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 0) {
+			skill0.play();
+		}
+	}
 }
 
 void Level::fadeImage(IMAGE* img, int x, int y, int fadeInTime, int stayTime, int fadeOutTime) {
@@ -849,3 +912,31 @@ void Level::fadeOutImage(IMAGE* img, int x, int y, int fadeOutTime) {
 		Sleep(fadeOutTime / 50); // 控制淡出速度
 	}
 }
+
+void Level::Buff_jojo(int n) {
+	killerQueen.play();
+	for (int i = 0;i < n;i++) {
+		if (!history.empty()) {
+			// 恢复上一个状态
+			board = history.back();
+			history.pop_back();
+			moves--;
+
+			// 更新空白块位置
+			for (int i = 0; i < SSIZE; i++) {
+				for (int j = 0; j < SSIZE; j++) {
+					if (board[i][j] == 0) {
+						emptyRow = i;
+						emptyCol = j;
+					}
+				}
+			}
+		}
+
+		//刷新
+
+		drawGame();
+		FlushBatchDraw();
+	}
+}
+

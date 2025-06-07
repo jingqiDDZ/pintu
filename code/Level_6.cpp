@@ -9,7 +9,7 @@ void Level_6::Buff_jojo(int n){
 			// 恢复上一个状态
 			board = history.back();
 			history.pop_back();
-			moves-=3;
+			moves--;
 
 			// 更新空白块位置
 			for (int i = 0; i < SSIZE; i++) {
@@ -176,8 +176,54 @@ int Level_6::handleFunctionKeys() {
 
 		lastFunctionTime = currentTime;
 	}
+	if (GetAsyncKeyState('Q') & 0x8000) {
+		if (skillQ == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillQ == 0) {
+			skill0.play();
+		}
+	}
+	else if (GetAsyncKeyState('E') & 0x8000) {
+		if (skillE == 1) {
+			if (!display.isPlaying()) {
+				int X = WD_width / 4 * 3;
+				int Y = WD_height / 4 * 3;
+				display.setStayDuration(5000);
+				display.startNonBlocking(X, Y, X, Y);
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 2) {
+			if (history.size() >= 3) {
+				Buff_jojo(3);
+			}
+			else {
+				killerQueen_de.play();
+			}
+			lastFunctionTime = currentTime;
+		}
+		else if (skillE == 0) {
+			skill0.play();
+		}
+	}
 	//回退操作
-	else if (GetAsyncKeyState('V') & 0x8000) {
+	/*else if (GetAsyncKeyState('V') & 0x8000) {
 		if (history.size() >= 3) {
 			Buff_jojo(3);
 		}
@@ -197,7 +243,7 @@ int Level_6::handleFunctionKeys() {
 			display.startNonBlocking(X, Y, X, Y);
 		}
 		lastFunctionTime = currentTime;
-	}
+	}*/
 }
 
 LevelResult Level_6::play(){

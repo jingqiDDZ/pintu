@@ -37,6 +37,12 @@ struct CountdownData {
 class Level {
 public:
 
+	Animation display;
+	IMAGE all;
+	Sound skill0;
+	SoundBuffer Buffer_skill0;
+	int skillQ = 0;
+	int skillE = 0;
 	//需要直接初始化的变量
 	int id = 0;						// 关卡名，关联到后续的地址
 	int SSIZE = 3;                  // 游戏板尺寸 (3x3, 4x4等) 
@@ -77,10 +83,11 @@ public:
 
 
 	//构造函数（三个变量初始化，素材引入）
-	Level(int tid, int tSSIZE, int tTmode);
+	Level(int tid, int tSSIZE, int tTmode,int tskillQ,int tskillE);
 	LevelResult virtual play();		//原来的main函数部分
 	virtual void drawDialogue(string);		//关卡开始/结束时展示剧情对话用
 	virtual void drawGame();				//绘制游戏界面
+	virtual void Buff_jojo(int n);
 
 	void fadeImage(IMAGE* img, int x, int y, int fadeInTime, int stayTime, int fadeOutTime);//插入图片的淡入淡出
 	void fadeInImage(IMAGE* img, int x, int y, int);
@@ -114,7 +121,7 @@ protected:
 
 class Level_TE :public Level {
 public:
-	Level_TE(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+	Level_TE(int id, int SSIZE, int Tmode,int sq,int se) :Level(id, SSIZE, Tmode,sq,se) {
 		alphaBoard.resize(SSIZE, vector<BYTE>(SSIZE, 255)); // 初始透明度255
 	}
 	LevelResult play() override;
@@ -151,7 +158,7 @@ public:
 		}
 	}
 
-	Level_3(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+	Level_3(int id, int SSIZE, int Tmode,int sq,int se) :Level(id, SSIZE, Tmode,sq,se) {
 		loadimage(&all, _T("./assets/image/level/3/all.png"), BLOCK_SIZE, BLOCK_SIZE);
 		initAnimations();
 	}
@@ -377,15 +384,78 @@ public:
 		}
 
 		
-		//检测C键:展示图片
-		if (GetAsyncKeyState('C') & 0x8000) {
-			if (!display.isPlaying()) {
-				int X = WD_width / 4 * 3;
-				int Y = WD_height / 4 * 3;
-				display.setStayDuration(5000);
-				display.startNonBlocking(X, Y, X, Y);
+		else if (GetAsyncKeyState('Q') & 0x8000) {
+			if (skillQ == 1) {
+				if (!display.isPlaying()) {
+					int X = WD_width / 4 * 3;
+					int Y = WD_height / 4 * 3;
+					display.setStayDuration(5000);
+					display.startNonBlocking(X, Y, X, Y);
+				}
+				lastFunctionTime = currentTime;
 			}
-			lastFunctionTime = currentTime;
+			else if (skillQ == 2) {
+				if (history.size() >= 3) {
+					Buff_jojo(3);
+				}
+				else {
+					killerQueen_de.play();
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillQ == 0) {
+				skill0.play();
+			}
+		}
+		else if (GetAsyncKeyState('E') & 0x8000) {
+			if (skillE == 1) {
+				if (!display.isPlaying()) {
+					int X = WD_width / 4 * 3;
+					int Y = WD_height / 4 * 3;
+					display.setStayDuration(5000);
+					display.startNonBlocking(X, Y, X, Y);
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillE == 2) {
+				if (history.size() >= 3) {
+					Buff_jojo(3);
+				}
+				else {
+					killerQueen_de.play();
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillE == 0) {
+				skill0.play();
+			}
+		}
+	}
+
+	void Buff_jojo(int n) {
+		killerQueen.play();
+		for (int i = 0;i < n;i++) {
+			if (!history.empty()) {
+				// 恢复上一个状态
+				board = history.back();
+				history.pop_back();
+				moves--;
+
+				// 更新空白块位置
+				for (int i = 0; i < SSIZE; i++) {
+					for (int j = 0; j < SSIZE; j++) {
+						if (board[i][j] == 0) {
+							emptyRow = i;
+							emptyCol = j;
+						}
+					}
+				}
+			}
+
+			//刷新
+
+			drawGame();
+			FlushBatchDraw();
 		}
 	}
 };
@@ -406,7 +476,7 @@ public:
 		}
 	}
 
-	Level_4(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+	Level_4(int id, int SSIZE, int Tmode,int sq,int se) :Level(id, SSIZE, Tmode,sq,se) {
 		alphaBoard.resize(SSIZE, vector<BYTE>(SSIZE, 255)); // 初始透明度255
 		loadimage(&all, _T("./assets/image/level/4/all.png"), BLOCK_SIZE, BLOCK_SIZE);
 		initAnimations();
@@ -638,8 +708,54 @@ public:
 			lastFunctionTime = currentTime;
 		}
 
+		else if (GetAsyncKeyState('Q') & 0x8000) {
+			if (skillQ == 1) {
+				if (!display.isPlaying()) {
+					int X = WD_width / 4 * 3;
+					int Y = WD_height / 4 * 3;
+					display.setStayDuration(5000);
+					display.startNonBlocking(X, Y, X, Y);
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillQ == 2) {
+				if (history.size() >= 3) {
+					Buff_jojo(3);
+				}
+				else {
+					killerQueen_de.play();
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillQ == 0) {
+				skill0.play();
+			}
+		}
+		else if (GetAsyncKeyState('E') & 0x8000) {
+			if (skillE == 1) {
+				if (!display.isPlaying()) {
+					int X = WD_width / 4 * 3;
+					int Y = WD_height / 4 * 3;
+					display.setStayDuration(5000);
+					display.startNonBlocking(X, Y, X, Y);
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillE == 2) {
+				if (history.size() >= 3) {
+					Buff_jojo(3);
+				}
+				else {
+					killerQueen_de.play();
+				}
+				lastFunctionTime = currentTime;
+			}
+			else if (skillE == 0) {
+				skill0.play();
+			}
+		}
 		// 检测 V 键：回退操作
-		else if (GetAsyncKeyState('V') & 0x8000) {
+		/*else if (GetAsyncKeyState('V') & 0x8000) {
 			if (history.size() >= 3) {
 				Buff_jojo(3);
 			}
@@ -658,7 +774,7 @@ public:
 				display.startNonBlocking(X, Y, X, Y);
 			}
 			lastFunctionTime = currentTime;
-		}
+		}*/
 	}
 
 
@@ -669,7 +785,7 @@ public:
 				// 恢复上一个状态
 				board = history.back();
 				history.pop_back();
-				moves-=3;
+				moves--;
 
 				// 更新空白块位置
 				for (int i = 0; i < SSIZE; i++) {
@@ -897,7 +1013,7 @@ public:
 		}
 	}
 
-	Level_5(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+	Level_5(int id, int SSIZE, int Tmode,int sq,int se) :Level(id, SSIZE, Tmode,sq,se) {
 		loadimage(&all, _T("./assets/image/level/5/all.png"), BLOCK_SIZE, BLOCK_SIZE);
 		initAnimations();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
@@ -1202,7 +1318,7 @@ public:
 		}
 	}
 
-	Level_6(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+	Level_6(int id, int SSIZE, int Tmode,int sq,int se) :Level(id, SSIZE, Tmode,sq,se) {
 		loadimage(&all, _T("./assets/image/level/6/all.png"), BLOCK_SIZE, BLOCK_SIZE);
 		initAnimation();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
@@ -1252,7 +1368,7 @@ public:
 	
 	void initAnimation();
 
-	Level_7(int id, int SSIZE, int Tmode):Level(id, SSIZE, Tmode) {
+	Level_7(int id, int SSIZE, int Tmode,int sq,int se):Level(id, SSIZE, Tmode,sq,se) {
 		alphaBoard.resize(SSIZE, vector<BYTE>(SSIZE, 255)); // 初始透明度255
 		loadimage(&all1, _T("./assets/image/level/7/all1.png"), BLOCK_SIZE, BLOCK_SIZE);
 		loadimage(&all2, _T("./assets/image/level/7/all2.png"), BLOCK_SIZE, BLOCK_SIZE);
