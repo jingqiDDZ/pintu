@@ -21,6 +21,8 @@ vector<AchievementConfig> achConfigs; // 成就配置（只读）
 Sound main_bgm;
 SoundBuffer main_buffer;
 bool bgm_play = false;
+int Level_5::value_5 = Level_5::Prob;
+
 
 int main() {
 	//加载游戏数据
@@ -42,7 +44,7 @@ int main() {
 	levelgames.push_back(make_unique<Level>(2, 3, 0));
 	levelgames.push_back(make_unique<Level_3>(3, 3, 1));
 	levelgames.push_back(make_unique<Level_4>(4, 3, 0));
-	levelgames.push_back(make_unique<Level>(5, 4, 1));
+	levelgames.push_back(make_unique<Level_5>(5, 4, 1));
 	levelgames.push_back(make_unique<Level_6>(6, 4, 1));
 
 

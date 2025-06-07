@@ -857,19 +857,300 @@ public:
 	const BYTE minAlpha = 25;         // 最小透明度
 };
 
-class Level_5 {
+class Level_5 : public Level{
 public:
 	Animation display;
+	Animation water1;
+	Animation water2;
+	Animation water3;
 	IMAGE all;
+	Sound Guqin;
+	SoundBuffer Buffer_Guqin;
+	const static int Prob = 40;
+	int stepsize = 5;
+	int Minvalue_Prob = 5;
+	static int value_5;
 
 	void initAnimations() {
 
 		display.init({ L"./assets/image/level/5/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+		water1.init({ L"./assets/anim/water1.png" }, 375, 237, Animation::NON_BLOCKING, 300, 100);
+		water2.init({ L"./assets/anim/water2.png" }, 375, 237, Animation::NON_BLOCKING, 300, 100);
+		water3.init({ L"./assets/anim/water3.png" }, 375, 237, Animation::NON_BLOCKING, 300, 100);
+
 
 		// 加载动画资源
 		if (!display.loadFrames()) {
 			MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
 		}
+		if (!water1.loadFrames()) {
+			MessageBox(GetHWnd(), _T("涟漪1动画资源加载失败"), _T("错误"), MB_OK);
+		}
+		if (!water2.loadFrames()) {
+			MessageBox(GetHWnd(), _T("涟漪2动画资源加载失败"), _T("错误"), MB_OK);
+		}
+		if (!water3.loadFrames()) {
+			MessageBox(GetHWnd(), _T("涟漪3动画资源加载失败"), _T("错误"), MB_OK);
+		}
+	}
+
+	Level_5(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
+		loadimage(&all, _T("./assets/image/level/5/all.png"), BLOCK_SIZE, BLOCK_SIZE);
+		initAnimations();
+		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
+		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);//发动败者食尘失败的音乐
+		loadSoundClip("./assets/audio/Guqin.wav", Guqin, Buffer_Guqin);//古琴
+	}
+
+	void moveTile(int row,int col)override{
+		if (canMove(row, col)) {
+
+			// 保存当前状态到历史记录
+			history.push_back(board);
+			// 保持最多50步历史记录
+			if (history.size() > 50) history.erase(history.begin());
+
+			board[emptyRow][emptyCol] = board[row][col];
+			board[row][col] = 0;
+			emptyRow = row;
+			emptyCol = col;
+			moves++;
+			Level_5::value_5 = (value_5 - stepsize) < Minvalue_Prob ? Minvalue_Prob : (value_5 - stepsize);
+			int r = rand() % value_5;
+			if (r == 1) {
+				Guqin.play();
+				int P = rand() % 3;
+				switch (P) {
+				case 0: {
+					water1.setAlpha(50);
+					water2.setAlpha(50);
+					water3.setAlpha(50);
+					break;
+				}
+				case 1: {
+					water1.setAlpha(150);
+					water2.setAlpha(150);
+					water3.setAlpha(150);
+					break;
+				}
+				case 2: {
+					water1.setAlpha(250);
+					water2.setAlpha(250);
+					water3.setAlpha(250);
+					break;
+				}
+				}
+				int animWidth = 375;
+				int animHeight = 237;
+				int h = rand() % 3;
+				switch (h) {
+				case 0: {
+					int w = rand() % 4;
+					switch (w) {
+					case 0:water1.startNonBlocking(0, 0, 0, 0);break;
+					case 1:water1.startNonBlocking(0, WD_height-animHeight, 0, WD_height-animHeight);break;
+					case 2:water1.startNonBlocking(WD_width-animWidth, 0, WD_width-animWidth, 0);break;
+					case 3:water1.startNonBlocking(WD_width-animWidth, WD_height-animHeight, WD_width-animWidth, WD_height-animHeight);break;
+					}
+				}
+				case 1: {
+					int w = rand() % 4;
+					switch (w) {
+					case 0:water2.startNonBlocking(0, 0, 0, 0);break;
+					case 1:water2.startNonBlocking(0, WD_height - animHeight, 0, WD_height - animHeight);break;
+					case 2:water2.startNonBlocking(WD_width - animWidth, 0, WD_width - animWidth, 0);break;
+					case 3:water2.startNonBlocking(WD_width - animWidth, WD_height - animHeight, WD_width - animWidth, WD_height - animHeight);break;
+					}
+				}
+				case 2: {
+					int w = rand() % 4;
+					switch (w) {
+					case 0:water3.startNonBlocking(0, 0, 0, 0);break;
+					case 1:water3.startNonBlocking(0, WD_height - animHeight, 0, WD_height - animHeight);break;
+					case 2:water3.startNonBlocking(WD_width - animWidth, 0, WD_width - animWidth, 0);break;
+					case 3:water3.startNonBlocking(WD_width - animWidth, WD_height - animHeight, WD_width - animWidth, WD_height - animHeight);break;
+					}
+				}
+
+				}
+			}
+			if (value_5 == Minvalue_Prob) value_5 = Prob;
+		}
+	}
+
+	LevelResult play() override {
+		BeginBatchDraw();	//双缓冲防止游戏闪烁
+		Gameopen();			//绘制开始界面
+		FlushBatchDraw();   //刷新缓冲区，显示初始界面
+
+		// 步骤1：等待所有按键松开
+		bool keyStillDown = true;
+		while (keyStillDown) {
+			keyStillDown = false;
+			for (int vKey = 8; vKey <= 255; vKey++) {
+				if (GetAsyncKeyState(vKey) & 0x8000) {
+					keyStillDown = true;
+					break;
+				}
+			}
+			Sleep(30);
+		}
+
+		// 步骤2：等待玩家按下任意键
+		while (true) {
+			// 检查ESC
+			if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+				return LevelResult::Exit;
+			}
+			// 检查任意键
+			for (int vKey = 8; vKey <= 255; vKey++) {
+				if (GetAsyncKeyState(vKey) & 0x8000) {
+					goto CONTINUE_GAME;
+				}
+			}
+			Sleep(30);
+		}
+
+	CONTINUE_GAME:
+
+		shuffleBoard();
+		if (Tmode == 0) {
+			time(&timeData.startTime);
+		}
+		else if (Tmode == 1) {
+			countdownData.startTime = chrono::system_clock::now();
+		}
+
+
+
+		initAnimations();
+		bool bgm_start = false;			//负责第一次进入循环时开始播放bgm
+
+
+
+		while (true) {
+
+			if (Tmode == 1) {
+				auto now = std::chrono::system_clock::now();
+				chrono::duration<double> elapsed_Re = now - countdownData.startTime;
+				countdownData.remaining = countdownData.totalTime - static_cast<int>(elapsed_Re.count());
+
+				if (countdownData.remaining <= 0 && !isWin()) {
+					countdownData.isTimeout = true;
+					countdownData.remaining = 0;
+				}
+
+				if (countdownData.remaining <= 10 && countdownData.Played_count == false) {
+					countdownData.sound.play();
+					countdownData.Played_count = true;
+				}
+			}//倒计时
+
+			if (!bgm_start) {
+				bgm_start = true;
+				sound_bgm.play();
+			}
+
+			drawGame();
+
+			// 更新非阻塞动画
+			if (display.isPlaying() && display.getType() == Animation::NON_BLOCKING) {
+				display.updateNonBlocking();
+			}
+			if (water1.isPlaying() && water1.getType() == Animation::NON_BLOCKING) {
+				water1.updateNonBlocking();
+			}
+			if (water2.isPlaying() && water2.getType() == Animation::NON_BLOCKING) {
+				water2.updateNonBlocking();
+			}
+			if (water3.isPlaying() && water3.getType() == Animation::NON_BLOCKING) {
+				water3.updateNonBlocking();
+			}
+
+			// 检查是否有阻塞动画在播放（如debuffAnimation）
+			/*bool isBlockingAnimation = debuffAnimation.isPlaying() &&
+				(debuffAnimation.getType() == Animation::BLOCKING);*/
+
+				// 非动画期间处理输入
+				//if (!isBlockingAnimation) {
+			if (handleMouse() || handleKeyboard()) {
+				sound_click.play();
+			}
+
+			//处理功能键
+			int funcReturn = handleFunctionKeys();
+			if (funcReturn == 1) {
+				return LevelResult::Exit;
+			}
+			//}
+
+			//胜利检测
+			if (isWin()) {
+				if (Tmode == 0) {
+					time(&timeData.endTime);
+					isWinning = true;
+				}
+				else  if (Tmode == 1) {
+					// 计算用时
+					auto endTime_Re = chrono::system_clock::now();
+					countdownData.used = endTime_Re - countdownData.startTime;
+				}
+				cout << "WOW~~ isWin!" << endl;
+				showWin();
+
+				continue;
+			}
+
+			/*if (isBlockingAnimation) {
+				// 阻塞动画有自己的绘制逻辑，跳过常规绘制
+				continue;
+			}*/
+
+			//超时检测
+			if (Tmode == 1 && countdownData.isTimeout) {
+				// 绘制超时界面
+				setbkcolor(RGB(240, 240, 240));
+				cleardevice();
+
+				settextcolor(RED);
+				settextstyle(40, 0, _T("宋体"));
+				outtextxy(SSIZE * 50 - 40, SSIZE * 100 + 230, _T("时间耗尽!"));
+
+				settextstyle(20, 0, _T("宋体"));
+				outtextxy(150, SSIZE * 100 + 270, _T("按R重新开始"));
+				outtextxy(150, SSIZE * 100 + 300, _T("ESC退出游戏"));
+
+				FlushBatchDraw();
+
+				// 非阻塞按键检测
+				while (true) {
+					// 检测R键
+					if (GetAsyncKeyState('R') & 0x8000) {
+						initBoard();
+						shuffleBoard();
+						moves = 0;
+						countdownData.Played_count = false;
+						countdownData.startTime = chrono::system_clock::now();
+						countdownData.isTimeout = false;
+						break;
+					}
+					// 检测ESC键
+					else if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+						return LevelResult::Exit;
+					}
+
+					// 避免CPU占用过高		牛逼，还考虑这种，真是太棒啦~
+					Sleep(50);
+				}
+				continue; // 跳过后续游戏逻辑
+			}//倒计时超时
+
+			FlushBatchDraw();
+			Sleep(0.1);
+		}//游戏运行
+
+		//closegraph();		游戏结束不关闭窗口
+		return LevelResult::Exit;
 	}
 };
 
@@ -933,4 +1214,3 @@ public:
 
 	void moveTile(int row, int col)override;
 };
-
