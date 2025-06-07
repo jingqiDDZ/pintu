@@ -5,7 +5,7 @@ static int value_7 = Level_7::Prob;
 void Level_7::initAnimation() {
 	display1.init({ L"./assets/image/level/7/all1.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
 	display2.init({ L"./assets/image/level/7/all2.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
-	debuffAnimation.init(
+	/*debuffAnimation.init(
 		{
 		L"./assets/anim/te.png",
 		L"./assets/anim/te1.png",
@@ -19,7 +19,9 @@ void Level_7::initAnimation() {
 		L"./assets/anim/te9.png"
 		},
 		400, 300, Animation::BLOCKING, 1000, 100
-	);
+	);*/
+	debuffAnimation.init({ L"./assets/image/level/7/bagua1.png" }, WD_width/3, WD_height/3, Animation::NON_BLOCKING, 1000, 100);
+
 
 
 	// 加载动画资源
@@ -53,7 +55,7 @@ void Level_7::Buff_jojo(int n) {
 			// 恢复上一个状态
 			board = history.back();
 			history.pop_back();
-			moves--;
+			moves-=3;
 
 			// 更新空白块位置
 			for (int i = 0; i < SSIZE; i++) {
@@ -95,7 +97,7 @@ void Level_7::Debuff_jojo() {
 	int centerY = getheight() / 2 - 150; // 动画高度300
 
 	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
-	debuffAnimation.play(
+	/*debuffAnimation.play(
 		getwidth(),          // startX
 		-300,                // startY
 		centerX,             // endX
@@ -105,7 +107,8 @@ void Level_7::Debuff_jojo() {
 			PathFunctions::linear(progress, x, y, sx, sy, ex, ey);
 		},  // 正确传递6个参数
 		SRCCOPY
-	);
+	);*/
+	debuffAnimation.startNonBlocking(centerX, centerY, centerX, centerY);
 
 	Shuffle(3);
 }
@@ -216,6 +219,7 @@ int Level_7::handleFunctionKeys() {
 		if (stage == 1) {
 			stage = 2;
 			win_1 = true;
+			trans.play();
 			// 播放阻塞动画
 			//debuffAnimation.play(...); // 你可以自定义动画参数
 			// 切换资源
@@ -276,39 +280,39 @@ void Level_7::moveTile(int row, int col) {
 	else {
 		if (canMove(row, col)) {
 
-			// 保存当前状态到历史记录
+			// 保存历史状态
 			history.push_back(board);
-			// 保持最多50步历史记录
-			if (history.size() > 50) history.erase(history.begin());
 
-			board[emptyRow][emptyCol] = board[row][col];
-			board[row][col] = 0;
+			// 更新透明度 (仅移动的方块)
+			if (alphaBoard[row][col] > minAlpha) {
+				alphaBoard[row][col] =
+					(alphaBoard[row][col] - alphaDecrement < minAlpha) ?
+					minAlpha : (alphaBoard[row][col] - alphaDecrement);
+			}
+
+			// 保存移动前的空白位置
+			int oldEmptyRow = emptyRow;
+			int oldEmptyCol = emptyCol;
+
+			// 移动方块
+			swap(board[emptyRow][emptyCol], board[row][col]);
+			swap(alphaBoard[emptyRow][emptyCol], alphaBoard[row][col]);
+
+			// 更新空白位置
 			emptyRow = row;
 			emptyCol = col;
 			moves++;
-			// 直接改变移动后的方块透明度（逻辑调整）
-			if (alphaBoard[row][col] > minAlpha) {
-				alphaBoard[row][col] = alphaBoard[row][col] - alphaDecrement > minAlpha ?
-					alphaBoard[row][col] - alphaDecrement : minAlpha;
-			}
 
-			// 计算该方块的正确位置
-			int value = board[row][col];
-			int correctRow = (value - 1) / SSIZE;
-			int correctCol = (value - 1) % SSIZE;
+			// +++ 新增：检查移动后的方块是否在正确位置 +++
+			int movedValue = board[oldEmptyRow][oldEmptyCol];  // 被移动的方块值
+			if (movedValue != 0) {
+				// 计算正确位置（行和列）
+				int correctRow = (movedValue - 1) / SSIZE;
+				int correctCol = (movedValue - 1) % SSIZE;
 
-			// 如果移动后的方块在正确位置，重置其透明度
-			if (row == correctRow && col == correctCol) {
-				alphaBoard[row][col] = 255;
-			}
-
-			// 如果之前的空白位置有方块，并且该方块现在不在正确位置，重置其透明度
-			int prevValue = board[emptyRow][emptyCol];
-			if (prevValue != 0) {
-				int prevCorrectRow = (prevValue - 1) / SSIZE;
-				int prevCorrectCol = (prevValue - 1) % SSIZE;
-				if (emptyRow != prevCorrectRow || emptyCol != prevCorrectCol) {
-					alphaBoard[emptyRow][emptyCol] = 255;
+				// 如果当前在正确位置，重置透明度
+				if (oldEmptyRow == correctRow && oldEmptyCol == correctCol) {
+					alphaBoard[oldEmptyRow][oldEmptyCol] = 255;  // 完全透明
 				}
 			}
 			value_7 = (value_7 - stepsize) < Minvalue_Prob ? Minvalue_Prob : (value_7 - stepsize);
@@ -399,13 +403,16 @@ CONTINUE_GAME:
 		if (display2.isPlaying() && display2.getType() == Animation::NON_BLOCKING && stage==2) {
 			display2.updateNonBlocking();
 		}
+		if (debuffAnimation.isPlaying() && debuffAnimation.getType() == Animation::NON_BLOCKING) {
+			debuffAnimation.updateNonBlocking();
+		}
 
 		// 检查是否有阻塞动画在播放（如debuffAnimation）
-		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
-			(debuffAnimation.getType() == Animation::BLOCKING);
+		/*bool isBlockingAnimation = debuffAnimation.isPlaying() &&
+			(debuffAnimation.getType() == Animation::BLOCKING);*/
 
 		// 非动画期间处理输入
-		if (!isBlockingAnimation) {
+		//if (!isBlockingAnimation) {
 			if (handleMouse() || handleKeyboard()) {
 				sound_click.play();
 			}
@@ -414,7 +421,7 @@ CONTINUE_GAME:
 			int funcReturn = handleFunctionKeys();
 			if (funcReturn == 1) {
 				return LevelResult::Exit;
-			}
+		//	}
 		}
 
 		//胜利检测
@@ -435,6 +442,7 @@ CONTINUE_GAME:
 			if (stage == 1) {
 				stage = 2;
 				win_1 = true;
+				trans.play();
 				// 播放阻塞动画
 				//debuffAnimation.play(...); // 你可以自定义动画参数
 				// 切换资源
@@ -452,10 +460,10 @@ CONTINUE_GAME:
 			continue;
 		}
 
-		if (isBlockingAnimation) {
+		/*if (isBlockingAnimation) {
 			// 阻塞动画有自己的绘制逻辑，跳过常规绘制
 			continue;
-		}
+		}*/
 
 		//超时检测
 		if (Tmode == 1 && countdownData.isTimeout) {

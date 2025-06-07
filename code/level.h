@@ -669,7 +669,7 @@ public:
 				// 恢复上一个状态
 				board = history.back();
 				history.pop_back();
-				moves--;
+				moves-=3;
 
 				// 更新空白块位置
 				for (int i = 0; i < SSIZE; i++) {
@@ -1170,12 +1170,12 @@ public:
 	Animation debuffAnimation;
 	IMAGE all;
 	const static int Prob=40;
-	int stepsize = 5;
-	int Minvalue_Prob=5;
+	int stepsize = 2;
+	int Minvalue_Prob=15;
 
 	void initAnimation() {
 		display.init({ L"./assets/image/level/6/all.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
-		debuffAnimation.init(
+		/*debuffAnimation.init(
 			{
 			L"./assets/anim/te.png",
 			L"./assets/anim/te1.png",
@@ -1189,7 +1189,8 @@ public:
 			L"./assets/anim/te9.png"
 			},
 			400, 300, Animation::BLOCKING, 1000, 100
-		);
+		);*/
+		debuffAnimation.init({ L"./assets/image/level/6/bagua1.png" }, WD_width / 3, WD_height / 3, Animation::NON_BLOCKING, 1000, 100);
 		
 			
 		// 加载动画资源
@@ -1206,7 +1207,7 @@ public:
 		initAnimation();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
 		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);//发动败者食尘失败的音乐
-		loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, Buffer_kingCrimson);
+		loadSoundClip("./assets/audio/Bagua.wav", kingCrimson, Buffer_kingCrimson);
 		srand((unsigned)time(nullptr));
 
 
@@ -1234,6 +1235,9 @@ public:
 	const BYTE alphaDecrement = 30;   // 每次移动减少的透明度值
 	const BYTE minAlpha = 25;         // 最小透明度
 
+	Sound trans;
+	SoundBuffer buffer_trans;
+
 	Animation display1;
 	Animation display2;
 	Animation debuffAnimation;
@@ -1242,7 +1246,7 @@ public:
 	IMAGE all2;
 	const static int Prob = 40;
 	int stepsize = 5;
-	int Minvalue_Prob = 5;
+	int Minvalue_Prob = 20;
 	vector<IMAGE> blockImgs1;
 	vector<IMAGE> blockImgs2;
 	
@@ -1255,7 +1259,8 @@ public:
 		initAnimation();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen); // 发动败者食尘成功的音乐
 		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de); // 发动败者食尘失败的音乐
-		loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, Buffer_kingCrimson);
+		loadSoundClip("./assets/audio/Bagua.wav", kingCrimson, Buffer_kingCrimson);
+		loadSoundClip("./assets/audio/level/7/trans.wav", trans, buffer_trans);
 		srand((unsigned)time(nullptr));
 
 	}

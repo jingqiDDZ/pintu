@@ -9,7 +9,7 @@ void Level_6::Buff_jojo(int n){
 			// 恢复上一个状态
 			board = history.back();
 			history.pop_back();
-			moves--;
+			moves-=3;
 
 			// 更新空白块位置
 			for (int i = 0; i < SSIZE; i++) {
@@ -51,7 +51,7 @@ void Level_6::Debuff_jojo(){
 	int centerY = getheight() / 2 - 150; // 动画高度300
 
 	// 设置起始位置为屏幕右上角外，结束位置为屏幕中心
-	debuffAnimation.play(
+	/*debuffAnimation.play(
 		getwidth(),          // startX
 		-300,                // startY
 		centerX,             // endX
@@ -61,7 +61,8 @@ void Level_6::Debuff_jojo(){
 			PathFunctions::linear(progress, x, y, sx, sy, ex, ey);
 		},  // 正确传递6个参数
 		SRCCOPY
-	);
+	);*/
+	debuffAnimation.startNonBlocking(centerX, centerY, centerX, centerY);
 
 	Shuffle(3);
 }
@@ -277,13 +278,16 @@ CONTINUE_GAME:
 		if (display.isPlaying() && display.getType() == Animation::NON_BLOCKING) {
 			display.updateNonBlocking();
 		}
+		if (debuffAnimation.isPlaying() && debuffAnimation.getType() == Animation::NON_BLOCKING) {
+			debuffAnimation.updateNonBlocking();
+		}
 
 		// 检查是否有阻塞动画在播放（如debuffAnimation）
-		bool isBlockingAnimation = debuffAnimation.isPlaying() &&
-			(debuffAnimation.getType() == Animation::BLOCKING);
+		//bool isBlockingAnimation = debuffAnimation.isPlaying() &&
+		//	(debuffAnimation.getType() == Animation::BLOCKING);
 		
 		// 非动画期间处理输入
-		if (!isBlockingAnimation) {
+		//if (!isBlockingAnimation) {
 			if (handleMouse() || handleKeyboard()) {
 				sound_click.play();
 			}
@@ -293,7 +297,7 @@ CONTINUE_GAME:
 			if (funcReturn == 1) {
 				return LevelResult::Exit;
 			}
-		}
+		//}
 
 		//胜利检测
 		if (isWin()) {
@@ -315,10 +319,10 @@ CONTINUE_GAME:
 			return LevelResult::Win;
 		}
 
-		if (isBlockingAnimation) {
+		/*if (isBlockingAnimation) {
 			// 阻塞动画有自己的绘制逻辑，跳过常规绘制
 			continue;
-		}
+		}*/
 
 		//超时检测
 		if (Tmode == 1 && countdownData.isTimeout) {
