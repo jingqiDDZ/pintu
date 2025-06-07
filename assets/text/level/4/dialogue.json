@@ -1,48 +1,48 @@
 [
     {
         "name": "旁白",
-        "text": "午后的阳光缓慢地渗进教室的每一寸空气",
+        "text": "午后的阳光缓慢地渗进卧室的每一寸空气",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
     },
     {
         "name": "旁白",
-        "text": "伴随着上课铃，林夏猛地坐起身",
+        "text": "伴随着手机闹铃，林夏猛地坐起身",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
 
     },
     {
         "name": "林夏",
         "text": "别……怎么……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
 
     },
     {
         "name": "旁白",
         "text": "午休时那个梦的残影正在飞快消退",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
     },
     {
         "name": "旁白",
         "text": "林夏的手指无意识地在草稿纸上划动……他努力回忆着",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
     },
     {
         "name": "林夏",
         "text": "刚才到底是……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
 
     },
     {
         "name": "旁白",
         "text": "梦境的记忆越来越模糊……试着在记忆消散前回忆起来吧",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/background.png"
+        "bkpath": "./assets/image/level/bedroom.png"
 
     }
     

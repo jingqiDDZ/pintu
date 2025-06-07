@@ -203,7 +203,7 @@ vector<unique_ptr<BaseButton>> initAchieveBtn(PlayerData player, vector<Achievem
 	for (int i = 0;i < achConfigs.size();i++) {		//遍历所有成就
 
 		string imagepath;
-		if (!player.achs[i].unlock) {				//若没有解锁此成就则指定imagepath为问号图片
+		if (i>player.unlockLevel) {				//若没有解锁此成就则指定imagepath为问号图片
 			imagepath = path + to_string(0) + ".png";
 		}
 		else {

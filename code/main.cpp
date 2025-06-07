@@ -132,7 +132,7 @@ int main() {
 									//confirm_window.show();
 									bool confirmed = false;		//确认是否进行关卡
 									drawLevelSelect(buttons, player);
-									confirm_window = ConfirmWindow(_T("是否确认进行关卡"));
+									confirm_window = ConfirmWindow(_T("进入梦境"));
 									confirm_window.draw();
 									FlushBatchDraw();
 									while (true) {

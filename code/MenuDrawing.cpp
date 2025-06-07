@@ -20,7 +20,7 @@ void drawMainMenu(vector<unique_ptr<BaseButton>>& buttons, PlayerData player) {
 	settextstyle(20, 0, _T("宋体"));
 	TCHAR coinText[50];
 	_stprintf_s(coinText, _T("金币: %d"), player.coins);
-	outtextxy(850, 30, coinText);
+	outtextxy(1300, 30, coinText);
 
 }
 
@@ -42,7 +42,7 @@ void drawLevelSelect(vector<unique_ptr<BaseButton>>& buttons, PlayerData player)
 	settextstyle(20, 0, _T("宋体"));
 	TCHAR coinText[50];
 	_stprintf_s(coinText, _T("金币: %d"), player.coins);
-	outtextxy(850, 30, coinText);
+	outtextxy(1300, 30, coinText);
 }
 
 
@@ -63,7 +63,7 @@ void drawShop(vector<unique_ptr<BaseButton>>& buttons, PlayerData player) {
 	settextstyle(20, 0, _T("宋体"));
 	TCHAR coinText[50];
 	_stprintf_s(coinText, _T("金币: %d"), player.coins);
-	outtextxy(780, 30, coinText);
+	outtextxy(1300, 30, coinText);
 }
 
 //绘制背包界面
@@ -86,7 +86,7 @@ void drawBag(vector<unique_ptr<BaseButton>>& buttons, PlayerData player, vector<
 	settextstyle(20, 0, _T("宋体"));
 	TCHAR coinText[50];
 	_stprintf_s(coinText, _T("金币: %d"), player.coins);
-	outtextxy(780, 30, coinText);
+	outtextxy(1300, 30, coinText);
 }
 
 //绘制成就界面

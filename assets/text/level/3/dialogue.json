@@ -12,7 +12,7 @@
         "bkpath": "./assets/image/level/3/background.png"
     },
     {
-        "name": "鲁班",
+        "name": "墨子",
         "text": "新来的？",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/3/background.png"
@@ -25,33 +25,33 @@
     },
     {
         "name": "旁白",
-        "text": "鲁班微微颔首，指向桌上一个精巧的木制玩具",
+        "text": "墨子微微颔首，指向桌上一个精巧的木制机械",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/3/bk2.png"
+        "bkpath": "./assets/image/level/3/background.png"
     },
     {
-        "name": "鲁班",
+        "name": "墨子",
         "text": "限时一柱香，解开它，我便收你为徒",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/3/bk2.png"
+        "bkpath": "./assets/image/level/3/background.png"
     },
     {
         "name": "旁白",
         "text": "林夏头皮发麻。他颤抖着手摆弄木鸟，却连从哪里下手都不知道",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/3/bk2.png"
+        "bkpath": "./assets/image/level/3/background.png"
     },
     {
         "name": "林夏",
         "text": "什么啊……操",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/3/bk2.png"
+        "bkpath": "./assets/image/level/3/background.png"
     },
     {
         "name": "学徒",
         "text": "（小声）看翅膀的第三根羽轴……左旋半圈",
         "imgpath": "./assets/image/chara/wood_girl.png",
-        "bkpath": "./assets/image/level/3/bk2.png"
+        "bkpath": "./assets/image/level/3/background.png"
     }
 
 ]

@@ -1,63 +1,69 @@
 [
     {
-        "name": "林夏",
-        "text": "（松开少女的手）差不多……成型了",
+        "name": "旁白",
+        "text": "墓葬封闭那日，少女被祭司拽进了陪葬品行列。",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/background.png"
     },
     {
-        "name": "少女",
-        "text": "(惊喜)好厉害！但……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "少女",
-        "text": "他们估计也不信我能做出这样的好的陶器吧",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "你有什么喜欢的东西吗？",
+        "name": "祭司",
+        "text": "铸器师之女，当侍奉先王于九泉！",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "深夜，林夏撬开石门。少女抱着膝盖坐在鼎边，长明灯映着她眼中的泪光。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
     },
     {
         "name": "少女",
-        "text": "欸？怎么了？",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "汝何苦来此？纵使暂脱，终难逃追捕。",
+        "imgpath": "./assets/image/chara/girl_final.png",
+        "bkpath": "./assets/image/level/background.png"
     },
     {
         "name": "林夏",
-        "text": "我…我是说可以用铁砂在盆上面画点喜欢的东西",
+        "text": "跟我走！",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/background.png"
     },
     {
-        "name": "林夏",
-        "text": "这样大家就知道，这是你做的陶盆了",
+        "name": "旁白",
+        "text": "他们逃至旷野，少女忽然拉住林夏的手。",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/background.png"
     },
     {
         "name": "少女",
-        "text": "铁砂？妈耶！你怎么想到的！",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "妾身愿随君去，纵使粉身碎骨...",
+        "imgpath": "./assets/image/chara/girl_final.png",
+        "bkpath": "./assets/image/level/background.png"
     },
     {
         "name": "少女",
-        "text": "我比较喜欢……吃鱼吧……",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "text": "'死生契阔，与子成说'",
+        "imgpath": "./assets/image/chara/girl_final.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "旷野上的风吹散了少女的话，吹散了少年的梦",
+        "imgpath": "./assets/image/chara/girl_final.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "晨光透过窗帘，林夏猛地坐起，耳边似乎还回荡着那句诗。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "",
+        "text": "执子之手，与子偕老",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
     }
 ]
     

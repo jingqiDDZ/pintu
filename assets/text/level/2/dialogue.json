@@ -1,13 +1,13 @@
 [
     {
         "name": "旁白",
-        "text": "少年睁开眼睛时，刺眼的阳光洒在陌生的土地上。",
+        "text": "刺眼的阳光洒在陌生的土地上。",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/2/background.png"
     },
     {
         "name": "旁白",
-        "text": "他茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
+        "text": "少年茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/2/background.png"
 
@@ -21,7 +21,7 @@
     },
     {
         "name": "林夏",
-        "text": "（低头查看自己的麻布衣）我的衣服怎么...？",
+        "text": "（低头查看自己的兽皮衣）我的衣服怎么...？",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/2/background.png"
     },

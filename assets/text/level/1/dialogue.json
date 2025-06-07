@@ -1,38 +1,102 @@
-﻿[
+[
     {
-        "name": "我",
-        "text": "我是傻逼",
-        "imgpath": "./assets/image/chara/null.png"
+        "name": "旁白",
+        "text": "少年睁开眼睛时，刺眼的阳光洒在陌生的土地上。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
     },
     {
-        "name": "少女",
-        "text": "为什么呢",
-        "imgpath": "./assets/image/chara/ancient_girl.png"
-    },
-    {
-        "name": "少女",
-        "text": "你看起来不像是傻逼呀",
-        "imgpath": "./assets/image/chara/ancient_girl.png"
-    },
-    {
-        "name": "少女",
-        "text": "好奇怪我怎么会说这种话",
-        "imgpath": "./assets/image/chara/ancient_girl1.png"
-    },
-    {
-        "name": "少女",
-        "text": "操这是个测试对话",
-        "imgpath": "./assets/image/chara/ancient_girl2.png"
-    },
-    {
-        "name": "我",
-        "text": "也就是说……",
-        "imgpath": "./assets/image/chara/null.png"
-    },
-    {
-        "name": "少女",
-        "text": "妈的，你就是个傻逼",
-        "imgpath": "./assets/image/chara/girl.png"
-    }
+        "name": "旁白",
+        "text": "他茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
 
+    },
+    {
+        "name": "旁白",
+        "text": "几个身着兽皮的人正围在火堆旁忙碌。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+
+    },
+    {
+        "name": "林夏",
+        "text": "（低头查看自己的麻布衣）我的衣服怎么...？",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "不远处，传来低低的啜泣声。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "一个少女蹲在河边，手中捏着一个潦草的毫无特色的泥盆",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/bk2.png"
+
+    },
+    {
+        "name": "林夏",
+        "text": "（试探）你在做什么？",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/bk2.png"
+    },
+    {
+        "name": "少女",
+        "text": "（吓了一跳，抬头看向少年）",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/bk2.png"
+    },
+    {
+        "name": "少女",
+        "text": "（咬着嘴唇）我……我想做一个陶盆，可它总是塌掉。",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "大家都笑我笨，说我不配当祭司的女儿。",
+        "imgpath": "./assets/image/chara/ancient_girl.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "欸不对？我们最近没有外地访客啊……",
+        "imgpath": "./assets/image/chara/ancient_girl2.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "（斟酌用词）我来自...黄河下游的部落！",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少女脖子上系着彩色贝壳串，正是课本里仰韶文化典型的装饰品。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "（鼓起勇气）呃…我们那儿做陶器会用慢轮辅助定型。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "(疑惑)",
+        "imgpath": "./assets/image/chara/ancient_girl2.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "(努力回忆)先揉匀黏土，再慢慢塑形……不能太急。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    }
 ]
+    
