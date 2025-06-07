@@ -183,6 +183,10 @@ public:
 			// 检查任意键
 			for (int vKey = 8; vKey <= 255; vKey++) {
 				if (GetAsyncKeyState(vKey) & 0x8000) {
+					//展示对话剧情之后再开始游戏
+					string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+					drawDialogue(tmppath);
+					FlushBatchDraw();
 					goto CONTINUE_GAME;
 				}
 			}
@@ -261,8 +265,12 @@ public:
 				}
 				cout << "WOW~~ isWin!" << endl;
 				showWin();
+				//结算之后，展示对话剧情再结束游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
+				return LevelResult::Win;
 
-				continue;
 			}
 
 			/*if (isBlockingAnimation) {
@@ -432,6 +440,10 @@ public:
 			// 检查任意键
 			for (int vKey = 8; vKey <= 255; vKey++) {
 				if (GetAsyncKeyState(vKey) & 0x8000) {
+					//展示对话剧情之后再开始游戏
+					string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+					drawDialogue(tmppath);
+					FlushBatchDraw();
 					goto CONTINUE_GAME;
 				}
 			}
@@ -515,8 +527,12 @@ public:
 				}
 				cout << "WOW~~ isWin!" << endl;
 				showWin();
+				//结算之后，展示对话剧情再结束游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
+				return LevelResult::Win;
 
-				continue;
 			}
 
 			/*if (isBlockingAnimation) {
@@ -896,7 +912,7 @@ public:
 
 	Level_6(int id, int SSIZE, int Tmode) :Level(id, SSIZE, Tmode) {
 		loadimage(&all, _T("./assets/image/level/6/all.png"), BLOCK_SIZE, BLOCK_SIZE);
-		initAnimations();
+		initAnimation();
 		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen);//发动败者食尘成功的音乐
 		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de);//发动败者食尘失败的音乐
 		loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, Buffer_kingCrimson);
