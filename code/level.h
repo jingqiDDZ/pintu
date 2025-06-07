@@ -183,6 +183,10 @@ public:
 			// 检查任意键
 			for (int vKey = 8; vKey <= 255; vKey++) {
 				if (GetAsyncKeyState(vKey) & 0x8000) {
+					//展示对话剧情之后再开始游戏
+					string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+					drawDialogue(tmppath);
+					FlushBatchDraw();
 					goto CONTINUE_GAME;
 				}
 			}
@@ -261,8 +265,12 @@ public:
 				}
 				cout << "WOW~~ isWin!" << endl;
 				showWin();
+				//结算之后，展示对话剧情再结束游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
+				return LevelResult::Win;
 
-				continue;
 			}
 
 			/*if (isBlockingAnimation) {
@@ -359,6 +367,9 @@ public:
 			}
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
 			cout << "showWin finished" << endl;
 
 
@@ -432,6 +443,10 @@ public:
 			// 检查任意键
 			for (int vKey = 8; vKey <= 255; vKey++) {
 				if (GetAsyncKeyState(vKey) & 0x8000) {
+					//展示对话剧情之后再开始游戏
+					string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+					drawDialogue(tmppath);
+					FlushBatchDraw();
 					goto CONTINUE_GAME;
 				}
 			}
@@ -515,8 +530,12 @@ public:
 				}
 				cout << "WOW~~ isWin!" << endl;
 				showWin();
+				//结算之后，展示对话剧情再结束游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
+				return LevelResult::Win;
 
-				continue;
 			}
 
 			/*if (isBlockingAnimation) {

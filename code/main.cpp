@@ -132,6 +132,7 @@ int main() {
 									//confirm_window.show();
 									bool confirmed = false;		//确认是否进行关卡
 									drawLevelSelect(buttons, player);
+									confirm_window = ConfirmWindow(_T("是否确认进行关卡"));
 									confirm_window.draw();
 									FlushBatchDraw();
 									while (true) {
@@ -189,6 +190,7 @@ int main() {
 							if (i < shopConfigs.size() && (shopConfigs[i].unique == false || (shopConfigs[i].unique && player.items[i].number == 0))) {		//点击购买按钮且可以购买
 								bool confirmed = false;		//确认是否进行购买
 								drawShop(buttons, player);
+								confirm_window = ConfirmWindow(_T("是否确认购买"));
 								confirm_window.draw();
 								FlushBatchDraw();
 								while (true) {

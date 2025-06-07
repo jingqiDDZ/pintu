@@ -40,6 +40,10 @@ LevelResult Level_TE::play() {
 		// 检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
+				//展示对话剧情之后再开始游戏
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
 				goto CONTINUE_GAME;
 			}
 		}
@@ -132,7 +136,7 @@ CONTINUE_GAME:
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
 
-			continue;
+			return LevelResult::Win;
 		}
 
 		if (isBlockingAnimation) {

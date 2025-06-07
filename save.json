@@ -24,13 +24,13 @@
         },
         {
             "id": "绿豆香囊",
-            "number": 3
+            "number": 5
         }
     ],
     "player": {
-        "coins": 9970,
-        "skillE": 2,
-        "skillQ": 1,
+        "coins": 10010,
+        "skillE": 1,
+        "skillQ": 2,
         "unlockedLevel": 7
     }
 }

@@ -25,14 +25,14 @@
     },
     {
         "name": "少女",
-        "text": "这位大娘，您这面相可是富贵相啊！只是最近家中灶神不安，得破点小财消灾......",
-        "imgpath": "./assets/image/chara/girl.png",
+        "text": "这位大娘，您这面相可是富贵相啊！",
+        "imgpath": "./assets/image/chara/magic_girl.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "少女",
         "text": "只是最近家中灶神不安，得破点小财消灾......",
-        "imgpath": "./assets/image/chara/girl.png",
+        "imgpath": "./assets/image/chara/magic_girl_smile.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
@@ -43,26 +43,56 @@
     },
     {
         "name": "旁白",
-        "text": "街角的小摊前，一个扎着麻花辫的少女正拉着一位老妇人的手",
+        "text": "街角的小摊前，一个拿着符纸的少女正拉着一位老妇人的手",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/6/bk2.png"
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "（不自觉地靠近）",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "（挤进人群，故意大声咳嗽）这位姑娘，您刚才说大娘“灶神不安",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
         "text": "（挤进人群，故意大声咳嗽）这位姑娘，您刚才说大娘“灶神不安”",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/6/bk2.png"
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
         "text": "可今日是丙寅日，灶君当值，最是安稳不过啊……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/6/bk2.png"
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "不是……哥你谁啊",
+        "imgpath": "./assets/image/chara/magic_girl_love.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "少女",
+        "text": "灶君当值就一定安稳了？纯傻*",
+        "imgpath": "./assets/image/chara/magic_girl_smile.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "林夏",
+        "text": "来来……奶*的",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "旁白",
         "text": "两人开始争辩……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/6/bk2.png"
+        "bkpath": "./assets/image/level/6/background.png"
     }
 ]
