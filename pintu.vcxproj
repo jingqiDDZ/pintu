@@ -25,6 +25,7 @@
     <ClCompile Include="code\dialogue.cpp" />
     <ClCompile Include="code\level.cpp" />
     <ClCompile Include="code\Level_6.cpp" />
+    <ClCompile Include="code\Level_7.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\MenuDrawing.cpp" />
     <ClCompile Include="code\pause.cpp" />

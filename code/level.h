@@ -99,7 +99,7 @@ protected:
 	bool handleKeyboard();				//键盘移动处理
 	virtual int handleFunctionKeys();   //功能键处理函数
 
-	void shuffleBoard();				//打乱游戏板
+	virtual void shuffleBoard();				//打乱游戏板
 	virtual void moveTile(int row, int col);	//处理方块移动
 	
 	
@@ -1197,4 +1197,58 @@ public:
 	void Shuffle(int n);
 
 	void moveTile(int row, int col)override;
+};
+
+class Level_7 :public Level{
+public:
+
+	bool win_1 = false;
+	int stage = 1; // 1 表示第一阶段，2 表示第二阶段
+	vector<vector<BYTE>> alphaBoard;  // 每个拼图块的透明度
+	const BYTE alphaDecrement = 30;   // 每次移动减少的透明度值
+	const BYTE minAlpha = 25;         // 最小透明度
+
+	Animation display1;
+	Animation display2;
+	Animation debuffAnimation;
+	IMAGE all;
+	IMAGE all1;
+	IMAGE all2;
+	const static int Prob = 40;
+	int stepsize = 5;
+	int Minvalue_Prob = 5;
+	vector<IMAGE> blockImgs1;
+	vector<IMAGE> blockImgs2;
+	
+	void initAnimation();
+
+	Level_7(int id, int SSIZE, int Tmode):Level(id, SSIZE, Tmode) {
+		alphaBoard.resize(SSIZE, vector<BYTE>(SSIZE, 255)); // 初始透明度255
+		loadimage(&all1, _T("./assets/image/level/7/all1.png"), BLOCK_SIZE, BLOCK_SIZE);
+		loadimage(&all2, _T("./assets/image/level/7/all2.png"), BLOCK_SIZE, BLOCK_SIZE);
+		initAnimation();
+		loadSoundClip("./assets/audio/Buff_jojo.wav", killerQueen, Buffer_killerQueen); // 发动败者食尘成功的音乐
+		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de); // 发动败者食尘失败的音乐
+		loadSoundClip("./assets/audio/Debuff_jojo.wav", kingCrimson, Buffer_kingCrimson);
+		srand((unsigned)time(nullptr));
+
+	}
+
+	int handleFunctionKeys() override;
+
+	LevelResult play() override;
+
+	void Buff_jojo(int n);
+
+	void Debuff_jojo();
+
+	void Shuffle(int n);
+
+	void moveTile(int row, int col)override;
+	
+	void initBoard() override;
+
+	void shuffleBoard() override;
+
+	void drawGame() override;
 };
