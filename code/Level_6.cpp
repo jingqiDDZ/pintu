@@ -223,7 +223,7 @@ LevelResult Level_6::play(){
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
 			return LevelResult::Exit;
 		}
-		// 检查任意键
+		//检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
 				//展示对话剧情之后再开始游戏

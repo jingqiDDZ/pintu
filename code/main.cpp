@@ -39,7 +39,7 @@ int main() {
 	}
 
 	//初始化关卡列表
-	levelgames.push_back(make_unique<Level_7>(7, 5, 1));
+	levelgames.push_back(make_unique<Level>(0, 3, 1));
 	levelgames.push_back(make_unique<Level>(1, 3, 1));
 	levelgames.push_back(make_unique<Level>(2, 3, 0));
 	levelgames.push_back(make_unique<Level_3>(3, 3, 1));
