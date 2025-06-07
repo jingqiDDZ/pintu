@@ -28,7 +28,7 @@
         }
     ],
     "player": {
-        "coins": 9900,
+        "coins": 10010,
         "skillE": 1,
         "skillQ": 2,
         "unlockedLevel": 7

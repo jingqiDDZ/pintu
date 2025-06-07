@@ -1,8 +1,8 @@
 [
     {
         "name": "少女",
-        "text": "（一愣，眯起眼睛）哦？那您看看，大娘这'坎纹'入'离宫'，是不是主火厄？",
-        "imgpath": "./assets/image/chara/girl.png",
+        "text": "您看看，大娘这'坎纹'入'离宫'，是不是主火厄？",
+        "imgpath": "./assets/image/chara/magic_girl_smile.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
@@ -14,25 +14,37 @@
     {
         "name": "少女",
         "text": "是什么？",
-        "imgpath": "./assets/image/chara/girl.png",
+        "imgpath": "./assets/image/chara/magic_girl_smile.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "林夏",
-        "text": "是......是您长得真好看",
+        "text": "是...是今日必有贵人相助！",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "",
+        "text": "…………",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "旁白",
-        "text": "人群哄然大笑",
+        "text": "随着两人的争辩，聪明的大妈已经偷偷跑开了",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
         "name": "少女",
         "text": "喂！……这算什么啊",
-        "imgpath": "./assets/image/chara/girl.png",
+        "imgpath": "./assets/image/chara/magic_girl_love.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "",
+        "text": "…………",
+        "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
@@ -43,8 +55,8 @@
     },
     {
         "name": "少女",
-        "text": "其实我根本不会算命",
-        "imgpath": "./assets/image/chara/girl.png",
+        "text": "（嚼嚼嚼）其实我根本不会算命",
+        "imgpath": "./assets/image/chara/magic_girl_smile.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
@@ -56,7 +68,7 @@
     {
         "name": "少女",
         "text": "那你怎么知道丙寅日灶君当值？",
-        "imgpath": "./assets/image/chara/girl.png",
+        "imgpath": "./assets/image/chara/magic_girl.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
@@ -66,9 +78,9 @@
         "bkpath": "./assets/image/level/6/background.png"
     },
     {
-        "name": "旁白",
-        "text": "少女哈哈大笑，笑声惊起屋檐下的麻雀",
-        "imgpath": "./assets/image/chara/null.png",
+        "name": "少女",
+        "text": "*我**真服了，就说你是纯傻*",
+        "imgpath": "./assets/image/chara/magic_girl_love.png",
         "bkpath": "./assets/image/level/6/background.png"
     }
 ]

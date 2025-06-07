@@ -35,14 +35,14 @@
         "name": "林夏",
         "text": "刚才到底是……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/bk2.png"
+        "bkpath": "./assets/image/level/4/background.png"
 
     },
     {
         "name": "旁白",
         "text": "梦境的记忆越来越模糊……试着在记忆消散前回忆起来吧",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/4/bk2.png"
+        "bkpath": "./assets/image/level/4/background.png"
 
     }
     

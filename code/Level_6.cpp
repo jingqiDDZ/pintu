@@ -167,6 +167,9 @@ int Level_6::handleFunctionKeys() {
 		}
 		cout << "WOW~~ isWin!" << endl;
 		showWin();
+		string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+		drawDialogue(tmppath);
+		FlushBatchDraw();
 		cout << "showWin finished" << endl;
 
 
