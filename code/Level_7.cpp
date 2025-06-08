@@ -37,13 +37,13 @@ void Level_7::initAnimation() {
 	blockImgs1.resize(26); // 0~25
 	for (int i = 1; i <= 25; ++i) {
 		wchar_t path[256];
-		swprintf(path, 256, L"D:/MyownGame/pt/assets/image/level/7/blocks1/%d.png", i);
+		swprintf(path, 256, L"./assets/image/level/7/blocks1/%d.png", i);
 		loadimage(&blockImgs1[i], path, BLOCK_SIZE, BLOCK_SIZE);
 	}
 	blockImgs2.resize(10); // 0~9
 	for (int i = 1; i <= 9; ++i) {
 		wchar_t path[256];
-		swprintf(path, 256, L"D:/MyownGame/pt/assets/image/level/7/blocks2/%d.png", i);
+		swprintf(path, 256, L"./assets/image/level/7/blocks2/%d.png", i);
 		loadimage(&blockImgs2[i], path, BLOCK_SIZE, BLOCK_SIZE);
 	}
 }

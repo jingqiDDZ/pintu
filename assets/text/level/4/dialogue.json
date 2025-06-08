@@ -1,6 +1,12 @@
 [
     {
         "name": "旁白",
+        "text": "这一个梦，似乎是在某个迷迷糊糊的下午",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/bedroom.png"
+    },
+    {
+        "name": "旁白",
         "text": "午后的阳光缓慢地渗进卧室的每一寸空气",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/bedroom.png"
@@ -40,10 +46,15 @@
     },
     {
         "name": "旁白",
-        "text": "梦境的记忆越来越模糊……试着在记忆消散前回忆起来吧",
+        "text": "梦境的记忆越来越模糊……",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/bedroom.png"
-
+    },
+    {
+        "name": "！",
+        "text": "拼图会随着回忆变淡……试着在记忆消散前想起来吧",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/bedroom.png"
     }
     
 ]

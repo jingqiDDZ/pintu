@@ -1,6 +1,12 @@
 [
     {
         "name": "旁白",
+        "text": "回忆第二个梦，似乎有一股淡淡的青草香",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "旁白",
         "text": "刺眼的阳光洒在陌生的土地上。",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/2/background.png"
@@ -95,6 +101,12 @@
     {
         "name": "林夏",
         "text": "(努力回忆)先揉匀黏土，再慢慢塑形……不能太急。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/2/background.png"
+    },
+    {
+        "name": "!",
+        "text": "帮助少女把陶罐完成吧~~",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/2/background.png"
     }

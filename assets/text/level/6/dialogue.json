@@ -1,7 +1,7 @@
 [
     {
         "name": "旁白",
-        "text": "这一次，他站在熙熙攘攘的市集上，四周是粗布麻衣的行人",
+        "text": "熙熙攘攘的市集上，四周是粗布麻衣的行人",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/6/background.png"
     },
@@ -92,6 +92,12 @@
     {
         "name": "旁白",
         "text": "两人开始争辩……",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/6/background.png"
+    },
+    {
+        "name": "!",
+        "text": "这一次少女会阻挠你解释卦象，请务必留意~~",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/6/background.png"
     }

@@ -1,102 +1,123 @@
 [
     {
         "name": "旁白",
-        "text": "刺眼的阳光洒在陌生的土地上。",
+        "text": "期中考试结束的午后，林夏在课桌上惊醒",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "旁白",
-        "text": "少年茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
+        "text": "手腕上还残留着被麻绳勒紧的幻痛",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "旁白",
-        "text": "几个身着兽皮的人正围在火堆旁忙碌。",
+        "text": "那是第七个梦的印记——商朝奴隶工匠的烙印",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "（低头查看自己的兽皮衣）我的衣服怎么...？",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "旁白",
-        "text": "不远处，传来低低的啜泣声。",
+        "text": "他下意识摸向历史课本",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "旁白",
-        "text": "一个少女蹲在河边，手中捏着一个潦草的毫无特色的泥盆",
+        "text": "指尖停在『司母戊鼎』的插图上",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "（试探）你在做什么？",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（吓了一跳，抬头看向少年）",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（咬着嘴唇）我……我想做一个陶盆，可它总是塌掉。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "大家都笑我笨，说我不配当祭司的女儿。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "欸不对？我们最近没有外地访客啊……",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "林夏",
-        "text": "（斟酌用词）我来自...黄河下游的部落！",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "旁白",
-        "text": "少女脖子上系着彩色贝壳串，正是课本里仰韶文化典型的装饰品。",
+        "text": "饕餮纹的眼睛在阳光下泛着诡异的光",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "仿佛在嘲笑他分不清梦境与现实",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "教室里的风扇吱呀转动",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "像极了青铜作坊里的鼓风机声响",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少年闭上眼睛",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "开始拼凑那些支离破碎的梦境记忆",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "林夏",
-        "text": "（鼓起勇气）呃…我们那儿做陶器会用慢轮辅助定型。",
+        "text": "做第一个这样的梦时……是在做什么呢",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
-        "name": "少女",
-        "text": "(疑惑)",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "name": "开发者",
+        "text": "…………先别急",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
     },
     {
-        "name": "林夏",
-        "text": "(努力回忆)先揉匀黏土，再慢慢塑形……不能太急。",
+        "name": "开发者",
+        "text": "其实这是个新手适应关，本游戏的主要玩法是数字华容道",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "每一关都代表着一次回忆",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "而玩家需要通过完成华容道拼图来完成回忆，或者说重新体验梦境",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "本游戏的大部分素材均是借助ai完成，而且开发时间短，请理解",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "哦对了为了保障玩家的体验，第一关我们采用了纯数字拼图",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "（其实是为了期末作业凑满九关）",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
+    },
+    {
+        "name": "开发者",
+        "text": "祝您游戏愉快",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/0/background.png"
     }
+
 ]
-    
