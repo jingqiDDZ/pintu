@@ -274,15 +274,6 @@ bool Animation::updateNonBlocking() {
     }
 
     // 绘制动画帧（带透明度）
-    if (alpha_ == 255) {
-        putimage(currentX, currentY, width_, height_,
-            &frames_[frameIndex], 0, 0, rop_);
-    }
-    else {
-        // ... [保持原有的透明度绘制代码] ...
-    }
-
-    // 使用 GDI+ 实现透明度
     HDC hdc = GetImageHDC();
     Graphics graphics(hdc);
 
@@ -294,30 +285,26 @@ bool Animation::updateNonBlocking() {
 
     // 从 EasyX IMAGE 复制数据
     BYTE* src = (BYTE*)GetImageBuffer(&frames_[frameIndex]);
-    int srcPitch = width_ * 4; // 32位图像每行字节数
+    int srcPitch = width_ * 4;
     BYTE* dst = (BYTE*)bmpData.Scan0;
     for (int y = 0; y < height_; y++) {
         for (int x = 0; x < width_; x++) {
             int idx = y * srcPitch + x * 4;
-
             BYTE originalAlpha = src[idx + 3];
-            if (originalAlpha == 0) {  // 完全透明的像素跳过
+            if (originalAlpha == 0) {
                 dst += 4;
                 continue;
             }
-
             BYTE b = src[idx];
             BYTE g = src[idx + 1];
             BYTE r = src[idx + 2];
             BYTE a = (originalAlpha * alpha_) / 255;
-
             dst[0] = b;
             dst[1] = g;
             dst[2] = r;
             dst[3] = a;
             dst += 4;
         }
-        // 处理目标位图的行填充
         dst += bmpData.Stride - width_ * 4;
     }
     bmp.UnlockBits(&bmpData);

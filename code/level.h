@@ -1357,6 +1357,19 @@ public:
 	Animation display1;
 	Animation display2;
 	Animation debuffAnimation;
+
+	Animation change1;
+	Animation change2;
+
+	Sound schange1;
+	SoundBuffer Buffer_schange1;
+	Sound schange2;
+	SoundBuffer Buffer_schange2;
+
+	bool change1_3min=false;
+	bool change2_1min=false;
+
+
 	IMAGE all;
 	IMAGE all1;
 	IMAGE all2;
@@ -1377,6 +1390,8 @@ public:
 		loadSoundClip("./assets/audio/Buff_jojo_de.wav", killerQueen_de, Buffer_killerQueen_de); // 发动败者食尘失败的音乐
 		loadSoundClip("./assets/audio/Bagua.wav", kingCrimson, Buffer_kingCrimson);
 		loadSoundClip("./assets/audio/level/7/trans.wav", trans, buffer_trans);
+		loadSoundClip("./assets/audio/level/7/schange1.wav", schange1, Buffer_schange1);
+		loadSoundClip("./assets/audio/level/7/schange2.wav", schange2, Buffer_schange2);
 		srand((unsigned)time(nullptr));
 
 	}

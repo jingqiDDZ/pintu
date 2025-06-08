@@ -5,6 +5,9 @@ static int value_7 = Level_7::Prob;
 void Level_7::initAnimation() {
 	display1.init({ L"./assets/image/level/7/all1.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
 	display2.init({ L"./assets/image/level/7/all2.png" }, BLOCK_SIZE, BLOCK_SIZE, Animation::NON_BLOCKING, 1000, 100);
+	change1.init({ L"./assets/image/level/7/change1.png" }, WD_width/3, WD_height/3, Animation::NON_BLOCKING, 1000, 100);
+	change2.init({ L"./assets/image/level/7/change2.png" }, WD_width/3, WD_height/3, Animation::NON_BLOCKING, 1000, 100);
+
 	/*debuffAnimation.init(
 		{
 		L"./assets/anim/te.png",
@@ -29,6 +32,12 @@ void Level_7::initAnimation() {
 		MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
 	}
 	if (!display2.loadFrames()) {
+		MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
+	}
+	if (!change1.loadFrames()) {
+		MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
+	}
+	if (!change2.loadFrames()) {
 		MessageBox(GetHWnd(), _T("图片动画资源加载失败"), _T("错误"), MB_OK);
 	}
 	if (!debuffAnimation.loadFrames()) {
@@ -391,6 +400,7 @@ void Level_7::moveTile(int row, int col) {
 				Debuff_jojo();
 			}
 			if (value_7 == Minvalue_Prob) value_7 = Prob;
+
 		}
 	}
 }
@@ -432,16 +442,27 @@ LevelResult Level_7::play() {
 CONTINUE_GAME:
 
 	shuffleBoard();
-	if (Tmode == 0) {
-		time(&timeData.startTime);
-	}
-	else if (Tmode == 1) {
-		countdownData.startTime = chrono::system_clock::now();
-	}
+	//第一阶段计时模式
+	Tmode = 0;
+	time(&timeData.startTime);
 
 	bool bgm_start = false;			//负责第一次进入循环时开始播放bgm
 
+	// 进入第二阶段时重置标志
+	change1_3min = false;
+	change2_1min = false;
+
+
 	while (true) {
+
+		// 第二阶段为倒计时模式
+		if (stage == 2 && Tmode == 0) {
+			Tmode = 1;
+			countdownData.totalTime = 182;
+			countdownData.startTime = chrono::system_clock::now();
+			countdownData.isTimeout = false;
+			countdownData.Played_count = false;
+		}
 
 		if (Tmode == 1) {
 			auto now = std::chrono::system_clock::now();
@@ -459,6 +480,38 @@ CONTINUE_GAME:
 			}
 		}//倒计时
 
+		// 3分钟和1分钟动画
+		if (Tmode == 1 && stage == 2) {
+			if (!change1_3min && countdownData.remaining <= 180) {
+				// 只在到达3分钟那一刻播放
+				if (!change1.isPlaying()) {
+					int animW = WD_width / 3;
+					int animH = WD_height / 3;
+					int X = (WD_width - animW) / 2;
+					int Y = (WD_height - animH) / 2;
+					change1.setStayDuration(1500); // 1.5秒
+					change1.startNonBlocking(X, Y, X, Y);
+					schange1.play();
+				}
+				change1_3min = true;
+			}
+			if (!change2_1min && countdownData.remaining <= 60) {
+				// 只在到达1分钟那一刻播放
+				if (!change2.isPlaying()) {
+					int animW = WD_width / 3;
+					int animH = WD_height / 3;
+					int X = (WD_width - animW) / 2;
+					int Y = (WD_height - animH) / 2;
+					change2.setStayDuration(1500); // 1.5秒
+					change2.startNonBlocking(X, Y, X, Y);
+					schange2.play();
+				}
+				change2_1min = true;
+			}
+		}
+
+
+
 		if (!bgm_start) {
 			bgm_start = true;
 			sound_bgm.play();
@@ -475,6 +528,13 @@ CONTINUE_GAME:
 		}
 		if (debuffAnimation.isPlaying() && debuffAnimation.getType() == Animation::NON_BLOCKING) {
 			debuffAnimation.updateNonBlocking();
+		}
+
+		if (change1.isPlaying()) {
+			change1.updateNonBlocking();
+		}
+		if (change2.isPlaying()) {
+			change2.updateNonBlocking();
 		}
 
 		// 检查是否有阻塞动画在播放（如debuffAnimation）
@@ -521,6 +581,11 @@ CONTINUE_GAME:
 				all = all2;
 				initBoard();
 				shuffleBoard();
+				Tmode = 1;
+				countdownData.totalTime = 300;
+				countdownData.startTime = chrono::system_clock::now();
+				countdownData.isTimeout = false;
+				countdownData.Played_count = false;
 				continue;
 			}
 			else {
@@ -610,6 +675,7 @@ void Level_7::shuffleBoard() {
 }
 
 void Level_7::drawGame() {
+
 	setbkcolor(RGB(240, 240, 240));
 	cleardevice();
 
@@ -651,6 +717,7 @@ void Level_7::drawGame() {
 		settextcolor(BLACK); // 恢复默认颜色
 	}
 
+	
 	// 绘制游戏方块（带透明度）
 	for (int i = 0; i < SSIZE; i++) {
 		for (int j = 0; j < SSIZE; j++) {
@@ -680,22 +747,46 @@ void Level_7::drawGame() {
 					for (int x = 0; x < BLOCK_SIZE; x++) {
 						int idx = y * BLOCK_SIZE + x;
 						DWORD color = pSrc[idx];
-
-						BYTE b = GetBValue(color);
-						BYTE g = GetGValue(color);
-						BYTE r = GetRValue(color);
+						BYTE b, g, r;
 						BYTE originalAlpha = (color >> 24) & 0xFF;
-
-						// 应用当前透明度
 						BYTE finalAlpha = (originalAlpha * alpha) / 255;
 
-						// 设置到目标位图
+						if (Tmode == 1 && stage == 2) {
+							if (countdownData.remaining > 180) {
+								// 前2分钟：正常BGRA
+								b = (color >> 0) & 0xFF;
+								g = (color >> 8) & 0xFF;
+								r = (color >> 16) & 0xFF;
+							}
+							else if (countdownData.remaining > 60) {
+								// 3~1分钟：错误色（错位色）
+								b = GetBValue(color);
+								g = GetGValue(color);
+								r = GetRValue(color);
+							}
+							else {
+								// 最后1分钟：黑白报纸风格
+								b = (color >> 0) & 0xFF;
+								g = (color >> 8) & 0xFF;
+								r = (color >> 16) & 0xFF;
+								BYTE gray = static_cast<BYTE>(0.299 * r + 0.587 * g + 0.114 * b);
+								r = g = b = gray;
+							}
+						}
+						else {
+							// 其它情况正常BGRA
+							b = (color >> 0) & 0xFF;
+							g = (color >> 8) & 0xFF;
+							r = (color >> 16) & 0xFF;
+						}
+
 						pDst[0] = b;
 						pDst[1] = g;
 						pDst[2] = r;
 						pDst[3] = finalAlpha;
 						pDst += 4;
 					}
+					pDst += bmpData.Stride - BLOCK_SIZE * 4;
 				}
 				bmp.UnlockBits(&bmpData);
 
