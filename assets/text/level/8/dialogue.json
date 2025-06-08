@@ -1,102 +1,177 @@
+
 [
     {
         "name": "旁白",
-        "text": "少年睁开眼睛时，刺眼的阳光洒在陌生的土地上。",
+        "text": "之后，少年再也没有做过和女孩相关的梦",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
         "name": "旁白",
-        "text": "他茫然地环顾四周——低矮的茅草屋、远处蜿蜒的河流。",
+        "text": "他知道日有所思夜有所梦，所以他努力地回忆着梦中的种种",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
         "name": "旁白",
-        "text": "几个身着兽皮的人正围在火堆旁忙碌。",
+        "text": "回忆着自己如何做梦，自己梦中发生了什么",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "（低头查看自己的麻布衣）我的衣服怎么...？",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
         "name": "旁白",
-        "text": "不远处，传来低低的啜泣声。",
+        "text": "可事与愿违",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
         "name": "旁白",
-        "text": "一个少女蹲在河边，手中捏着一个潦草的毫无特色的泥盆",
+        "text": "他越回忆，梦境的朦胧感消失得越快",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-
-    },
-    {
-        "name": "林夏",
-        "text": "（试探）你在做什么？",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（吓了一跳，抬头看向少年）",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/bk2.png"
-    },
-    {
-        "name": "少女",
-        "text": "（咬着嘴唇）我……我想做一个陶盆，可它总是塌掉。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "大家都笑我笨，说我不配当祭司的女儿。",
-        "imgpath": "./assets/image/chara/ancient_girl.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "少女",
-        "text": "欸不对？我们最近没有外地访客啊……",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
-    },
-    {
-        "name": "林夏",
-        "text": "（斟酌用词）我来自...黄河下游的部落！",
-        "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
         "name": "旁白",
-        "text": "少女脖子上系着彩色贝壳串，正是课本里仰韶文化典型的装饰品。",
+        "text": "填补梦境空白的的是自己压抑的幻想",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
-        "name": "林夏",
-        "text": "（鼓起勇气）呃…我们那儿做陶器会用慢轮辅助定型。",
+        "name": "旁白",
+        "text": "自己印象里或触不可及，或清纯美好的存在，都变得……",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
-        "name": "少女",
-        "text": "(疑惑)",
-        "imgpath": "./assets/image/chara/ancient_girl2.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "name": "旁白",
+        "text": "现实得可怕",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
     },
     {
-        "name": "林夏",
-        "text": "(努力回忆)先揉匀黏土，再慢慢塑形……不能太急。",
+        "name": "旁白",
+        "text": "是啊，自己只是一个普通的男高",
         "imgpath": "./assets/image/chara/null.png",
-        "bkpath": "./assets/image/level/2/background.png"
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "而且这里不是他*的日本，怎么可能会有什么跨越时空的美少女恋爱剧情",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "",
+        "text": "…………",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "第一次期中考试结束了",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少年整天幻想着继续做梦，期中考试显然没有准备好",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少年看着身边埋头苦学的前桌",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "不可否认",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "前桌低头验算时垂落的发丝确实很美",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "但少年更清楚看到她草稿纸上工整的解题步骤",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "但他知道，家人的期望在自己身上",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "他没有功夫偷懒，也不应该沉浸于幻想",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "自己应该和她一样用心学习",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "窗外的樱花开了又谢",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "就像他那些未说出口的话",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "最终都变成了补习班缴费单上的数字",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "放学铃响了",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "前桌收拾书包时掉出一张清华园明信片",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少年弯腰帮她捡起",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "指尖相触的瞬间",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "他忽然明白",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
+    },
+    {
+        "name": "旁白",
+        "text": "有些距离比三千年时光还要遥远",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/chara/null.png"
     }
 ]
-    

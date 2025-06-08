@@ -46,6 +46,12 @@
         "text": "若误了时辰，你我皆要受鞭笞之刑。",
         "imgpath": "./assets/image/chara/girl_final.png",
         "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "！",
+        "text": "总之先把鼎修好吧",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
     }
     
 ]

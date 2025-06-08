@@ -8,8 +8,14 @@ void drawMainMenu(vector<unique_ptr<BaseButton>>& buttons, PlayerData player) {
 	cleardevice();
 
 	//绘制背景
+	/*
+		IMAGE image;
+	loadimage(&image, _T("./assets/image/ui/background.png"), WD_width, WD_height);
+	putimage_alpha(0, 0, &image);
+	*/
+
 	setbkcolor(RGB(240, 240, 240));
-	cleardevice();
+	//cleardevice();
 
 	//绘制按钮
 	for (auto& btn : buttons) {
@@ -30,8 +36,11 @@ void drawLevelSelect(vector<unique_ptr<BaseButton>>& buttons, PlayerData player)
 	cleardevice();
 
 	//绘制背景
-	setbkcolor(RGB(240, 240, 240));
-	cleardevice();
+	IMAGE image;
+	loadimage(&image, _T("./assets/image/ui/background.png"), WD_width, WD_height);
+	putimage_alpha(0, 0, &image);
+	//setbkcolor(RGB(240, 240, 240));
+	//cleardevice();
 
 	//绘制按钮
 	for (auto& btn : buttons) {
@@ -51,8 +60,11 @@ void drawShop(vector<unique_ptr<BaseButton>>& buttons, PlayerData player) {
 	cleardevice();
 
 	//绘制背景
-	setbkcolor(RGB(240, 240, 240));
-	cleardevice();
+	IMAGE image;
+	loadimage(&image, _T("./assets/image/ui/background.png"), WD_width, WD_height);
+	putimage_alpha(0, 0, &image);
+	//setbkcolor(RGB(240, 240, 240));
+	//cleardevice();
 
 	//绘制按钮
 	for (auto& btn : buttons) {
@@ -71,8 +83,11 @@ void drawBag(vector<unique_ptr<BaseButton>>& buttons, PlayerData player, vector<
 	cleardevice();
 
 	//绘制背景
-	setbkcolor(RGB(240, 240, 240));
-	cleardevice();
+	IMAGE image;
+	loadimage(&image, _T("./assets/image/ui/background.png"), WD_width, WD_height);
+	putimage_alpha(0, 0, &image);
+	//setbkcolor(RGB(240, 240, 240));
+	//cleardevice();
 
 	//绘制按钮
 	for (auto& btn : buttons) {
@@ -94,8 +109,11 @@ void drawAchieve(vector<unique_ptr<BaseButton>>& buttons, PlayerData player, vec
 	cleardevice();
 
 	//绘制背景
-	setbkcolor(RGB(240, 240, 240));
-	cleardevice();
+	IMAGE image;
+	loadimage(&image, _T("./assets/image/ui/background.png"), WD_width, WD_height);
+	putimage_alpha(0, 0, &image);
+	//setbkcolor(RGB(240, 240, 240));
+	//cleardevice();
 
 	//绘制按钮
 	for (auto& btn : buttons) {

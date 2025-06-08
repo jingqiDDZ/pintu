@@ -1,7 +1,13 @@
 [
     {
         "name": "旁白",
-        "text": "再睁眼时，少年站在一座古朴的木工坊前，空气中飘散着松木的清香",
+        "text": "窗外飞过几只麻雀，少年的回忆来到了春秋的木鸢",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/bedroom.png"
+    },
+    {
+        "name": "旁白",
+        "text": "他站在一座古朴的木工坊前，空气中飘散着松木的清香",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/3/background.png"
     },
@@ -43,13 +49,25 @@
     },
     {
         "name": "林夏",
-        "text": "什么啊……操",
+        "text": "什么啊……*",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/3/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "他注意到了边上的一位学徒打扮的人，正在比划着什么",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/3/background.png"
     },
     {
         "name": "学徒",
         "text": "（小声）看翅膀的第三根羽轴……左旋半圈",
+        "imgpath": "./assets/image/chara/wood_girl.png",
+        "bkpath": "./assets/image/level/3/background.png"
+    },
+    {
+        "name": "!",
+        "text": "神秘学徒的提示！本次回忆可以使用Q获得帮助",
         "imgpath": "./assets/image/chara/wood_girl.png",
         "bkpath": "./assets/image/level/3/background.png"
     }

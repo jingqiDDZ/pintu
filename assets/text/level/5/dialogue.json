@@ -68,6 +68,12 @@
         "text": "伴随着那段旋律，少年的脑中开始构建一幅画面……",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/5/bk2.png"
+    },
+    {
+        "name": "!",
+        "text": "少女的弦音可能会造成干扰，记得注意~~",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/5/bk2.png"
     }
 ]
     
