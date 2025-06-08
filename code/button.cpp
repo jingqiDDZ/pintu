@@ -116,7 +116,9 @@ vector<unique_ptr<BaseButton>> initShopBtn(PlayerData player, vector<ShopItemCon
 		}
 
 		int col = i % 3;
-
+		
+		//string tmp = to_string(shopConfigs[i].price) + "$";
+		//wstring wprice = utf8_to_wstring(tmp);
 		buttons.emplace_back(make_unique <Button>(
 			startX + paceX * col, startY,
 			btnW, btnH,
@@ -195,15 +197,15 @@ vector<unique_ptr<BaseButton>> initAchieveBtn(PlayerData player, vector<Achievem
 
 	int imgbtnW = 180;
 	int imgbtnH = 380;
-	double imgpaceX = 0.15f;
-	//double paceY = 0.3f;
+	double imgpaceX = 0.2f;
+	double imgpaceY = 0.5f;
 	double imgstartX = 0.1f;
 	double imgstartY = 0.2f;
 
 	for (int i = 0;i < achConfigs.size();i++) {		//遍历所有成就
 
 		string imagepath;
-		if (i>player.unlockLevel) {				//若没有解锁此成就则指定imagepath为问号图片
+		if (i>=player.unlockLevel-3) {				//若没有解锁此成就则指定imagepath为问号图片
 			imagepath = path + to_string(0) + ".png";
 		}
 		else {
@@ -211,7 +213,7 @@ vector<unique_ptr<BaseButton>> initAchieveBtn(PlayerData player, vector<Achievem
 		}
 
 		buttons.emplace_back(make_unique <ImageButton>(
-			imgstartX + imgpaceX * i, imgstartY,
+			imgstartX + imgpaceX * (i%3), imgstartY + imgpaceY * (i / 3),
 			imgbtnW, imgbtnH, imagepath)
 		);
 

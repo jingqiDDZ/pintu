@@ -13,6 +13,14 @@
             "unlock": true
         },
         {
+            "id": "凑数",
+            "unlock": true
+        },
+        {
+            "id": "tmp",
+            "unlock": true
+        },
+        {
             "id": "（连续十次在某一关超过倒计时时间输掉）",
             "unlock": false
         }
@@ -28,9 +36,9 @@
         }
     ],
     "player": {
-        "coins": 10930,
-        "skillE": 1,
-        "skillQ": 2,
+        "coins": 510,
+        "skillE": 2,
+        "skillQ": 1,
         "unlockedLevel": 9
     }
 }

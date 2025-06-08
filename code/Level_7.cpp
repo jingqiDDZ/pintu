@@ -226,6 +226,9 @@ int Level_7::handleFunctionKeys() {
 
 		// 第一阶段胜利后进入第二阶段
 		if (stage == 1) {
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue1.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
 			stage = 2;
 			win_1 = true;
 			trans.play();
@@ -238,9 +241,13 @@ int Level_7::handleFunctionKeys() {
 			initBoard();
 			shuffleBoard();
 
+
 		}
 		else {
 			showWin();
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
 		}
 
 
@@ -433,6 +440,9 @@ LevelResult Level_7::play() {
 		// 检查任意键
 		for (int vKey = 8; vKey <= 255; vKey++) {
 			if (GetAsyncKeyState(vKey) & 0x8000) {
+				string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue.json";
+				drawDialogue(tmppath);
+				FlushBatchDraw();
 				goto CONTINUE_GAME;
 			}
 		}
@@ -567,6 +577,7 @@ CONTINUE_GAME:
 			}
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
+
 
 			// 第一阶段胜利后进入第二阶段
 			if (stage == 1) {

@@ -1,0 +1,39 @@
+[
+    {
+        "name": "旁白",
+        "text": "墓葬封闭那日，少女被祭司拽进了陪葬品行列。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "祭司",
+        "text": "铸器师之女，当侍奉先王于九泉！",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "深夜，林夏走小道来到封闭的墓室前",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "门前居然是现代的机关锁，不愧是梦境 :)",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "锁上的纹样，好像在哪里见过",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "！",
+        "text": "尽快解锁救出女孩！这一次干扰有点多！",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    }
+    
+]

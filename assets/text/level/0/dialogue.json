@@ -74,49 +74,49 @@
     {
         "name": "开发者",
         "text": "…………先别急",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "其实这是个新手适应关，本游戏的主要玩法是数字华容道",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "每一关都代表着一次回忆",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "而玩家需要通过完成华容道拼图来完成回忆，或者说重新体验梦境",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "本游戏的大部分素材均是借助ai完成，而且开发时间短，请理解",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "哦对了为了保障玩家的体验，第一关我们采用了纯数字拼图",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "（其实是为了期末作业凑满九关）",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     },
     {
         "name": "开发者",
         "text": "祝您游戏愉快",
-        "imgpath": "./assets/image/chara/null.png",
+        "imgpath": "./assets/image/chara/girl.png",
         "bkpath": "./assets/image/level/0/background.png"
     }
 

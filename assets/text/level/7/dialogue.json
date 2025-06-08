@@ -37,7 +37,13 @@
     },
     {
         "name": "旁白",
-        "text": "林夏转头，火光映照出一张沾满烟灰的脸。少女抱着陶范，手指被烫得通红。",
+        "text": "林夏转头，火光映照出一张沾满烟灰的脸。",
+        "imgpath": "./assets/image/chara/null.png",
+        "bkpath": "./assets/image/level/background.png"
+    },
+    {
+        "name": "旁白",
+        "text": "少女抱着陶范，手指被烫得通红。",
         "imgpath": "./assets/image/chara/null.png",
         "bkpath": "./assets/image/level/background.png"
     },

@@ -47,7 +47,7 @@ int main() {
 	levelgames.push_back(make_unique<Level_5>(5, 4, 1, player.skillQ, player.skillE));
 	levelgames.push_back(make_unique<Level_6>(6, 4, 1, player.skillQ, player.skillE));
 	levelgames.push_back(make_unique<Level_7>(7, 5, 1, player.skillQ, player.skillE));
-
+	levelgames.push_back(make_unique<Level>(8, 4, 0, player.skillQ, player.skillE));
 
 	// 初始化窗口
 	initgraph(WD_width, WD_height);
@@ -251,11 +251,20 @@ int main() {
 									}
 								}
 
-								if (Qed && player.skillE != i + 1) {
+								if (Qed) {
 									player.skillQ = i+1;
+									if (player.skillE == i + 1) {	//如果该技能被设置为E，则将E改为0
+										player.skillE = 0;
+									}			
 								}
-								else if(!Qed && player.skillQ != i + 1){
+								else if(!Qed){
 									player.skillE = i + 1;
+									if (player.skillQ == i + 1) {	//如果该技能被设置为E，则将E改为0
+										player.skillQ = 0;
+									}
+								}
+								else {
+									;
 								}
 								saveData(player);
 							}
@@ -267,7 +276,7 @@ int main() {
 
 						//成就界面按钮处理
 						else if (currentState == ACHIEVE) {
-							if (i < buttons.size() - 1) {		//成就详情
+							if (i < buttons.size() - 1 && i<player.unlockLevel-2) {		//成就详情
 								imgpath = "./assets/image/achievement/" + to_string(i) + "/";
 								image_window = ImageWindow(0.6, 0.6, imgpath);
 								drawAchieve(buttons, player, achConfigs);
