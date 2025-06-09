@@ -703,7 +703,9 @@ public:
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
 			cout << "showWin finished" << endl;
-
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
 
 			lastFunctionTime = currentTime;
 		}

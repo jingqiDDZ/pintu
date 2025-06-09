@@ -9,20 +9,19 @@
 
 
 //全局数据 
-vector<unique_ptr<Level>> levelgames;
-ConfirmWindow confirm_window(_T("是否确认"));
-ImageWindow image_window;
+vector<unique_ptr<Level>> levelgames;         // 关卡对象列表，存储所有关卡实例
+ConfirmWindow confirm_window(_T("是否确认"));  // 全局确认弹窗（如购买、进入关卡时使用）
+ImageWindow image_window;                     // 全局图片弹窗（如成就CG、物品介绍等）
+PlayerData player;                            // 玩家动态数据（金币、解锁关卡、技能等）
+vector<ShopItemConfig> shopConfigs;           // 商店配置（只读，包含所有可购买物品的信息）
+vector<AchievementConfig> achConfigs;         // 成就配置（只读，包含所有成就的信息）
+Sound main_bgm;                              // 主菜单背景音乐
+SoundBuffer main_buffer;                     // 主菜单背景音乐缓冲区
+bool bgm_play = false;                       // 主菜单BGM是否正在播放
+int Level_5::value_5 = Level_5::Prob;        // Level_5关卡的概率参数初始化
 //Level_TE levelgame(0, 3, 1);	//关卡
 //Level levelnormal(2, 3, 1);		//一般关卡测试
 //Dialogue testDia("./assets/text/level/0/dialogue.json");
-PlayerData player; // 玩家动态数据
-vector<ShopItemConfig> shopConfigs; // 商店配置（只读）
-vector<AchievementConfig> achConfigs; // 成就配置（只读）
-Sound main_bgm;
-SoundBuffer main_buffer;
-bool bgm_play = false;
-int Level_5::value_5 = Level_5::Prob;
-
 
 int main() {
 	//加载游戏数据
@@ -276,7 +275,7 @@ int main() {
 
 						//成就界面按钮处理
 						else if (currentState == ACHIEVE) {
-							if (i < buttons.size() - 1 && i<player.unlockLevel-2) {		//成就详情
+							if (i < buttons.size() - 1 && i<player.unlockLevel-3) {		//成就详情
 								imgpath = "./assets/image/achievement/" + to_string(i) + "/";
 								image_window = ImageWindow(0.6, 0.6, imgpath);
 								drawAchieve(buttons, player, achConfigs);

@@ -135,7 +135,9 @@ CONTINUE_GAME:
 			}
 			cout << "WOW~~ isWin!" << endl;
 			showWin();
-
+			string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+			drawDialogue(tmppath);
+			FlushBatchDraw();
 			return LevelResult::Win;
 		}
 
@@ -233,7 +235,9 @@ int Level_TE::handleFunctionKeys() {
 		cout << "WOW~~ isWin!" << endl;
 		showWin();
 		cout << "showWin finished" << endl;
-
+		string tmppath = "./assets/text/level/" + to_string(id) + "/dialogue2.json";
+		drawDialogue(tmppath);
+		FlushBatchDraw();
 
 		lastFunctionTime = currentTime;
 	}
